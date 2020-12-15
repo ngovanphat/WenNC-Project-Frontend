@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1
     },
     titleLogo: {
-        marginLeft: theme.spacing(3)
+        marginLeft: theme.spacing(2)
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -76,40 +76,35 @@ const Header = () => {
     const classes = useStyles();
   return (
     <div className={classes.grow}>
-      <AppBar position="static" >
+      <AppBar position="static" color="inherit">
         <Toolbar>
-      
-           
-                <IconButton
-                    edge="start"
-                    className={classes.menuButton}
-                    color="inherit"
-                >
-                    <HomeIcon />
-                    <Typography className={classes.titleLogo}>Onlice Academic</Typography>
-                </IconButton>
-                <HoverMenu />
-                <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                <SearchIcon />
-                </div>
-                <InputBase
-                placeholder="Search…"
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                />
-            </div>
-            
-          
-                <div className={classes.buttonGroup}>
-                    <Button variant="contained" className={classes.buttonLogin}>Log in</Button>
-                    <Button variant="outlined">Sign up</Button>
-                </div>
-                <div className={classes.grow} />
-            
+          <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+            >
+                <HomeIcon />
+                <Typography className={classes.titleLogo}>Onlice Academic</Typography>
+          </IconButton>
+          <HoverMenu />
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+              </div>
+              <InputBase
+              placeholder="Search…"
+              classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+              />
+          </div>
+          <div className={classes.grow} />
+          <div className={classes.buttonGroup}>
+              <Button variant="contained" className={classes.buttonLogin} color="primary">Log in</Button>
+              <Button variant="outlined" color="primary">Sign up</Button>
+          </div>
         
         </Toolbar>
       </AppBar>
