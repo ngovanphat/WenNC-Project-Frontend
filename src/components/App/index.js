@@ -1,34 +1,36 @@
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <h1>Hello World</h1>
-//     </div>
-//   );
-// }
-
-// export default App;
 
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import Header from '../Header';
-import Content from '../Content'
+import Home from '../Home';
+import Login from '../Login';
+import Signup from '../Signup';
 
 const App = () => {
   return (
-    <Grid container direction="column">
-      <Grid item>
-        <Header />
-      </Grid>
-      <Grid item container>
-        <Grid item xs={0} sm={2} />
-        <Grid item xs={12} sm={8}>
-          <Content />
+    <Router>
+      <Grid container direction="column">
+        <Grid item>
+          <Header />
         </Grid>
-        <Grid item xs={0} sm={2} /> 
       </Grid>
-    </Grid>
+      <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
+    </Router>
   )
 }
 
