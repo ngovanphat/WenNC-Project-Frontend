@@ -9,7 +9,6 @@ import Header from '../Header';
 import Home from '../Home';
 import Login from '../Login';
 import Signup from '../Signup';
-import CarouselSlide from '../Carousel'
 
 const App = () => {
   return (
@@ -17,13 +16,6 @@ const App = () => {
       <Grid container direction="column">
         <Grid item>
           <Header />
-        </Grid>
-        <Grid item container>
-          <Grid item />
-          <Grid item xs={12}>
-            <CarouselSlide />
-          </Grid>
-          <Grid />
         </Grid>
       </Grid>
       <Switch>
