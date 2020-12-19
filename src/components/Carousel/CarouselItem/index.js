@@ -99,7 +99,7 @@ const CarouselItem = (props) => {
                             <Grid item>
                                 <Typography variant="h5">
                                     <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.ratingCount}>
-                                    Andrew Garfield
+                                      Andrew Garfield
                                     </Link>
                                 </Typography>
                             </Grid>
