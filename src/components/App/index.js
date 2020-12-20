@@ -9,6 +9,7 @@ import Header from '../Header';
 import Home from '../Home';
 import Login from '../Login';
 import Signup from '../Signup';
+import Footer from '../Footer';
 
 const App = () => {
   return (
@@ -17,18 +18,23 @@ const App = () => {
         <Grid item>
           <Header />
         </Grid>
+        <Grid item>
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route exact path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Grid>
+        <Grid item>
+          <Footer />
+        </Grid>
       </Grid>
-      <Switch>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/signup">
-          <Signup />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
     </Router>
   )
 }

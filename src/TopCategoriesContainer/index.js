@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Typography, Link, Hidden } from '@material-ui/core';
+import { Grid, Typography, Hidden } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import CourseCard from './CourseCard';
+import CategoryCard from './CategoryCard';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -24,78 +24,47 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TopCoursesContainer = (props) => {
+const TopCategoriesContainer = (props) => {
   const classes = useStyles();
-  const preventDefault = (event) => event.preventDefault();
 
   return (
     <Grid container direction="column" spacing={2}>
       <Grid className={classes.wrapper} item container>
         <Typography className={classes.lable}>{props.label}</Typography>
-        <Typography>
+        {/* <Typography>
           <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.showMore}>
             Explore more
           </Link>
-        </Typography>
+        </Typography> */}
       </Grid>
       <Grid item container spacing={2} direction="row">
         <Grid item xs={1} sm={2} md={1}></Grid>
         <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
+          <CategoryCard></CategoryCard>
         </Grid>
         <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
+          <CategoryCard></CategoryCard>
         </Grid>
         <Hidden only={['md', 'lg']}>
           <Grid item xs={1} sm={2} md={0}></Grid>
           <Grid item xs={1} sm={2} md={0}></Grid>
         </Hidden>
         <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
+          <CategoryCard></CategoryCard>
+        </Grid>
+        <Grid item xs={5} sm={4} md={2}>
+          <CategoryCard></CategoryCard>
+        </Grid>
+        <Hidden only={['md', 'lg']}>
+          <Grid item xs={1} sm={2} md={0}></Grid>
+          <Grid item xs={1} sm={2} md={0}></Grid>
+        </Hidden>
+        <Grid item xs={5} sm={4} md={2}>
+          <CategoryCard></CategoryCard>
         </Grid>
         <Hidden only={['md', 'lg']}>
           <Grid item xs={5} sm={4}>
-            <CourseCard></CourseCard>
-          </Grid>
-        </Hidden>
-        <Grid item xs={1}></Grid>
-      </Grid>
-      
-      <Grid item container spacing={2} direction="row">
-        <Grid item xs={1} sm={2} md={1}></Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Hidden only={['sm', 'xs']}>
-          <Grid item xs={5} md={2}>
-            <CourseCard></CourseCard>
+            <CategoryCard></CategoryCard>
           </Grid>
         </Hidden>
         <Grid item xs={1}></Grid>
@@ -104,4 +73,4 @@ const TopCoursesContainer = (props) => {
   )
 }
 
-export default TopCoursesContainer;
+export default TopCategoriesContainer;
