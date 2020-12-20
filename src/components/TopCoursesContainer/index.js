@@ -38,7 +38,7 @@ const TopCoursesContainer = (props) => {
           </Link>
         </Typography>
       </Grid>
-      <Grid item container spacing={2}>
+      <Grid item container spacing={2} direction="row">
         <Grid item xs={2} md={1}></Grid>
         <Grid item xs={4} sm={5} md={2}>
           <CourseCard></CourseCard>
@@ -57,7 +57,7 @@ const TopCoursesContainer = (props) => {
         </Grid>
         <Grid item xs={2} md={1}></Grid>
       </Grid>
-      <Grid item container spacing={2}>
+      <Grid item container spacing={2} direction="row">
         <Grid item xs={2} md={1}></Grid>
         <Grid item xs={4} sm={5} md={2}>
           <CourseCard></CourseCard>

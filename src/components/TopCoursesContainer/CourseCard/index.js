@@ -5,7 +5,6 @@ import Rating from '@material-ui/lab/Rating'
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core'
 import styled from 'styled-components';
