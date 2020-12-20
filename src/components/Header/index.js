@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from 'react-router-dom';
-import HoverMenu from "../HoverMenu";
+import HoverMenu from "./HoverMenu";
 
 const useStyles = makeStyles((theme) => ({
   style: {

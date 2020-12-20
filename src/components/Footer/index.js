@@ -10,7 +10,9 @@ const useStyles = makeStyles((theme) => ({
   style: {
     background: '#e6e6e6',
     marginTop: 50,
-    height: 50
+    height: 100,
+    display: 'flex',
+    alignItems: 'flex-end'
   },
   copyrights: {
     fontSize: 15

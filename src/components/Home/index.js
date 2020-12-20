@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import CarouselSlide from '../Carousel'
-import TopCoursesContainer from '../TopCoursesContainer';
-import TopCategoriesContainer from '../../TopCategoriesContainer';
+import CarouselSlide from './Carousel'
+import TopCoursesContainer from './TopCoursesContainer';
+import TopCategoriesContainer from './TopCategoriesContainer';
 
 const Home = () => {
   return (
