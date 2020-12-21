@@ -10,6 +10,7 @@ import Home from '../Home';
 import Login from '../Login';
 import Signup from '../Signup';
 import Footer from '../Footer';
+import Categories from '../Categories';
 
 const App = () => {
   return (
@@ -27,7 +28,7 @@ const App = () => {
               <Signup />
             </Route>
             <Route exact path="/">
-              <Home />
+              <Categories />
             </Route>
           </Switch>
         </Grid>

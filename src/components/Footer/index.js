@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Hidden, Link } from "@material-ui/core";
+import { Grid, Typography, Hidden, Link, Divider } from "@material-ui/core";
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
