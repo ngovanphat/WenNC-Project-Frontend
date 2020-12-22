@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('Email:', email, 'Password: ', password);
+    console.log("Email:", email, "Password: ", password);
   }
 
   return (
@@ -40,7 +40,7 @@ function Login() {
       <div className={classes.paper}>
         <Typography component="h1" variant="h4" color="primary">
           Log in
-          </Typography>
+        </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -53,7 +53,7 @@ function Login() {
             autoComplete="email"
             autoFocus
             value={email}
-            onInput={e => setEmail(e.target.value)}
+            onInput={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -66,7 +66,7 @@ function Login() {
             id="password"
             autoComplete="current-password"
             value={password}
-            onInput={e => setPassword(e.target.value)}
+            onInput={(e) => setPassword(e.target.value)}
           />
           <Button
             type="submit"
@@ -76,25 +76,31 @@ function Login() {
             className={classes.submit}
           >
             Login
-            </Button>
+          </Button>
           <Grid container>
             <Grid item xs>
-              <NavLink to="/forgotpassword" style={{
-                fontWeight: 'bold',
-                fontSize: 14,
-                color: '#005580',
-                textDecoration: 'none'
-              }}>
+              <NavLink
+                to="/forgotpassword"
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 14,
+                  color: "#005580",
+                  textDecoration: "none",
+                }}
+              >
                 Forgot password?
-                </NavLink>
+              </NavLink>
             </Grid>
             <Grid item>
-              <NavLink to="/signup" style={{
-                fontWeight: 'bold',
-                fontSize: 14,
-                color: '#005580',
-                textDecoration: 'none'
-              }}>
+              <NavLink
+                to="/signup"
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 14,
+                  color: "#005580",
+                  textDecoration: "none",
+                }}
+              >
                 {"Don't have an account? Sign Up"}
               </NavLink>
             </Grid>
