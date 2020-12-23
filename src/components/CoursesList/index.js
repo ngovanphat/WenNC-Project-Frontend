@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export default function Album() {
   const classes = useStyles();
@@ -77,9 +77,9 @@ export default function Album() {
       </div>
       <Container className={classes.cardGrid} maxWidth="md">
         {/* End hero unit */}
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
+            <Grid item key={card} xs={6} sm={4} md={3}>
               <CourseCard></CourseCard>
               {/* <Card className={classes.card}>
                 <CardMedia
