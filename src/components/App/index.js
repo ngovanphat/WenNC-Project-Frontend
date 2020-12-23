@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AdminLayout from "../../layouts/AdminLayout";
 import Users from "../Admin/Users"
+import CourseList from "../CoursesList"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     //display: "flex",
@@ -33,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     //marginTop: "auto",
   },
 }));
+
 const App = ({ location }) => {
   const classes = useStyles();
 
@@ -46,17 +49,16 @@ const App = ({ location }) => {
           </Grid>
           <Grid item className={classes.main}>
             <Switch>
-              
               <Route path="/admin/:path?" exact>
                 <AdminLayout>
-                <Switch>
-                  <Route exact path="/admin/dashboard">
-                    
-                  </Route>
-                  <Route exact path="/admin/users">
-                    <Users/>
-                  </Route>
-                </Switch>
+                  <Switch>
+                    <Route exact path="/admin/dashboard">
+                      
+                    </Route>
+                    <Route exact path="/admin/users">
+                      <Users />
+                    </Route>
+                  </Switch>
                 </AdminLayout>
               </Route>
               <Route exact path="/login">
@@ -66,7 +68,8 @@ const App = ({ location }) => {
                 <Signup />
               </Route>
               <Route exact path="/">
-                <Categories />
+                {/* <Categories /> */}
+                <CourseList />
               </Route>
             </Switch>
           </Grid>

@@ -6,11 +6,12 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { useLocation } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   style: {
     background: '#e6e6e6',
     minHeight: '8vh',
-    marginTop:'20px'
+    marginTop: '20px'
   },
   copyrights: {
     fontSize: 15,
@@ -100,7 +101,7 @@ const Footer = (props) => {
             marginTop: 15,
           }}>
           <Typography className={classes.copyrights} color="textSecondary">
-            2020 Devteam, Inc{' '}
+            © 2020 Devteam, Inc{' '}
           </Typography>{' '}
         </Grid>{' '}
       </Grid>{' '}

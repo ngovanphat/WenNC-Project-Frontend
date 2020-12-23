@@ -70,7 +70,7 @@ const TopCoursesContainer = (props) => {
         </Hidden>
         <Grid item xs={1}></Grid>
       </Grid>
-      
+
       <Grid item container spacing={2} direction="row">
         <Grid item xs={1} sm={2} md={1}></Grid>
         <Grid item xs={5} sm={4} md={2}>

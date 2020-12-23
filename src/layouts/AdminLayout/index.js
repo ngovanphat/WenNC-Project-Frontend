@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Grid,makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import Header from "./Header";
 import styled from "styled-components";
 import SideNavBar from "./SideNavBar";
-import {Colors} from "../../helpers/colors"
+import { Colors } from "../../helpers/colors"
+
 const Container = styled.div`
   backgroundColor: theme.palette.background.dark,
     display: "flex",
@@ -11,6 +12,7 @@ const Container = styled.div`
     overflow: "hidden",
     width: "100%",
 `;
+
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -25,17 +27,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flex: "1 1 auto",
     overflow: "hidden",
-    background:Colors.white,
-    marginLeft:5,
-    marginRight:5
+    background: Colors.white,
+    marginLeft: 5,
+    marginRight: 5
   },
   content: {
     flex: "1 1 auto",
     height: "100%",
     overflow: "auto",
   },
-  container:{
-    
+  container: {
     minHeight: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
@@ -53,7 +54,7 @@ const Dashboard = ({ children }) => {
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
-          { children }
+            {children}
           </div>
         </div>
       </div>
