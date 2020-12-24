@@ -11,8 +11,9 @@ import Dashboard from "../Admin/Dashboard";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AdminLayout from "../../layouts/AdminLayout";
-import Users from "../Admin/Users"
-import CourseList from "../CoursesList"
+import Users from "../Admin/Users";
+import CourseList from "../CoursesList";
+import MyCourseList from "../MyCourseList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,7 @@ const App = ({ location }) => {
                 <AdminLayout>
                   <Switch>
                     <Route exact path="/admin/dashboard">
-                      
+
                     </Route>
                     <Route exact path="/admin/users">
                       <Users />
@@ -69,7 +70,7 @@ const App = ({ location }) => {
               </Route>
               <Route exact path="/">
                 {/* <Categories /> */}
-                <CourseList />
+                <MyCourseList />
               </Route>
             </Switch>
           </Grid>

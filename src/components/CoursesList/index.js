@@ -1,9 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,17 +16,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
   },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
   descButton: {
     backgroundColor: '#005580',
     color: 'white',
@@ -43,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function Album() {
+export default function CourseList() {
   const classes = useStyles();
 
   return (
     <main>
       <div className={classes.heroContent}>
         <Container maxWidth="sm">
-          <Typography style={{ fontSize: 40 }} align="center" color="textPrimary">
+          <Typography style={{ fontSize: 36 }} align="center" color="textPrimary">
             Courses (29 results)
           </Typography>
           <Typography variant="h5" align="center" color="textSecondary" paragraph>
@@ -59,7 +44,7 @@ export default function Album() {
           <Typography variant="h6" align="center" color="textSecondary">
             Sort by:
           </Typography>
-          <div className={classes.heroButtons}>
+          <div>
             <Grid container spacing={2} justify="center">
               <Grid item>
                 <Button variant="contained" className={classes.descButton}>
@@ -76,34 +61,10 @@ export default function Album() {
         </Container>
       </div>
       <Container className={classes.cardGrid} maxWidth="md">
-        {/* End hero unit */}
         <Grid container spacing={2}>
           {cards.map((card) => (
             <Grid item key={card} xs={6} sm={4} md={3}>
               <CourseCard></CourseCard>
-              {/* <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Heading
-                    </Typography>
-                  <Typography>
-                    This is a media card. You can use this section to describe the content.
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    View
-                    </Button>
-                  <Button size="small" color="primary">
-                    Edit
-                    </Button>
-                </CardActions>
-              </Card> */}
             </Grid>
           ))}
         </Grid>
