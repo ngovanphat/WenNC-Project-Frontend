@@ -68,8 +68,8 @@ const App = ({ location }) => {
                 <Signup />
               </Route>
               <Route exact path="/">
-                {/* <Categories /> */}
-                <CourseList />
+                <Categories /> 
+                {/*<CourseList />*/}
               </Route>
             </Switch>
           </Grid>
