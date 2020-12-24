@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button';
+import Rating from '@material-ui/lab/Rating';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
@@ -37,9 +38,25 @@ const useStyles = makeStyles({
     color: '#005580',
     fontWeight: 600,
   },
+  rating: {
+    color: '#e6ac00',
+    fontWeight: 700,
+    fontSize: 15,
+  },
+  ratingCount: {
+    fontWeight: 500,
+    fontSize: 15,
+  },
   resumeButton: {
+    marginTop: 10,
     borderColor: "#005580",
     color: '#005580'
+  },
+  removeButton: {
+    marginTop: 10,
+    marginLeft: 10,
+    borderColor: "red",
+    color: 'red'
   },
   card: {
     display: 'flex',
@@ -52,14 +69,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MyCourseCard(props) {
+export default function MyFavoriteCard(props) {
   const classes = useStyles();
   const { course } = props;
   const preventDefault = (event) => event.preventDefault();
 
   return (
     <Grid item xs={12}>
-      {/* <CardActionArea component="a" href="#"> */}
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -81,10 +97,16 @@ export default function MyCourseCard(props) {
                     </Link>
                   </Typography>
                 </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2" color="textSecondary">
-                    Last accessed - {course.last_updated}
-                  </Typography>
+                <Grid item container spacing={1}>
+                  <Grid item>
+                    <Rating name="half-rating" defaultValue={course.points} precision={0.5} size="small" readOnly style={{ marginTop: 1 }} />
+                  </Grid>
+                  <Grid item>
+                    <Typography className={classes.rating}>5</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography color="textSecondary" className={classes.ratingCount}>500,000 ratings</Typography>
+                  </Grid>
                 </Grid>
               </Grid>
               <Typography variant="subtitle1" style={{marginTop: 10}}>
@@ -92,8 +114,11 @@ export default function MyCourseCard(props) {
                   {course.description}
                 </DescriptionStyled>
               </Typography>
-              <Button variant="outlined" className={classes.resumeButton} style={{marginTop: 10}}>
-                Resume course
+              <Button variant="outlined" className={classes.resumeButton}>
+                Go to course
+              </Button>
+              <Button variant="outlined" className={classes.removeButton}>
+                Remove
               </Button>
             </CardContent>
           </div>
@@ -101,11 +126,10 @@ export default function MyCourseCard(props) {
             <CardMedia className={classes.cardMedia} image={course.thumbnail} />
           </Hidden>
         </Card>
-      {/* </CardActionArea> */}
     </Grid>
   );
 }
 
-MyCourseCard.propTypes = {
+MyFavoriteCard.propTypes = {
   course: PropTypes.object,
 };
