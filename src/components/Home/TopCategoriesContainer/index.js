@@ -31,11 +31,11 @@ const TopCategoriesContainer = (props) => {
     <Grid container direction="column" spacing={2}>
       <Grid className={classes.wrapper} item container>
         <Typography className={classes.lable}>{props.label}</Typography>
-         <Typography>
+        <Typography>
           <Link href="#" onClick={(event) => event.preventDefault()} style={{ textDecoration: 'none' }} className={classes.showMore}>
             Explore more
           </Link>
-        </Typography> 
+        </Typography>
       </Grid>
       <Grid item container spacing={2} direction="row">
         <Grid item xs={1} sm={2} md={1}></Grid>
