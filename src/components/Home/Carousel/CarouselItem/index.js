@@ -72,13 +72,13 @@ const CarouselItem = (props) => {
             <Typography>
               <Link href="#" onClick={preventDefault} className={classes.category}>
                 Mobile Development
-                            </Link>
+              </Link>
             </Typography>
           </Grid>
           <Grid item style={{ marginTop: 35 }}>
             <Typography className={classes.title}>
               The Complete 2020 Flutter Development Bootcamp with Dart
-                        </Typography>
+            </Typography>
           </Grid>
           <Grid item container spacing={1}>
             <Grid item>
@@ -100,7 +100,7 @@ const CarouselItem = (props) => {
                 <Typography variant="h5">
                   <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.ratingCount}>
                     Andrew Garfield
-                                    </Link>
+                  </Link>
                 </Typography>
               </Grid>
             </Hidden>
@@ -120,12 +120,12 @@ const CarouselItem = (props) => {
                   <Grid item>
                     <Typography className={classes.cardContent}>
                       $15.99
-                                    </Typography>
+                    </Typography>
                   </Grid>
                   <Grid item style={{ marginTop: 7, marginLeft: 10, textDecoration: 'line-through' }}>
                     <Typography>
                       $100.99
-                                        </Typography>
+                    </Typography>
                   </Grid>
                 </Grid>
               </CardContent>
