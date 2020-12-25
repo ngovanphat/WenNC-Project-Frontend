@@ -71,9 +71,9 @@ const App = ({ location }) => {
                 <Signup />
               </Route>
               <Route exact path="/">
-                {/* <Categories /> */}
+                <Categories />
                 {/*<MyFavoriteList />*/}
-                <CourseDetail />
+                {/*<CourseDetail />*/}
               </Route>
             </Switch>
           </Grid>

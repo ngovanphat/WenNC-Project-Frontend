@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Typography, List, Button, Paper, ListItem, Avatar, LinearProgress } from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
+import { Rating, Pagination } from '@material-ui/lab';
 import Image from 'material-ui-image';
 
 import UpdateIcon from '@material-ui/icons/Update';
@@ -400,6 +400,12 @@ class CourseDetail extends Component {
                                         />
                                     </ListItem>
                                 </List>
+                                <Grid container style={{display: 'flex', alignContent: 'flex-end'}}>
+                                    <Grid xs={6} />  
+                                    <Grid xs={6} >
+                                        <Pagination count={10} page={1}  />
+                                    </Grid>
+                                </Grid>
                             </Grid>
                             {/*------------------More Courses---------------------*/}
                             <Typography
@@ -427,7 +433,7 @@ class CourseDetail extends Component {
                                         justifyContent: 'stretch'
                                     }}>
                                         <Typography variant="h4" style={{fontWeight: 'bold'}}>$12.99</Typography>
-                                        <Typography variant="p" style={{color: 'grey', marginLeft: 10}}>$122.99</Typography>
+                                        <Typography variant="p" style={{color: 'grey', marginLeft: 10, textDecoration: 'line-through'}}>$122.99</Typography>
                                         <Typography variant="p" style={{marginLeft: 10}}>91% off</Typography>
                                     </Grid>
 

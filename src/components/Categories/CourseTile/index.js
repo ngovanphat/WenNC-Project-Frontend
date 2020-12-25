@@ -34,7 +34,7 @@ function CourseTile(props) {
                       justifyContent: 'flex-end'
                     }}>
                       <Typography variant="subtitle1" style={{textAlign: 'right', fontWeight: 'bold'}}>$ {props.price}</Typography>
-                      <Typography variant="subtitle1" style={{textAlign: 'right', color: '#ccc'}}>$ {props.actualPrice}</Typography>
+                      <Typography variant="subtitle1" style={{textAlign: 'right', color: '#ccc',textDecoration: 'line-through'}}>$ {props.actualPrice}</Typography>
                     </Container>
                   </Grid>
                 </Grid>
