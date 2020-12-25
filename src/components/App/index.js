@@ -14,7 +14,8 @@ import AdminLayout from "../../layouts/AdminLayout";
 import Users from "../Admin/Users";
 import CourseList from "../CoursesList";
 import MyCourseList from "../MyCourseList";
-import MyFavoriteList from "../MyFavoriteList"
+import MyFavoriteList from "../MyFavoriteList";
+import CourseDetail from  "../CourseDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,13 +71,9 @@ const App = ({ location }) => {
                 <Signup />
               </Route>
               <Route exact path="/">
-<<<<<<< HEAD
-                <Categories /> 
-                {/*<CourseList />*/}
-=======
                 {/* <Categories /> */}
-                <MyFavoriteList />
->>>>>>> 68fffa632fd1557796cba09642c5e5eae92c25cd
+                {/*<MyFavoriteList />*/}
+                <CourseDetail />
               </Route>
             </Switch>
           </Grid>
