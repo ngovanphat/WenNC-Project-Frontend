@@ -15,7 +15,8 @@ import Users from "../Admin/Users";
 import CourseList from "../CoursesList";
 import MyCourseList from "../MyCourseList";
 import MyFavoriteList from "../MyFavoriteList";
-import CourseDetail from  "../CourseDetail";
+import CourseDetail from "../CourseDetail";
+import Profile from "../Profile";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,9 +72,9 @@ const App = ({ location }) => {
                 <Signup />
               </Route>
               <Route exact path="/">
-                <Categories />
-                {/*<MyFavoriteList />*/}
-                {/*<CourseDetail />*/}
+                {/* <Categories /> */}
+                <Profile />
+                {/* <CourseDetail /> */}
               </Route>
             </Switch>
           </Grid>
