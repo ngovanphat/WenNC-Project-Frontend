@@ -70,10 +70,14 @@ const App = ({ location }) => {
               <Route exact path="/signup">
                 <Signup />
               </Route>
-              <Route exact path="/">
+              <Route exact path="/categories" >
                 <Categories />
-                {/*<MyFavoriteList />*/}
-                {/*<CourseDetail />*/}
+              </Route>
+              <Route path="/courses/:id" >
+                <CourseDetail />
+              </Route>
+              <Route exact path="/">
+                <Home />
               </Route>
             </Switch>
           </Grid>
