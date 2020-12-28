@@ -8,6 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core'
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 const TitleStyled = styled.div`
     overflow: hidden;
@@ -54,7 +56,9 @@ export default function CourseCard() {
   const classes = useStyles();
 
   return (
+
     <Card className={classes.root}>
+      <Link underline='none' component={RouterLink} to='/courses/1753082'>
       <CardActionArea>
         <CardMedia
           square
@@ -99,6 +103,7 @@ export default function CourseCard() {
           </Grid>
         </CardContent>
       </CardActionArea>
+      </Link>
     </Card>
   );
 }

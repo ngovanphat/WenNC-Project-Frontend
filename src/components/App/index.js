@@ -2,20 +2,18 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import Header from "../Header";
-import Home from "../Home";
 import Login from "../Login";
 import Signup from "../Signup";
 import Footer from "../Footer";
-import Categories from "../Categories";
-import Dashboard from "../Admin/Dashboard";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AdminLayout from "../../layouts/AdminLayout";
 import Users from "../Admin/Users";
-import CourseList from "../CoursesList";
-import MyCourseList from "../MyCourseList";
-import MyFavoriteList from "../MyFavoriteList";
-import CourseDetail from  "../CourseDetail";
+import Categories from "../Categories";
+import CourseDetail from "../CourseDetail";
+import Profile from "../Profile";
+import Home from "../Home";
+import UpdateProfile from "../UpdateProfile";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +73,12 @@ const App = ({ location }) => {
               </Route>
               <Route path="/courses/:id" >
                 <CourseDetail />
+              </Route>
+              <Route exact path="/profile">
+                <Profile />
+              </Route>
+              <Route exact path="/profile/update">
+                <UpdateProfile />
               </Route>
               <Route exact path="/">
                 <Home />

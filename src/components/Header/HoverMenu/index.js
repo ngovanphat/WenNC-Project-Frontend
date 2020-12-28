@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { fade, withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -47,7 +48,7 @@ const StyledMenuItem = withStyles((theme) => ({
     '&:focus': {
       backgroundColor: theme.palette.primary,
     },
-    width: 220
+    width: 180
   },
 }))(MenuItem);
 
@@ -70,7 +71,9 @@ export default function HoverMenu() {
         className={classes.button}
         onClick={handleClick}
       >
-        Explore
+         <NavLink to="/categories" style={{textDecoration: 'none', color: "#005580", fontWeight: 'bold'}}> 
+            Categories
+          </NavLink>
         <ExpandMoreIcon fontSize="small" style={{ marginLeft: 5 }} />
       </Button>
       <StyledMenu
@@ -82,18 +85,16 @@ export default function HoverMenu() {
         <StyledMenuItem
           onClick={handleClose}
         >
-          <ListItemText primary="Web Development" />
-          <ListItemIcon>
-            <ChevronRightIcon fontSize="small" style={{ marginLeft: 40 }} />
-          </ListItemIcon>
+          <NavLink to="/categories/Web Development" style={{textDecoration: 'none', color: "#000", fontWeight: 'bold'}}> 
+            <ListItemText primary="Web Development" />
+          </NavLink>
         </StyledMenuItem>
         <StyledMenuItem
           onClick={handleClose}
         >
-          <ListItemText primary="Mobile Development" />
-          <ListItemIcon>
-            <ChevronRightIcon fontSize="small" style={{ marginLeft: 40 }} />
-          </ListItemIcon>
+          <NavLink to="/categories/Mobile Development" style={{textDecoration: 'none', color: "#000", fontWeight: 'bold'}}> 
+            <ListItemText primary="Mobile Development" />
+          </NavLink>
         </StyledMenuItem>
       </StyledMenu>
     </div>
