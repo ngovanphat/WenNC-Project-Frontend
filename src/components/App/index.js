@@ -14,11 +14,8 @@ import CourseDetail from "../CourseDetail";
 import Profile from "../Profile";
 import Home from "../Home";
 import UpdateProfile from "../UpdateProfile";
-<<<<<<< HEAD
 import AddCourse from "../AddCourse";
-=======
 import VideoPlayer from "../VideoPlayer";
->>>>>>> e4d0a40edd521377be7da285cc1a38e0e26d3009
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +73,10 @@ const App = ({ location }) => {
               <Route exact path="/categories" >
                 <Categories />
               </Route>
-              <Route path="/courses/:id" >
+              <Route exact path="/courses/:id/:videoid" >
+                <VideoPlayer />
+              </Route>
+              <Route exact path="/courses/:id" >
                 <CourseDetail />
               </Route>
               <Route exact path="/profile">
@@ -85,16 +85,11 @@ const App = ({ location }) => {
               <Route exact path="/profile/update">
                 <UpdateProfile />
               </Route>
-<<<<<<< HEAD
               <Route exact path="/addCourse">
                 <AddCourse />
               </Route>
               <Route path="/">
                 <Home />
-=======
-              <Route exact path="/">
-                <VideoPlayer />
->>>>>>> e4d0a40edd521377be7da285cc1a38e0e26d3009
               </Route>
             </Switch>
           </Grid>
