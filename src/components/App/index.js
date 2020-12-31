@@ -14,6 +14,7 @@ import CourseDetail from "../CourseDetail";
 import Profile from "../Profile";
 import Home from "../Home";
 import UpdateProfile from "../UpdateProfile";
+import AddCourse from "../AddCourse";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,7 +81,10 @@ const App = ({ location }) => {
               <Route exact path="/profile/update">
                 <UpdateProfile />
               </Route>
-              <Route exact path="/">
+              <Route exact path="/addCourse">
+                <AddCourse />
+              </Route>
+              <Route path="/">
                 <Home />
               </Route>
             </Switch>
