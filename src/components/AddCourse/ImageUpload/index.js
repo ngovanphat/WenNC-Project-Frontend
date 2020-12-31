@@ -16,7 +16,6 @@ import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 //Tabs
 import { withStyles } from "@material-ui/core/styles";
 
-
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
@@ -61,7 +60,6 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
     backgroundColor: "default"
   },
-
   searchRoot: {
     padding: "2px 4px",
     display: "flex",
@@ -95,7 +93,7 @@ class ImageUploadCard extends React.Component {
     const reader = new FileReader();
     var url = reader.readAsDataURL(file);
 
-    reader.onloadend = function(e) {
+    reader.onloadend = function (e) {
       this.setState({
         selectedFile: [reader.result]
       });
