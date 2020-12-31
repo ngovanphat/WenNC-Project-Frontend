@@ -76,56 +76,56 @@ export default function MyFavoriteCard(props) {
 
   return (
     <Grid item xs={12}>
-        <Card className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-              <Typography component="h2" variant="h5">
-                <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.title}>
-                  <TitleStyled>
-                    {course.title}
-                  </TitleStyled>
-                </Link>
-              </Typography>
-              <Grid container direction="row" style={{marginTop: 10}}>
-                <Grid item container>
-                  <Typography variant="subtitle2" color="textSecondary" style={{ flexGrow: 1 }}>
-                    {course.leturer}
-                  </Typography>
-                  <Typography variant="subtitle2">
-                    <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.category}>
-                      {course.category}
-                    </Link>
-                  </Typography>
+      <Card className={classes.card}>
+        <div className={classes.cardDetails}>
+          <CardContent>
+            <Typography component="h2" variant="h5">
+              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.title}>
+                <TitleStyled>
+                  {course.title}
+                </TitleStyled>
+              </Link>
+            </Typography>
+            <Grid container direction="row" style={{ marginTop: 10 }}>
+              <Grid item container>
+                <Typography variant="subtitle2" color="textSecondary" style={{ flexGrow: 1 }}>
+                  {course.leturer}
+                </Typography>
+                <Typography variant="subtitle2">
+                  <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.category}>
+                    {course.category}
+                  </Link>
+                </Typography>
+              </Grid>
+              <Grid item container spacing={1}>
+                <Grid item>
+                  <Rating name="half-rating" defaultValue={course.points} precision={0.5} size="small" readOnly style={{ marginTop: 1 }} />
                 </Grid>
-                <Grid item container spacing={1}>
-                  <Grid item>
-                    <Rating name="half-rating" defaultValue={course.points} precision={0.5} size="small" readOnly style={{ marginTop: 1 }} />
-                  </Grid>
-                  <Grid item>
-                    <Typography className={classes.rating}>5</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography color="textSecondary" className={classes.ratingCount}>500,000 ratings</Typography>
-                  </Grid>
+                <Grid item>
+                  <Typography className={classes.rating}>5</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography color="textSecondary" className={classes.ratingCount}>500,000 ratings</Typography>
                 </Grid>
               </Grid>
-              <Typography variant="subtitle1" style={{marginTop: 10}}>
-                <DescriptionStyled>
-                  {course.description}
-                </DescriptionStyled>
-              </Typography>
-              <Button variant="outlined" className={classes.resumeButton}>
-                Go to course
-              </Button>
-              <Button variant="outlined" className={classes.removeButton}>
-                Remove
-              </Button>
-            </CardContent>
-          </div>
-          <Hidden xsDown>
-            <CardMedia className={classes.cardMedia} image={course.thumbnail} />
-          </Hidden>
-        </Card>
+            </Grid>
+            <Typography variant="subtitle1" style={{ marginTop: 10 }}>
+              <DescriptionStyled>
+                {course.description}
+              </DescriptionStyled>
+            </Typography>
+            <Button variant="outlined" className={classes.resumeButton}>
+              Go to course
+            </Button>
+            <Button variant="outlined" className={classes.removeButton}>
+              Remove
+            </Button>
+          </CardContent>
+        </div>
+        <Hidden xsDown>
+          <CardMedia className={classes.cardMedia} image={course.thumbnail} />
+        </Hidden>
+      </Card>
     </Grid>
   );
 }

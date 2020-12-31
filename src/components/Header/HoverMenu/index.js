@@ -71,9 +71,9 @@ export default function HoverMenu() {
         className={classes.button}
         onClick={handleClick}
       >
-         <NavLink to="/categories" style={{textDecoration: 'none', color: "#005580", fontWeight: 'bold'}}> 
-            Categories
-          </NavLink>
+        <NavLink to="/categories" style={{ textDecoration: 'none', color: "#005580", fontWeight: 'bold' }}>
+          Categories
+        </NavLink>
         <ExpandMoreIcon fontSize="small" style={{ marginLeft: 5 }} />
       </Button>
       <StyledMenu
@@ -85,14 +85,14 @@ export default function HoverMenu() {
         <StyledMenuItem
           onClick={handleClose}
         >
-          <NavLink to="/categories/Web Development" style={{textDecoration: 'none', color: "#000", fontWeight: 'bold'}}> 
+          <NavLink to="/categories/Web Development" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
             <ListItemText primary="Web Development" />
           </NavLink>
         </StyledMenuItem>
         <StyledMenuItem
           onClick={handleClose}
         >
-          <NavLink to="/categories/Mobile Development" style={{textDecoration: 'none', color: "#000", fontWeight: 'bold'}}> 
+          <NavLink to="/categories/Mobile Development" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
             <ListItemText primary="Mobile Development" />
           </NavLink>
         </StyledMenuItem>

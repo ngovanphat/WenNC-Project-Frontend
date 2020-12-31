@@ -66,18 +66,18 @@ export default function UpdateProfile() {
           <Grid item container direction="row" spacing={3}>
             <Grid item xs={6}>
               <TextField
-              label="Full name"
-              defaultValue="Christian Dior"
-              variant="outlined"
-              fullWidth
+                label="Full name"
+                defaultValue="Christian Dior"
+                variant="outlined"
+                fullWidth
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-              label="Email"
-              defaultValue="1234567@student.hcmus.edu.vn"
-              variant="outlined"
-              fullWidth
+                label="Email"
+                defaultValue="1234567@student.hcmus.edu.vn"
+                variant="outlined"
+                fullWidth
               />
             </Grid>
           </Grid>
@@ -96,7 +96,7 @@ export default function UpdateProfile() {
           </Grid>
           <Grid item container direction="row">
             <Grid item container direction="column" alignItems="flex-start" xs={2}>
-              <Avatar variant="rounded"  src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" className={classes.avatar} />
+              <Avatar variant="rounded" src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" className={classes.avatar} />
             </Grid>
             <Grid item container direction="column" alignItems="flex-start" xs={10}>
               <Button variant="outlined" align="start" className={classes.uploadButton}>
@@ -115,14 +115,14 @@ export default function UpdateProfile() {
               Password
             </Typography>
           </Grid>
-          <Grid item container direction="row" spacing={3} style={{marginTop: 10}}>
+          <Grid item container direction="row" spacing={3} style={{ marginTop: 10 }}>
             <Grid item xs={4}>
               <TextField
                 label="Current password"
                 type="password"
                 variant="outlined"
                 fullWidth
-              />  
+              />
             </Grid>
             <Grid item xs={4}>
               <TextField
@@ -130,7 +130,7 @@ export default function UpdateProfile() {
                 type="password"
                 variant="outlined"
                 fullWidth
-              />  
+              />
             </Grid>
             <Grid item xs={4}>
               <TextField
@@ -138,7 +138,7 @@ export default function UpdateProfile() {
                 type="password"
                 variant="outlined"
                 fullWidth
-              />  
+              />
             </Grid>
           </Grid>
           <Grid item container direction="column" alignItems="flex-start" xs={12}>
