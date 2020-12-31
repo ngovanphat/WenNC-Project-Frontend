@@ -59,50 +59,50 @@ export default function CourseCard() {
 
     <Card className={classes.root}>
       <Link underline='none' component={RouterLink} to='/courses/1753082'>
-      <CardActionArea>
-        <CardMedia
-          square
-          component="img"
-          height="150"
-          image="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
-        />
-        <CardContent>
-          <Typography className={classes.category}>
-            Mobile Development
+        <CardActionArea>
+          <CardMedia
+            square
+            component="img"
+            height="150"
+            image="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
+          />
+          <CardContent>
+            <Typography className={classes.category}>
+              Mobile Development
           </Typography>
-          <Typography className={classes.title}>
-            <TitleStyled>
-              The Complete 2020 Flutter Development Bootcamp with Dart
+            <Typography className={classes.title}>
+              <TitleStyled>
+                The Complete 2020 Flutter Development Bootcamp with Dart
             </TitleStyled>
-          </Typography>
-          <Typography className={classes.author} color="textSecondary">
-            Andrew Garfield
-          </Typography>
-          <Grid item container spacing={0}>
-            <Grid item>
-              <Typography className={classes.rating}>5</Typography>
-            </Grid>
-            <Grid item>
-              <Rating value={5} size="small" readOnly style={{ marginTop: 1 }} />
-            </Grid>
-            <Grid item>
-              <Typography className={classes.ratingCount} color="textSecondary">(500,000)</Typography>
-            </Grid>
-          </Grid>
-          <Grid container style={{ marginTop: 5 }}>
-            <Grid item>
-              <Typography className={classes.price}>
-                $15.99
             </Typography>
+            <Typography className={classes.author} color="textSecondary">
+              Andrew Garfield
+          </Typography>
+            <Grid item container spacing={0}>
+              <Grid item>
+                <Typography className={classes.rating}>5</Typography>
+              </Grid>
+              <Grid item>
+                <Rating value={5} size="small" readOnly style={{ marginTop: 1 }} />
+              </Grid>
+              <Grid item>
+                <Typography className={classes.ratingCount} color="textSecondary">(500,000)</Typography>
+              </Grid>
             </Grid>
-            <Grid item style={{ marginTop: 3, marginLeft: 10, textDecoration: 'line-through' }}>
-              <Typography>
-                $100.99
+            <Grid container style={{ marginTop: 5 }}>
+              <Grid item>
+                <Typography className={classes.price}>
+                  $15.99
+            </Typography>
+              </Grid>
+              <Grid item style={{ marginTop: 3, marginLeft: 10, textDecoration: 'line-through' }}>
+                <Typography>
+                  $100.99
                 </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </CardActionArea>
+          </CardContent>
+        </CardActionArea>
       </Link>
     </Card>
   );

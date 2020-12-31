@@ -60,47 +60,47 @@ export default function MyCourseCard(props) {
   return (
     <Grid item xs={12}>
       {/* <CardActionArea component="a" href="#"> */}
-        <Card className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-              <Typography component="h2" variant="h5">
-                <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.title}>
-                  <TitleStyled>
-                    {course.title}
-                  </TitleStyled>
-                </Link>
-              </Typography>
-              <Grid container direction="row" style={{marginTop: 10}}>
-                <Grid item container>
-                  <Typography variant="subtitle2" color="textSecondary" style={{ flexGrow: 1 }}>
-                    {course.leturer}
-                  </Typography>
-                  <Typography variant="subtitle2">
-                    <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.category}>
-                      {course.category}
-                    </Link>
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2" color="textSecondary">
-                    Last accessed - {course.last_updated}
-                  </Typography>
-                </Grid>
+      <Card className={classes.card}>
+        <div className={classes.cardDetails}>
+          <CardContent>
+            <Typography component="h2" variant="h5">
+              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.title}>
+                <TitleStyled>
+                  {course.title}
+                </TitleStyled>
+              </Link>
+            </Typography>
+            <Grid container direction="row" style={{ marginTop: 10 }}>
+              <Grid item container>
+                <Typography variant="subtitle2" color="textSecondary" style={{ flexGrow: 1 }}>
+                  {course.leturer}
+                </Typography>
+                <Typography variant="subtitle2">
+                  <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.category}>
+                    {course.category}
+                  </Link>
+                </Typography>
               </Grid>
-              <Typography variant="subtitle1" style={{marginTop: 10}}>
-                <DescriptionStyled>
-                  {course.description}
-                </DescriptionStyled>
-              </Typography>
-              <Button variant="outlined" className={classes.resumeButton} style={{marginTop: 10}}>
-                Resume course
+              <Grid item>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Last accessed - {course.last_updated}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Typography variant="subtitle1" style={{ marginTop: 10 }}>
+              <DescriptionStyled>
+                {course.description}
+              </DescriptionStyled>
+            </Typography>
+            <Button variant="outlined" className={classes.resumeButton} style={{ marginTop: 10 }}>
+              Resume course
               </Button>
-            </CardContent>
-          </div>
-          <Hidden xsDown>
-            <CardMedia className={classes.cardMedia} image={course.thumbnail} />
-          </Hidden>
-        </Card>
+          </CardContent>
+        </div>
+        <Hidden xsDown>
+          <CardMedia className={classes.cardMedia} image={course.thumbnail} />
+        </Hidden>
+      </Card>
       {/* </CardActionArea> */}
     </Grid>
   );
