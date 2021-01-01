@@ -15,6 +15,7 @@ import Profile from "../Profile";
 import Home from "../Home";
 import UpdateProfile from "../UpdateProfile";
 import AddCourse from "../AddCourse";
+import VideoPlayer from "../VideoPlayer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,10 @@ const App = ({ location }) => {
               <Route exact path="/categories" >
                 <Categories />
               </Route>
-              <Route path="/courses/:id" >
+              <Route exact path="/courses/:id/:videoid" >
+                <VideoPlayer />
+              </Route>
+              <Route exact path="/courses/:id" >
                 <CourseDetail />
               </Route>
               <Route exact path="/profile">
