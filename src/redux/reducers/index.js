@@ -5,5 +5,5 @@
 */
 
 import { combineReducers } from "redux";
-
-export default combineReducers({  });
+import { loginReducer } from './login';
+export default combineReducers({ loginReducer });
