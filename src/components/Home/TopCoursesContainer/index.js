@@ -37,25 +37,44 @@ const TopCoursesContainer = (props) => {
     );
   });
 
-  return (
-    <Grid container direction="column" spacing={2}>
-      <Grid className={classes.wrapper} item container>
-        <Typography className={classes.lable}>{props.label}</Typography>
-        <Typography>
-          <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.showMore}>
-            Explore more
-          </Link>
-        </Typography>
-      </Grid>
+  if(props.newestCoursesLoading) {
+    return (
       <Grid container>
-        <Grid xs={1} />
-        <GridList cellHeight={380}  cols={5} xs={10} style={{marginLeft: 20}}>
-          {courseList}
-        </GridList>
-        <Grid xs={1} />
-      </Grid>  
-     </Grid>
-  )
+          <Grid item row xs={12}>
+              <Typography variant="h4">Loading....</Typography>
+          </Grid>
+      </Grid>
+    );
+    }
+    else if (props.newestCoursesErrMess) {
+        return (
+            <Grid container>
+                <Grid item row xs={12}>
+                    <Typography variant="h4">{props.newestCoursesErrMess}</Typography>
+                </Grid>
+            </Grid>
+        );
+    }
+    else
+      return (
+        <Grid container direction="column" spacing={2}>
+          <Grid className={classes.wrapper} item container>
+            <Typography className={classes.lable}>{props.label}</Typography>
+            <Typography>
+              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.showMore}>
+                Explore more
+              </Link>
+            </Typography>
+          </Grid>
+          <Grid container>
+            <Grid xs={1} />
+            <GridList cellHeight={380}  cols={5} xs={10} style={{marginLeft: 20}}>
+              {courseList}
+            </GridList>
+            <Grid xs={1} />
+          </Grid>  
+        </Grid>
+      )
 }
 
 export default TopCoursesContainer;

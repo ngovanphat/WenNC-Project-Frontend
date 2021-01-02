@@ -76,7 +76,7 @@ export default function CourseCard(props) {
             </TitleStyled>
             </Typography>
             <Typography className={classes.author} color="textSecondary">
-              {props.data.leturer}
+              {props.data.leturer.fullname}
           </Typography>
             <Grid item container spacing={0}>
               <Grid item>
