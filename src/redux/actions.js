@@ -9,7 +9,6 @@
 
 import * as actionTypes from './actionTypes';
 import { ApiURL } from '../helpers/baseUrl';
-import axios from 'axios';
 
 // this is what our action should look like which dispatches the "payload" to reducer
 const setLoginState = (loginData) => {
@@ -75,10 +74,54 @@ export const signup = (signupInput) => {
   });
 }
 
-  const setLoginLocal = async (loginData) => {
-    try {
-      await localStorage.setItem('loginData', JSON.stringify(loginData));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+const setLoginLocal = async (loginData) => {
+  try {
+    await localStorage.setItem('loginData', JSON.stringify(loginData));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+// ----------------- Course -----------------------
+
+
+export const fetchNewestCourses = () => (dispatch) => {
+  dispatch(newestCoursesLoading(true));
+
+  return fetch(ApiURL + '/courses/new')
+          .then(response => {
+              if(response.ok){
+                  console.log(response);
+                  return response;
+              }
+              else {
+                  var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                  error.response= response;
+                  throw error;
+              }
+          },
+              error => {
+                  var errmess = new Error(error.message);
+                  throw errmess;
+              }
+          )
+          .then(response => response.json())
+          .then(courses => dispatch(addNewestCourses(courses)))
+          .catch(error => dispatch(newestCoursesFailed(error.message)));
+}
+
+export const newestCoursesLoading = () => ({
+  type: actionTypes.NEWEST_COURSES_LOADING
+});
+
+export const newestCoursesFailed = (errmess) => ({
+  type: actionTypes.NEWEST_COURSES_FAIL,
+  payload: errmess
+});
+
+export const addNewestCourses = (courses) => ({
+  type: actionTypes.ADD_NEWEST_COURSES,
+  payload: courses
+});

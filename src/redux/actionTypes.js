@@ -6,3 +6,10 @@
 
 */
 export const SET_LOGIN_STATE = "SET_LOGIN_STATE";
+
+
+//-------------Course-------------------
+
+export const NEWEST_COURSES_LOADING = 'NEWEST_COURSES_LOADING';
+export const NEWEST_COURSES_FAIL = 'NEWEST_COURSES_FAIL';
+export const ADD_NEWEST_COURSES = 'ADD_NEWEST_COURSES';

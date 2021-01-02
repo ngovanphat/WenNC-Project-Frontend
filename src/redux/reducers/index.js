@@ -6,4 +6,5 @@
 
 import { combineReducers } from "redux";
 import { loginReducer } from './login';
-export default combineReducers({ loginReducer });
+import { newestCourses } from './newestCourses';
+export default combineReducers({ loginReducer, newestCourses });

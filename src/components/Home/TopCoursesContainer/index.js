@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Link, Hidden } from '@material-ui/core';
+import { Grid, Typography, Link, GridList, GridListTile } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import CourseCard from './CourseCard';
 
@@ -28,6 +28,15 @@ const TopCoursesContainer = (props) => {
   const classes = useStyles();
   const preventDefault = (event) => event.preventDefault();
 
+  console.log(props);
+  const courseList = props.newestCourses.map((course) => {
+    return (
+      <GridListTile key={course._id} cols={1}>
+        <CourseCard  data={course} />
+      </GridListTile>
+    );
+  });
+
   return (
     <Grid container direction="column" spacing={2}>
       <Grid className={classes.wrapper} item container>
@@ -38,69 +47,14 @@ const TopCoursesContainer = (props) => {
           </Link>
         </Typography>
       </Grid>
-      <Grid item container spacing={2} direction="row">
-        <Grid item xs={1} sm={2} md={1}></Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={5} sm={4}>
-            <CourseCard></CourseCard>
-          </Grid>
-        </Hidden>
-        <Grid item xs={1}></Grid>
-      </Grid>
-
-      <Grid item container spacing={2} direction="row">
-        <Grid item xs={1} sm={2} md={1}></Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Grid item xs={5} sm={4} md={2}>
-          <CourseCard></CourseCard>
-        </Grid>
-        <Hidden only={['md', 'lg']}>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-          <Grid item xs={1} sm={2} md={0}></Grid>
-        </Hidden>
-        <Hidden only={['sm', 'xs']}>
-          <Grid item xs={5} md={2}>
-            <CourseCard></CourseCard>
-          </Grid>
-        </Hidden>
-        <Grid item xs={1}></Grid>
-      </Grid>
-    </Grid>
+      <Grid container>
+        <Grid xs={1} />
+        <GridList cellHeight={380}  cols={5} xs={10} style={{marginLeft: 20}}>
+          {courseList}
+        </GridList>
+        <Grid xs={1} />
+      </Grid>  
+     </Grid>
   )
 }
 

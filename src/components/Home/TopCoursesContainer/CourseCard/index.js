@@ -52,38 +52,38 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CourseCard() {
+export default function CourseCard(props) {
   const classes = useStyles();
-
+  console.log(props.data);
   return (
 
     <Card className={classes.root}>
-      <Link underline='none' component={RouterLink} to='/courses/1753082'>
+      <Link underline='none' component={RouterLink} to='/courses/${course._id}'>
         <CardActionArea>
           <CardMedia
             square
             component="img"
             height="150"
-            image="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
+            image={props.data.thumnail}
           />
           <CardContent>
             <Typography className={classes.category}>
-              Mobile Development
+              {props.data.category}
           </Typography>
             <Typography className={classes.title}>
               <TitleStyled>
-                The Complete 2020 Flutter Development Bootcamp with Dart
+                {props.data.title}
             </TitleStyled>
             </Typography>
             <Typography className={classes.author} color="textSecondary">
-              Andrew Garfield
+              {props.data.leturer}
           </Typography>
             <Grid item container spacing={0}>
               <Grid item>
-                <Typography className={classes.rating}>5</Typography>
+                <Typography className={classes.rating}>{props.data.points}</Typography>
               </Grid>
               <Grid item>
-                <Rating value={5} size="small" readOnly style={{ marginTop: 1 }} />
+                <Rating value={props.data.points} size="small" readOnly style={{ marginTop: 1 }} />
               </Grid>
               <Grid item>
                 <Typography className={classes.ratingCount} color="textSecondary">(500,000)</Typography>
@@ -92,12 +92,12 @@ export default function CourseCard() {
             <Grid container style={{ marginTop: 5 }}>
               <Grid item>
                 <Typography className={classes.price}>
-                  $15.99
+                  ${props.data.price}
             </Typography>
               </Grid>
               <Grid item style={{ marginTop: 3, marginLeft: 10, textDecoration: 'line-through' }}>
                 <Typography>
-                  $100.99
+                  ${props.data.actualPrice}
                 </Typography>
               </Grid>
             </Grid>
