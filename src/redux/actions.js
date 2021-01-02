@@ -86,6 +86,7 @@ const setLoginLocal = async (loginData) => {
 
 // ----------------- Course -----------------------
 
+// ------------------- New Courses ---------------------------
 
 export const fetchNewestCourses = () => (dispatch) => {
   dispatch(newestCoursesLoading(true));
@@ -126,7 +127,46 @@ export const addNewestCourses = (courses) => ({
   payload: courses
 });
 
+// ---------------------- All Courses -----------------------
 
+export const fetchAllCourses = () => (dispatch) => {
+  dispatch(allCoursesLoading(true));
+
+  return fetch(ApiURL + '/courses/all')
+          .then(response => {
+              if(response.ok){
+                  console.log(response);
+                  return response;
+              }
+              else {
+                  var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                  error.response= response;
+                  throw error;
+              }
+          },
+              error => {
+                  var errmess = new Error(error.message);
+                  throw errmess;
+              }
+          )
+          .then(response => response.json())
+          .then(courses => dispatch(addAllCourses(courses)))
+          .catch(error => dispatch(allCoursesFailed(error.message)));
+}
+
+export const allCoursesLoading = () => ({
+  type: actionTypes.ALL_COURSES_LOADING
+});
+
+export const allCoursesFailed = (errmess) => ({
+  type: actionTypes.ALL_COURSES_FAIL,
+  payload: errmess
+});
+
+export const addAllCourses = (courses) => ({
+  type: actionTypes.ADD_ALL_COURSES,
+  payload: courses
+});
 
 //-------------- Category --------------------------
 
