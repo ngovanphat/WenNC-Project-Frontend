@@ -95,7 +95,7 @@ export default function CourseCard(props) {
                   ${props.data.price}
             </Typography>
               </Grid>
-              <Grid item style={{ marginTop: 3, marginLeft: 10, textDecoration: 'line-through' }}>
+              <Grid item style={{ marginTop: 3, marginLeft: 10, textDecoration: 'line-through', color: 'grey' }}>
                 <Typography>
                   ${props.data.actualPrice}
                 </Typography>

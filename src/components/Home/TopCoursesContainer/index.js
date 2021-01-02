@@ -5,8 +5,8 @@ import CourseCard from './CourseCard';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    width: '83%',
-    margin: '0 auto',
+    width: '100%',
+    margin: 20,
     alignItems: 'center',
     justify: 'center'
   },
@@ -58,20 +58,18 @@ const TopCoursesContainer = (props) => {
     else
       return (
         <Grid container direction="column" spacing={2}>
-          <Grid className={classes.wrapper} item container>
+          <Grid className={classes.wrapper} container>
             <Typography className={classes.lable}>{props.label}</Typography>
             <Typography>
-              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.showMore}>
+              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
                 Explore more
               </Link>
             </Typography>
           </Grid>
           <Grid container>
-            <Grid xs={1} />
             <GridList cellHeight={380}  cols={5} xs={10} style={{marginLeft: 20}}>
               {courseList}
             </GridList>
-            <Grid xs={1} />
           </Grid>  
         </Grid>
       )

@@ -42,21 +42,29 @@ class  Home extends Component {
           </Grid>
           <Grid />
         </Grid>
-        <Grid item container>
-          <TopCoursesContainer 
-          label={'NEWEST COURSE'} 
-          newestCourses={this.props.newestCourses.courses}
-          newestCoursesLoading={this.props.newestCourses.isLoading}
-          newestCoursesErrMess={this.props.newestCourses.errMess} 
-          />
+        <Grid container style={{width: '100%', display: 'flex', alignItems: 'center'}}>
+          <Grid xs={1} />
+          <Grid xs={10}>
+            <TopCoursesContainer 
+            label={'NEWEST COURSE'} 
+            newestCourses={this.props.newestCourses.courses}
+            newestCoursesLoading={this.props.newestCourses.isLoading}
+            newestCoursesErrMess={this.props.newestCourses.errMess} 
+            />
+          </Grid>
+          <Grid xs={1} />
         </Grid>
-        <Grid item container style={{ marginTop: 50 }}>
-          <TopCoursesContainer 
-          label={'MOST VIEWED COURSE'}
-          newestCourses={this.props.newestCourses.courses}
-          newestCoursesLoading={this.props.newestCourses.isLoading}
-          newestCoursesErrMess={this.props.newestCourses.errMess} 
-          />
+        <Grid container style={{width: '100%', display: 'flex', alignItems: 'center', marginTop: 40}}>
+          <Grid xs={1} />
+          <Grid xs={10}>
+            <TopCoursesContainer 
+            label={'MOST VIEWED COURSE'} 
+            newestCourses={this.props.newestCourses.courses}
+            newestCoursesLoading={this.props.newestCourses.isLoading}
+            newestCoursesErrMess={this.props.newestCourses.errMess} 
+            />
+          </Grid>
+          <Grid xs={1} />
         </Grid>
         <Divider style={{ marginTop: 40 }}></Divider>
         <Grid item container style={{ marginTop: 30 }}>
