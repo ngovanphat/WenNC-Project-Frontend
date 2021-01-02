@@ -8,16 +8,18 @@ import CarouselSlide from './Carousel'
 import TopCoursesContainer from './TopCoursesContainer';
 import TopCategoriesContainer from './TopCategoriesContainer';
 
-import { fetchNewestCourses } from '../../redux/actions'; 
+import { fetchNewestCourses, fetchHotCategories } from '../../redux/actions'; 
 
 const mapStateToProps = state => {
   return {
-      newestCourses: state.newestCourses
+      newestCourses: state.newestCourses,
+      hotCategories: state.hotCategories
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   fetchNewestCourses: () => {dispatch(fetchNewestCourses())},
+  fetchHotCategories: () => {dispatch(fetchHotCategories())}
 });
 
 
@@ -29,6 +31,7 @@ class  Home extends Component {
 
   componentDidMount() {
     this.props.fetchNewestCourses();
+    this.props.fetchHotCategories();
   }
 
   
@@ -67,8 +70,17 @@ class  Home extends Component {
           <Grid xs={1} />
         </Grid>
         <Divider style={{ marginTop: 40 }}></Divider>
-        <Grid item container style={{ marginTop: 30 }}>
-          <TopCategoriesContainer label={'TOP CATEGORIES'}></TopCategoriesContainer>
+        <Grid item container style={{ marginTop: 20 }}>
+          <Grid xs={1} />
+          <Grid xs={10}>
+          <TopCategoriesContainer 
+            label={'TOP CATEGORIES'} 
+            hotCategories={this.props.hotCategories.categories}
+            hotCategoriesLoading={this.props.hotCategories.isLoading}
+            hotCategoriesErrMess={this.props.hotCategories.errMess}
+          />
+          </Grid>
+          <Grid xs={1} />
         </Grid>
       </Grid>
     );

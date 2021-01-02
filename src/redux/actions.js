@@ -125,3 +125,48 @@ export const addNewestCourses = (courses) => ({
   type: actionTypes.ADD_NEWEST_COURSES,
   payload: courses
 });
+
+
+
+//-------------- Category --------------------------
+
+// -------------------Hot Category -------------------------
+
+export const fetchHotCategories = () => (dispatch) => {
+  dispatch(hotCategoriesLoading(true));
+
+  return fetch(ApiURL + '/categories/hot')
+          .then(response => {
+              if(response.ok){
+                  console.log(response);
+                  return response;
+              }
+              else {
+                  var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                  error.response= response;
+                  throw error;
+              }
+          },
+              error => {
+                  var errmess = new Error(error.message);
+                  throw errmess;
+              }
+          )
+          .then(response => response.json())
+          .then(categories => dispatch(addHotCategories(categories)))
+          .catch(error => dispatch(hotCategoriesFailed(error.message)));
+}
+
+export const hotCategoriesLoading = () => ({
+  type: actionTypes.HOT_CATEGORIES_LOADING
+});
+
+export const hotCategoriesFailed = (errmess) => ({
+  type: actionTypes.HOT_CATEGORIES_FAIL,
+  payload: errmess
+});
+
+export const addHotCategories = (categories) => ({
+  type: actionTypes.ADD_HOT_CATEGORIES,
+  payload: categories
+});

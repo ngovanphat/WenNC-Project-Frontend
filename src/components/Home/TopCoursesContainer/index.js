@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Typography, Link, GridList, GridListTile } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import CourseCard from './CourseCard';
@@ -26,9 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TopCoursesContainer = (props) => {
   const classes = useStyles();
-  const preventDefault = (event) => event.preventDefault();
 
-  console.log(props);
   const courseList = props.newestCourses.map((course) => {
     return (
       <GridListTile key={course._id} cols={1}>
@@ -61,7 +60,7 @@ const TopCoursesContainer = (props) => {
           <Grid className={classes.wrapper} container>
             <Typography className={classes.lable}>{props.label}</Typography>
             <Typography>
-              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
+              <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
                 Explore more
               </Link>
             </Typography>
