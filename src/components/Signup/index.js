@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -6,8 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
+
+import { useForm } from "react-hook-form";
+
+import {signup} from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,7 +33,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Signup() {
-  const classes = useStyles();
+  const classes = useStyles();  
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { register, handleSubmit, errors } = useForm();
+  let history = useHistory();
+  const onSubmit = async (data, e) =>  {
+    e.preventDefault();
+    const res = await signup({fullname, email, password});
+    if(res) history.push('/login')
+  };
+
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -37,31 +53,30 @@ function Signup() {
         <Typography component="h1" variant="h4" color="primary" >
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="fullName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="fullName"
+                label="Full Name"
                 autoFocus
+                value={fullname}
+                error={!!errors.fullname}
+                inputRef={register({
+                  required: true,
+                  maxLength: {
+                    value: 50
+                  }
+                })}
+                onInput={(e) => setFullname(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
+            <Typography variant="caption" style={{color: '#f00'}}>{errors.fullname && "Fullname is required and  maximum is 50 letters"}</Typography>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -71,8 +86,15 @@ function Signup() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                error={!!errors.email}
+                inputRef={register({
+                  pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                })}
+                onInput={(e) => setEmail(e.target.value)}
               />
-            </Grid>
+            </Grid>          
+            <Typography variant="caption" style={{color: '#f00'}}>{errors.email && "Invalid email address"}</Typography>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -83,8 +105,18 @@ function Signup() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                error={!!errors.password}
+                inputRef={register({
+                  required: true,
+                  minLength: {
+                    value: 8
+                  }
+                })}
+                onInput={(e) => setPassword(e.target.value)}
               />
             </Grid>
+            <Typography variant="caption" style={{color: '#f00'}}>{errors.password && "Password is required and at least 8 characters"}</Typography>
           </Grid>
           <Button
             type="submit"
