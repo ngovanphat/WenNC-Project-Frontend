@@ -31,47 +31,47 @@ const TopCategoriesContainer = (props) => {
   const categoryList = props.hotCategories.map((category) => {
     return (
       <GridListTile key={category._id} cols={2}>
-        <CategoryCard  data={category} />
+        <CategoryCard data={category} />
       </GridListTile>
     );
   });
 
-  if(props.hotCategoriesLoading) {
+  if (props.hotCategoriesLoading) {
     return (
       <Grid container>
-          <Grid item row xs={12}>
-              <Typography variant="h4">Loading....</Typography>
-          </Grid>
+        <Grid item row xs={12}>
+          <Typography variant="h4">Loading....</Typography>
+        </Grid>
       </Grid>
     );
-    }
-    else if (props.hotCategoriesErrMess) {
-        return (
-            <Grid container>
-                <Grid item row xs={12}>
-                    <Typography variant="h4">{props.hotCategoriesErrMess}</Typography>
-                </Grid>
-            </Grid>
-        );
-    }
-    else
-      return (
-        <Grid container direction="column" spacing={2}>
-          <Grid className={classes.wrapper} item container>
-            <Typography className={classes.lable}>{props.label}</Typography>
-            <Typography>
-              <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none',color: 'grey', marginRight: 20  }} className={classes.showMore}>
-                Explore more
+  }
+  else if (props.hotCategoriesErrMess) {
+    return (
+      <Grid container>
+        <Grid item row xs={12}>
+          <Typography variant="h4">{props.hotCategoriesErrMess}</Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+  else
+    return (
+      <Grid container direction="column" spacing={2}>
+        <Grid className={classes.wrapper} item container>
+          <Typography className={classes.lable}>{props.label}</Typography>
+          <Typography>
+            <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
+              Explore more
               </Link>
-            </Typography>
-          </Grid>
-          <Grid container>
-            <GridList cellHeight={380}  cols={5} xs={10} style={{marginLeft: 20}}>
-              {categoryList}
-            </GridList>
-          </Grid>  
-          </Grid>
-      );
+          </Typography>
+        </Grid>
+        <Grid container>
+          <GridList cellHeight={380} cols={5} xs={10} style={{ marginLeft: 20 }}>
+            {categoryList}
+          </GridList>
+        </Grid>
+      </Grid>
+    );
 }
 
 export default TopCategoriesContainer;

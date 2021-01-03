@@ -20,16 +20,13 @@ const mapDispatchToProps = (dispatch) => ({
   fetchAllCategories: () => {dispatch(fetchAllCategories())}
 });
 
-
 class Categories extends Component {
-
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchAllCourses();
     this.props.fetchAllCategories();
   }
 
-
-  render(){
+  render() {
     return (
       <Grid>
         <Grid item container>
@@ -53,19 +50,15 @@ class Categories extends Component {
           <Grid item xs={4} style={{ marginBottom: 20 }}>
             <Typography variant="h5" style={{ fontWeight: '700' }}>All development courses</Typography>
           </Grid>
-          <CourseList 
-                courses={this.props.allCourses.courses}
-                isLoading={this.props.allCourses.isLoading}
-                errMess={this.props.allCourses.errMess}
+          <CourseList
+            courses={this.props.allCourses.courses}
+            isLoading={this.props.allCourses.isLoading}
+            errMess={this.props.allCourses.errMess}
           />
         </Grid>
       </Grid>
     );
   }
-
-
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

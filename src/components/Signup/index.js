@@ -8,10 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { NavLink, useHistory } from 'react-router-dom';
 
-
 import { useForm } from "react-hook-form";
 
-import {signup} from '../../redux/actions';
+import { signup } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,16 +32,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Signup() {
-  const classes = useStyles();  
+  const classes = useStyles();
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { register, handleSubmit, errors } = useForm();
   let history = useHistory();
-  const onSubmit = async (data, e) =>  {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
-    const res = await signup({fullname, email, password});
-    if(res) history.push('/login')
+    const res = await signup({ fullname, email, password });
+    if (res) history.push('/login')
   };
 
 
@@ -76,7 +75,7 @@ function Signup() {
                 onInput={(e) => setFullname(e.target.value)}
               />
             </Grid>
-            <Typography variant="caption" style={{color: '#f00'}}>{errors.fullname && "Fullname is required and  maximum is 50 letters"}</Typography>
+            <Typography variant="caption" style={{ color: '#f00' }}>{errors.fullname && "Fullname is required and  maximum is 50 letters"}</Typography>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -93,8 +92,8 @@ function Signup() {
                 })}
                 onInput={(e) => setEmail(e.target.value)}
               />
-            </Grid>          
-            <Typography variant="caption" style={{color: '#f00'}}>{errors.email && "Invalid email address"}</Typography>
+            </Grid>
+            <Typography variant="caption" style={{ color: '#f00' }}>{errors.email && "Invalid email address"}</Typography>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -116,7 +115,7 @@ function Signup() {
                 onInput={(e) => setPassword(e.target.value)}
               />
             </Grid>
-            <Typography variant="caption" style={{color: '#f00'}}>{errors.password && "Password is required and at least 8 characters"}</Typography>
+            <Typography variant="caption" style={{ color: '#f00' }}>{errors.password && "Password is required and at least 8 characters"}</Typography>
           </Grid>
           <Button
             type="submit"
