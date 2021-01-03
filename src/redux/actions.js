@@ -3,9 +3,8 @@
     This file create a action to call reducer
     for each reducer create a group of action: User, Course, Category, Feedback, Video, Filter, Search
 
-    
-
 */
+
 import * as actionTypes from './actionTypes';
 import { ApiURL } from '../helpers/baseUrl';
 
@@ -15,6 +14,14 @@ const setLoginState = (loginData) => {
     type: actionTypes.SET_LOGIN_STATE,
     payload: loginData,
   };
+};
+
+const setLoginLocal = async (loginData) => {
+  try {
+    await localStorage.setItem('loginData', JSON.stringify(loginData));
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const login = (loginInput) => {
@@ -43,12 +50,4 @@ export const login = (loginInput) => {
           console.log(err);
         });
     };
-  };
-
-  const setLoginLocal = async (loginData) => {
-    try {
-      await localStorage.setItem('loginData', JSON.stringify(loginData));
-    } catch (err) {
-      console.log(err);
-    }
   };

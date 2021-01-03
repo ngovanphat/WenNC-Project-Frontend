@@ -3,9 +3,6 @@
     Root reducer file is Index.js file of Reducers folder
 */
 
-
-
-
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers";
 import thunk from 'redux-thunk';

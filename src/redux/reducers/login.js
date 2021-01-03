@@ -7,7 +7,6 @@ const initialState = {
     refreshToken: ''
 };
 
-
 export const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_LOGIN_STATE:
