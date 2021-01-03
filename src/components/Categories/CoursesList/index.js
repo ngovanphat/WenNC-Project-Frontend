@@ -3,7 +3,7 @@ import { List, Grid, Typography, ListItem, Hidden, Collapse, FormGroup, ListItem
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { Rating } from '@material-ui/lab';
 
-import CourseTile from '../CourseTile';
+import CourseTile from './CourseTile';
 
 function CourseList(props) {
 

@@ -80,6 +80,11 @@ export const signup = (signupInput) => {
   });
 }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 82af2b61fa9360a419adb11aca3f5ffe6c31314a
 // ----------------- Course -----------------------
 
 // ------------------- New Courses ---------------------------
@@ -245,5 +250,45 @@ export const hotCategoriesFailed = (errmess) => ({
 
 export const addHotCategories = (categories) => ({
   type: actionTypes.ADD_HOT_CATEGORIES,
+  payload: categories
+});
+
+// ------------------ All Categories ------------------------
+
+export const fetchAllCategories = () => (dispatch) => {
+  dispatch(allCategoriesLoading(true));
+
+  return fetch(ApiURL + '/categories')
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(categories => dispatch(addAllCategories(categories)))
+    .catch(error => dispatch(hotCategoriesFailed(error.message)));
+}
+
+export const allCategoriesLoading = () => ({
+  type: actionTypes.ALL_CATEGORIES_LOADING
+});
+
+export const allCategoriesFailed = (errmess) => ({
+  type: actionTypes.ALL_CATEGORIES_FAIL,
+  payload: errmess
+});
+
+export const addAllCategories = (categories) => ({
+  type: actionTypes.ADD_ALL_CATEGORIES,
   payload: categories
 });

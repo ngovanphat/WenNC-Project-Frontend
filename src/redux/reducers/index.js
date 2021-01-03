@@ -10,4 +10,5 @@ import { newestCourses } from './newestCourses';
 import { mostViewedCourses } from './mostViewedCourses';
 import { allCourses } from './allCourses';
 import { hotCategories } from './hotCategories';
-export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, hotCategories });
+import { allCategories } from './allCategories';
+export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses , hotCategories, allCategories });

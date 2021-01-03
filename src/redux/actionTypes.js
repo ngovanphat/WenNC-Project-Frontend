@@ -37,3 +37,7 @@ export const HOT_CATEGORIES_FAIL = 'HOT_CATEGORIES_FAIL';
 export const ADD_HOT_CATEGORIES = 'ADD_HOT_CATEGORIES';
 
 //------------------ All Categories -----------------
+
+export const ALL_CATEGORIES_LOADING = 'ALL_CATEGORIES_LOADING';
+export const ALL_CATEGORIES_FAIL = 'ALL_CATEGORIES_FAIL';
+export const ADD_ALL_CATEGORIES = 'ADD_ALL_CATEGORIES';

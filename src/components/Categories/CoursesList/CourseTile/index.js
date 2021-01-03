@@ -18,7 +18,7 @@ function CourseTile(props) {
           <List disablePadding>
             <ListItemText primary={<Typography variant="h6" style={{ fontWeight: 'bold' }}>{props.title}</Typography>} />
             <ListItemText primary={<Typography variant="subtitle" style={{ fontSize: 16 }}>{props.description}</Typography>} />
-            <ListItemText primary={<Typography variant="subtitle" style={{ fontSize: 14 }} >{props.lecturer}</Typography>} />
+            <ListItemText primary={<Typography variant="subtitle" style={{ fontSize: 14 }} >{props.lecturer.fullname}</Typography>} />
             <ListItemText primary={
               <Container style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} disableGutters>
                 <Typography variant="subtitle1" style={{ color: '#ffd700', fontWeight: 'bold', textAlign: 'center' }}>{props.rating}</Typography>
