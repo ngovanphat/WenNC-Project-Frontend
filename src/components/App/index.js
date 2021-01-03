@@ -8,6 +8,7 @@ import Footer from "../Footer";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AdminLayout from "../../layouts/AdminLayout";
+
 import Users from "../Admin/Users";
 import Categories from "../Categories";
 import CourseDetail from "../CourseDetail";

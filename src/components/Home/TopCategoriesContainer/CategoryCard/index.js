@@ -17,7 +17,7 @@ const TitleStyled = styled.div`
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 245,
+    maxWidth: 300,
     minHeight: 350
   },
   title: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CourseCard() {
+export default function CourseCard(props) {
   const classes = useStyles();
 
   return (
@@ -36,14 +36,14 @@ export default function CourseCard() {
         <CardMedia
           square
           component="img"
-          alt="Contemplative Reptile"
+          alt={props.data.title}
           height="300"
-          image="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
+          image="https://c8.alamy.com/comp/PF46Y1/desktop-source-code-and-technology-background-developer-or-programer-with-coding-and-programming-wallpaper-by-computer-language-and-source-code-com-PF46Y1.jpg"
         />
         <CardContent>
           <Typography className={classes.title}>
             <TitleStyled>
-              Web Development
+              {props.data.title}
             </TitleStyled>
           </Typography>
         </CardContent>

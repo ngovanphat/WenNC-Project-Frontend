@@ -1,10 +1,10 @@
 import * as actionTypes from '../actionTypes';
 
 const initialState = {
-    isLoggedIn: false,
-    userId: '',
-    accessToken: '',
-    refreshToken: ''
+  isLoggedIn: false,
+  userId: '',
+  accessToken: '',
+  refreshToken: ''
 };
 
 export const loginReducer = (state = initialState, action) => {
