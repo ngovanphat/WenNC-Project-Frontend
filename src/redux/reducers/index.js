@@ -9,4 +9,5 @@ import { loginReducer } from './login';
 import { newestCourses } from './newestCourses';
 import { allCourses } from './allCourses';
 import { hotCategories } from './hotCategories';
-export default combineReducers({ loginReducer, newestCourses, allCourses , hotCategories });
+import { allCategories } from './allCategories';
+export default combineReducers({ loginReducer, newestCourses, allCourses , hotCategories, allCategories });

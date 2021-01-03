@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Typography, Hidden, Card, CardHeader } from '@material-ui/core';
+import { Grid, Typography} from '@material-ui/core';
 
 import CourseList from './CoursesList';
+import CategoriesList from './CategoriesList';
 
 
-import { fetchAllCourses } from '../../redux/actions'; 
+import { fetchAllCourses, fetchAllCategories } from '../../redux/actions'; 
 
 const mapStateToProps = state => {
   return {
-      allCourses: state.allCourses
+      allCourses: state.allCourses,
+      allCategories: state.allCategories
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAllCourses: () => {dispatch(fetchAllCourses())}
+  fetchAllCourses: () => {dispatch(fetchAllCourses())},
+  fetchAllCategories: () => {dispatch(fetchAllCategories())}
 });
 
 
@@ -22,6 +25,7 @@ class Categories extends Component {
 
   componentDidMount(){
     this.props.fetchAllCourses();
+    this.props.fetchAllCategories();
   }
 
 
@@ -36,95 +40,16 @@ class Categories extends Component {
           <Grid />
         </Grid>
         <Grid item container>
-          <Grid item xs={4} style={{ marginLeft: 30, marginTop: 50 }}>
+          <Grid item xs={4} style={{ marginLeft: 20, marginTop: 50 }}>
             <Typography variant="h5" style={{ fontWeight: '700' }}>All topics</Typography>
           </Grid>
-          <Grid item container spacing={2} direction="row" style={{ marginTop: 5, marginLeft: 20 }}>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Hidden only={['md', 'lg']}>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-            </Hidden>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Hidden only={['md', 'lg']}>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-            </Hidden>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Hidden only={['md', 'lg']}>
-              <Grid item xs={5} sm={4}>
-                <Card variant="outlined" >
-                  <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-                </Card >
-              </Grid>
-            </Hidden>
-          </Grid>
-          <Grid item container spacing={2} direction="row" style={{ marginTop: 5, marginLeft: 20 }}>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Hidden only={['md', 'lg']}>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-            </Hidden>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Hidden only={['md', 'lg']}>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-              <Grid item xs={1} sm={2} md={0}></Grid>
-            </Hidden>
-            <Grid item xs={5} sm={4} md={2}>
-              <Card variant="outlined" >
-                <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-              </Card >
-            </Grid>
-            <Hidden only={['md', 'lg']}>
-              <Grid item xs={5} sm={4}>
-                <Card variant="outlined" >
-                  <CardHeader title="Web Development" style={{ textAlign: 'center', fontWeight: '700', color: '#0f7c90' }} disableTypography />
-                </Card >
-              </Grid>
-            </Hidden>
-          </Grid>
+          <CategoriesList 
+                categories={this.props.allCategories.categories}
+                isLoading={this.props.allCategories.isLoading}
+                errMess={this.props.allCategories.errMess}
+          /> 
         </Grid>
-        <Grid item container style={{ marginTop: 50, marginLeft: 20 }}>
+        <Grid  container style={{ marginTop: 50, marginLeft: 20 }}>
           <Grid item xs={4} style={{ marginBottom: 20 }}>
             <Typography variant="h5" style={{ fontWeight: '700' }}>All development courses</Typography>
           </Grid>
