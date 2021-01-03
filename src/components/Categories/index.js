@@ -4,28 +4,24 @@ import { Grid, Typography, Hidden, Card, CardHeader } from '@material-ui/core';
 
 import CourseList from './CoursesList';
 
-
-import { fetchAllCourses } from '../../redux/actions'; 
+import { fetchAllCourses } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
-      allCourses: state.allCourses
+    allCourses: state.allCourses
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAllCourses: () => {dispatch(fetchAllCourses())}
+  fetchAllCourses: () => { dispatch(fetchAllCourses()) }
 });
 
-
 class Categories extends Component {
-
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchAllCourses();
   }
 
-
-  render(){
+  render() {
     return (
       <Grid>
         <Grid item container>
@@ -128,19 +124,15 @@ class Categories extends Component {
           <Grid item xs={4} style={{ marginBottom: 20 }}>
             <Typography variant="h5" style={{ fontWeight: '700' }}>All development courses</Typography>
           </Grid>
-          <CourseList 
-                courses={this.props.allCourses.courses}
-                isLoading={this.props.allCourses.isLoading}
-                errMess={this.props.allCourses.errMess}
+          <CourseList
+            courses={this.props.allCourses.courses}
+            isLoading={this.props.allCourses.isLoading}
+            errMess={this.props.allCourses.errMess}
           />
         </Grid>
       </Grid>
     );
   }
-
-
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

@@ -34,11 +34,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const { register, handleSubmit, errors } = useForm();
 
-  const dispatch =  useDispatch();
+  const dispatch = useDispatch();
 
-  const onSubmit = async (data, e) =>  {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
-    await dispatch(login({'email': email, 'password': password }));
+    await dispatch(login({ 'email': email, 'password': password }));
   };
 
   return (
@@ -66,7 +66,7 @@ function Login() {
             })}
             onInput={(e) => setEmail(e.target.value)}
           />
-          <Typography variant="caption" style={{color: '#f00'}}>{errors.email && "Invalid email address"}</Typography>
+          <Typography variant="caption" style={{ color: '#f00' }}>{errors.email && "Invalid email address"}</Typography>
           <TextField
             variant="outlined"
             margin="normal"
@@ -87,7 +87,7 @@ function Login() {
             })}
             onInput={(e) => setPassword(e.target.value)}
           />
-          <Typography variant="caption" style={{color: '#f00'}}>{errors.password && "Password is required and at least 8 characters"}</Typography>
+          <Typography variant="caption" style={{ color: '#f00' }}>{errors.password && "Password is required and at least 8 characters"}</Typography>
           <Button
             type="submit"
             fullWidth

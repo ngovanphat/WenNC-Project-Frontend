@@ -28,50 +28,50 @@ const useStyles = makeStyles((theme) => ({
 const TopCoursesContainer = (props) => {
   const classes = useStyles();
 
-  const courseList = props.newestCourses.map((course) => {
+  const courseList = props.courses.map((course) => {
     return (
       <GridListTile key={course._id} cols={1}>
-        <CourseCard  data={course} />
+        <CourseCard data={course} />
       </GridListTile>
     );
   });
 
-  if(props.newestCoursesLoading) {
+  if (props.coursesLoading) {
     return (
       <Grid container>
-          <Grid item row xs={12}>
-              <Typography variant="h4">Loading....</Typography>
-          </Grid>
+        <Grid item row xs={12}>
+          <Typography variant="h4">Loading....</Typography>
+        </Grid>
       </Grid>
     );
-    }
-    else if (props.newestCoursesErrMess) {
-        return (
-            <Grid container>
-                <Grid item row xs={12}>
-                    <Typography variant="h4">{props.newestCoursesErrMess}</Typography>
-                </Grid>
-            </Grid>
-        );
-    }
-    else
-      return (
-        <Grid container direction="column" spacing={2}>
-          <Grid className={classes.wrapper} container>
-            <Typography className={classes.lable}>{props.label}</Typography>
-            <Typography>
-              <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
-                Explore more
-              </Link>
-            </Typography>
-          </Grid>
-          <Grid container>
-            <GridList cellHeight={380}  cols={5} xs={10} style={{marginLeft: 20}}>
-              {courseList}
-            </GridList>
-          </Grid>  
+  }
+  else if (props.coursesErrMess) {
+    return (
+      <Grid container>
+        <Grid item row xs={12}>
+          <Typography variant="h4">{props.coursesErrMess}</Typography>
         </Grid>
-      )
+      </Grid>
+    );
+  }
+  else
+    return (
+      <Grid container direction="column" spacing={2}>
+        <Grid className={classes.wrapper} container>
+          <Typography className={classes.lable}>{props.label}</Typography>
+          <Typography>
+            <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
+              Explore more
+              </Link>
+          </Typography>
+        </Grid>
+        <Grid container>
+          <GridList cellHeight={380} cols={5} xs={10} style={{ marginLeft: 20 }}>
+            {courseList}
+          </GridList>
+        </Grid>
+      </Grid>
+    )
 }
 
 export default TopCoursesContainer;

@@ -80,14 +80,6 @@ export const signup = (signupInput) => {
   });
 }
 
-const setLoginLocal = async (loginData) => {
-  try {
-    await localStorage.setItem('loginData', JSON.stringify(loginData));
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 // ----------------- Course -----------------------
 
 // ------------------- New Courses ---------------------------
@@ -128,6 +120,47 @@ export const newestCoursesFailed = (errmess) => ({
 
 export const addNewestCourses = (courses) => ({
   type: actionTypes.ADD_NEWEST_COURSES,
+  payload: courses
+});
+
+// ------------------- Most Viewed Courses ---------------------------
+
+export const fetchMostViewedCourses = () => (dispatch) => {
+  dispatch(mostViewedCoursesLoading(true));
+
+  return fetch(ApiURL + '/courses/topView')
+    .then(response => {
+      if (response.ok) {
+        console.log(response);
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(courses => dispatch(addMostViewedCourses(courses)))
+    .catch(error => dispatch(mostViewedCoursesFailed(error.message)));
+}
+
+export const mostViewedCoursesLoading = () => ({
+  type: actionTypes.MOST_VIEWED_COURSES_LOADING
+});
+
+export const mostViewedCoursesFailed = (errmess) => ({
+  type: actionTypes.MOST_VIEWED_COURSES_FAIL,
+  payload: errmess
+});
+
+export const addMostViewedCourses = (courses) => ({
+  type: actionTypes.ADD_MOST_VIEWED_COURSES,
   payload: courses
 });
 

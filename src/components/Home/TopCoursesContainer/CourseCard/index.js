@@ -69,15 +69,15 @@ export default function CourseCard(props) {
           <CardContent>
             <Typography className={classes.category}>
               {props.data.category}
-          </Typography>
+            </Typography>
             <Typography className={classes.title}>
               <TitleStyled>
                 {props.data.title}
-            </TitleStyled>
+              </TitleStyled>
             </Typography>
             <Typography className={classes.author} color="textSecondary">
               {props.data.leturer.fullname}
-          </Typography>
+            </Typography>
             <Grid item container spacing={0}>
               <Grid item>
                 <Typography className={classes.rating}>{props.data.points}</Typography>
@@ -93,7 +93,7 @@ export default function CourseCard(props) {
               <Grid item>
                 <Typography className={classes.price}>
                   ${props.data.price}
-            </Typography>
+                </Typography>
               </Grid>
               <Grid item style={{ marginTop: 3, marginLeft: 10, textDecoration: 'line-through', color: 'grey' }}>
                 <Typography>
