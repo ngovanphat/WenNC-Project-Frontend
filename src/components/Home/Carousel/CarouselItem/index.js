@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     height: 400,
     borderRadius: 0,
-    background: 'linear-gradient(to right, black, gray)'
+    background: 'linear-gradient(to right, #006699, black)'
   },
   category: {
     color: 'white',
     fontWeight: 700,
-    fontSize: 14,
+    fontSize: 18,
   },
   title: {
     color: 'white',
@@ -38,15 +38,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 7,
   },
   enrollButton: {
-    width: 150,
-    height: 50,
+    width: 160,
+    height: 60,
     background: 'white',
-    color: 'black',
     fontWeight: 600,
+    fontSize: 18,
     textTransform: 'none',
-    '&:hover': {
+    borderColor: "#005580",
+    color: '#005580',
+    "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.8),
-    }
+      color: '#005580'
+    },
   },
   card: {
     height: 200,
@@ -71,21 +74,21 @@ const CarouselItem = (props) => {
           <Grid item style={{ marginTop: 55 }}>
             <Typography>
               <Link href="#" onClick={preventDefault} className={classes.category}>
-                Mobile Development
+                {props.item.category}
               </Link>
             </Typography>
           </Grid>
-          <Grid item style={{ marginTop: 35 }}>
+          <Grid item style={{ marginTop: 30 }}>
             <Typography className={classes.title}>
-              The Complete 2020 Flutter Development Bootcamp with Dart
+              {props.item.title}
             </Typography>
           </Grid>
           <Grid item container spacing={1}>
             <Grid item>
-              <Rating value={5} size="small" readOnly style={{ marginTop: 1 }} />
+              <Rating value={props.item.points} size="small" readOnly style={{ marginTop: 1 }} />
             </Grid>
             <Grid item>
-              <Typography className={classes.rating}>5</Typography>
+              <Typography className={classes.rating}>{props.item.points}</Typography>
             </Grid>
             <Grid item>
               <Typography className={classes.ratingCount}>500,000 ratings</Typography>
@@ -99,7 +102,7 @@ const CarouselItem = (props) => {
               <Grid item>
                 <Typography variant="h5">
                   <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.ratingCount}>
-                    Andrew Garfield
+                    {props.item.leturer.fullname}
                   </Link>
                 </Typography>
               </Grid>
@@ -113,18 +116,18 @@ const CarouselItem = (props) => {
           <Grid item xs={3} style={{ marginTop: 55, marginLeft: 55 }}>
             <Card style={{ width: 300 }}>
               <Card className={classes.card}>
-                <Image imageStyle={{ height: 200 }} src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" />
+                <Image imageStyle={{ height: 200 }} src={props.item.thumnail} />
               </Card>
               <CardContent>
-                <Grid container style={{ marginLeft: 50, marginTop: 5 }}>
+                <Grid container style={{ marginLeft: 60, marginTop: 10 }}>
                   <Grid item>
                     <Typography className={classes.cardContent}>
-                      $15.99
+                      ${props.item.price}
                     </Typography>
                   </Grid>
                   <Grid item style={{ marginTop: 7, marginLeft: 10, textDecoration: 'line-through' }}>
                     <Typography>
-                      $100.99
+                      ${props.item.actualPrice}
                     </Typography>
                   </Grid>
                 </Grid>
