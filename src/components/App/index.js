@@ -71,14 +71,12 @@ const App = ({ location }) => {
               <Route exact path="/signup">
                 <Signup />
               </Route>
-              <Route exact path="/categories" >
-                <Categories />
-              </Route>
+              <Route exact path="/courses/:id" render={({ match, location }) => <CourseDetail match={match} />} />
               <Route exact path="/courses/:id/:videoid" >
                 <VideoPlayer />
               </Route>
-              <Route exact path="/courses/:id" >
-                <CourseDetail />
+              <Route exact path="/categories" >
+                <Categories />
               </Route>
               <Route exact path="/profile">
                 <Profile />

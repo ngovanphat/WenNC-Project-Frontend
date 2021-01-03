@@ -34,6 +34,7 @@ function CourseList(props) {
     return (
       <CourseTile
         key={course._id}
+        _id={course._id}
         imageUrl={course.thumnail}
         title={course.title}
         description={course.shortDescription}

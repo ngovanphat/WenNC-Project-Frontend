@@ -54,11 +54,12 @@ const useStyles = makeStyles({
 
 export default function CourseCard(props) {
   const classes = useStyles();
-  console.log(props.data);
+ 
+  const path = "/courses/"+props.data._id;
   return (
 
     <Card className={classes.root}>
-      <Link underline='none' component={RouterLink} to='/courses/${course._id}'>
+      <Link underline='none' component={RouterLink} to={path}>
         <CardActionArea>
           <CardMedia
             square

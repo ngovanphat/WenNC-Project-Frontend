@@ -80,11 +80,8 @@ export const signup = (signupInput) => {
   });
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 82af2b61fa9360a419adb11aca3f5ffe6c31314a
 // ----------------- Course -----------------------
 
 // ------------------- New Courses ---------------------------
@@ -127,6 +124,93 @@ export const addNewestCourses = (courses) => ({
   type: actionTypes.ADD_NEWEST_COURSES,
   payload: courses
 });
+
+
+// ------------------- Single Course -------------------------------
+
+export const fetchSingleCourse = (id) => (dispatch) => {
+  dispatch(singleCourseLoading(true));
+
+  return fetch(ApiURL + `/courses/${id}`)
+    .then(response => {
+      if (response.ok) {
+        console.log(response);
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(course => {
+      dispatch(addSingleCourse(course));
+      dispatch(fetchSameCourses(course.category));
+    })
+    .catch(error => dispatch(singleCourseFailed(error.message)));
+}
+
+export const singleCourseLoading = () => ({
+  type: actionTypes.SINGLE_COURSE_LOADING
+});
+
+export const singleCourseFailed = (errmess) => ({
+  type: actionTypes.SINGLE_COURSE_FAIL,
+  payload: errmess
+});
+
+export const addSingleCourse = (course) => ({
+  type: actionTypes.ADD_SINGLE_COURSE,
+  payload: course
+});
+
+//--------------------- Same Category Course --------------------
+
+export const fetchSameCourses = (category) => (dispatch) => {
+  dispatch(sameCoursesLoading(true));
+
+  return fetch(ApiURL + `/courses/byCategory/${category}`)
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(courses => dispatch(addSameCourses(courses)))
+    .catch(error => dispatch(sameCoursesFailed(error.message)));
+}
+
+export const sameCoursesLoading = () => ({
+  type: actionTypes.SAME_COURSES_LOADING
+});
+
+export const sameCoursesFailed = (errmess) => ({
+  type: actionTypes.SAME_COURSES_FAIL,
+  payload: errmess
+});
+
+export const addSameCourses = (course) => ({
+  type: actionTypes.ADD_SAME_COURSES,
+  payload: course
+});
+
+
 
 // ------------------- Most Viewed Courses ---------------------------
 

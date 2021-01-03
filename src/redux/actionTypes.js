@@ -28,6 +28,19 @@ export const ALL_COURSES_LOADING = 'ALL_COURSES_LOADING';
 export const ALL_COURSES_FAIL = 'ALL_COURSES_FAIL';
 export const ADD_ALL_COURSES = 'ADD_ALL_COURSES';
 
+//---------------------- Single Course ------------------
+
+export const SINGLE_COURSE_LOADING = 'SINGLE_COURSE_LOADING';
+export const SINGLE_COURSE_FAIL = 'SINGLE_COURSE_FAIL';
+export const ADD_SINGLE_COURSE = 'ADD_SINGLE_COURSE';
+
+//---------------------- Same Category Course ------------------
+
+export const SAME_COURSES_LOADING = 'SAME_COURSES_LOADING';
+export const SAME_COURSES_FAIL = 'SAME_COURSES_FAIL';
+export const ADD_SAME_COURSES = 'ADD_SAME_COURSES';
+
+
 //---------------Category----------------------
 
 // ------------- Hot Category ------------------
