@@ -11,7 +11,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 import VideoTile from './VideoTile';
-import CommentTile from './CommentTile';
+import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
 import { fetchSingleCourse } from '../../redux/actions';
@@ -20,7 +20,8 @@ import { fetchSingleCourse } from '../../redux/actions';
 const mapStateToProps = state => {
   return {
     singleCourse: state.singleCourse,
-    sameCourses: state.sameCourses
+    sameCourses: state.sameCourses,
+    allComments: state.allComments
   };
 };
 
@@ -41,6 +42,13 @@ class CourseDetail extends Component {
     }
   }
 
+  countRatingStar(comments, value){
+    let sum=0;
+    comments.forEach(comment => {
+      if(comment.rating === value)sum=sum+1;
+    });
+    return sum;
+  }
 
   render() {
     const course = this.props.singleCourse.course;
@@ -265,41 +273,41 @@ class CourseDetail extends Component {
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={54} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,5)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={5} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>54%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,5)*100/this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={37} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,4)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={4} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>37%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,4)*100/this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={8} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,3)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={3} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>8%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,3)*100/this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={1} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,2)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={2} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>1%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,2)*100/this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={0.5} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,1)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={1} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{"<1%"}</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,1)*100/this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -313,53 +321,13 @@ class CourseDetail extends Component {
                 }}
               >Reviews</Typography>
               <Grid container style={{ marginTop: 20 }}>
-                <List>
-                  <ListItem>
-                    <CommentTile userName="Debora Durek"
-                      avatarUrl="https://img-b.udemycdn.com/user/50x50/64820798_6947.jpg?secure=0yyB6eqg2Z3_6L-daI2qew%3D%3D%2C1608958969"
-                      last_updated="a month ago"
-                      comment="This course is fantastic! I learned so much so far, and I knew nothing about any programming languages. Thanks Jose!!"
-                      rating={5}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <CommentTile userName="Debora Durek"
-                      avatarUrl="https://img-b.udemycdn.com/user/50x50/64820798_6947.jpg?secure=0yyB6eqg2Z3_6L-daI2qew%3D%3D%2C1608958969"
-                      last_updated="a month ago"
-                      comment="This course is fantastic! I learned so much so far, and I knew nothing about any programming languages. Thanks Jose!!"
-                      rating={5}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <CommentTile userName="Debora Durek"
-                      avatarUrl="https://img-b.udemycdn.com/user/50x50/64820798_6947.jpg?secure=0yyB6eqg2Z3_6L-daI2qew%3D%3D%2C1608958969"
-                      last_updated="a month ago"
-                      comment="This course is fantastic! I learned so much so far, and I knew nothing about any programming languages. Thanks Jose!!"
-                      rating={5}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <CommentTile userName="Debora Durek"
-                      avatarUrl="https://img-b.udemycdn.com/user/50x50/64820798_6947.jpg?secure=0yyB6eqg2Z3_6L-daI2qew%3D%3D%2C1608958969"
-                      last_updated="a month ago"
-                      comment="This course is fantastic! I learned so much so far, and I knew nothing about any programming languages. Thanks Jose!!"
-                      rating={5}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <CommentTile userName="Debora Durek"
-                      avatarUrl="https://img-b.udemycdn.com/user/50x50/64820798_6947.jpg?secure=0yyB6eqg2Z3_6L-daI2qew%3D%3D%2C1608958969"
-                      last_updated="a month ago"
-                      comment="This course is fantastic! I learned so much so far, and I knew nothing about any programming languages. Thanks Jose!!"
-                      rating={5}
-                    />
-                  </ListItem>
-                </List>
-                <Grid container style={{ display: 'flex', alignContent: 'flex-end' }}>
-                  <Grid xs={6} />
-                  <Grid xs={6} >
-                    <Pagination count={10} page={1} />
-                  </Grid>
+                <CommentList 
+                  comments={this.props.allComments.comments}
+                  isLoading={this.props.allComments.isLoading}
+                  errMess={this.props.allComments.errMess}
+                />
+                <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Pagination count={this.props.allComments.totalPages} page={1} />
                 </Grid>
               </Grid>
               {/*------------------More Courses---------------------*/}

@@ -152,6 +152,7 @@ export const fetchSingleCourse = (id) => (dispatch) => {
     .then(course => {
       dispatch(addSingleCourse(course));
       dispatch(fetchSameCourses(course.category));
+      dispatch(fetchAllComments(course._id));
     })
     .catch(error => dispatch(singleCourseFailed(error.message)));
 }
@@ -360,7 +361,7 @@ export const fetchAllCategories = () => (dispatch) => {
     )
     .then(response => response.json())
     .then(categories => dispatch(addAllCategories(categories)))
-    .catch(error => dispatch(hotCategoriesFailed(error.message)));
+    .catch(error => dispatch(allCategoriesFailed(error.message)));
 }
 
 export const allCategoriesLoading = () => ({
@@ -375,4 +376,44 @@ export const allCategoriesFailed = (errmess) => ({
 export const addAllCategories = (categories) => ({
   type: actionTypes.ADD_ALL_CATEGORIES,
   payload: categories
+});
+
+
+// ------------------- Comment ------------------------
+export const fetchAllComments = (id) => (dispatch) => {
+  dispatch(allCommentsLoading(true));
+
+  return fetch(ApiURL + `/feedbacks/${id}`)
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(comments => dispatch(addAllComments(comments)))
+    .catch(error => dispatch(allCommentsFailed(error.message)));
+}
+
+export const allCommentsLoading = () => ({
+  type: actionTypes.ALL_COMMENTS_LOADING
+});
+
+export const allCommentsFailed = (errmess) => ({
+  type: actionTypes.ALL_COMMENTS_FAIL,
+  payload: errmess
+});
+
+export const addAllComments = (comments) => ({
+  type: actionTypes.ADD_ALL_COMMENTS,
+  payload: comments
 });

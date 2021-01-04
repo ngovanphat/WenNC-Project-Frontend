@@ -54,3 +54,12 @@ export const ADD_HOT_CATEGORIES = 'ADD_HOT_CATEGORIES';
 export const ALL_CATEGORIES_LOADING = 'ALL_CATEGORIES_LOADING';
 export const ALL_CATEGORIES_FAIL = 'ALL_CATEGORIES_FAIL';
 export const ADD_ALL_CATEGORIES = 'ADD_ALL_CATEGORIES';
+
+
+// ------------------- Comments ------------------------
+
+// ------------------------ All Comment --------------------
+
+export const ALL_COMMENTS_LOADING = 'ALL_COMMENTS_LOADING';
+export const ALL_COMMENTS_FAIL = 'ALL_COMMENTS_FAIL';
+export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
