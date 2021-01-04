@@ -40,7 +40,6 @@ export const SAME_COURSES_LOADING = 'SAME_COURSES_LOADING';
 export const SAME_COURSES_FAIL = 'SAME_COURSES_FAIL';
 export const ADD_SAME_COURSES = 'ADD_SAME_COURSES';
 
-
 //---------------Category----------------------
 
 // ------------- Hot Category ------------------
@@ -54,7 +53,6 @@ export const ADD_HOT_CATEGORIES = 'ADD_HOT_CATEGORIES';
 export const ALL_CATEGORIES_LOADING = 'ALL_CATEGORIES_LOADING';
 export const ALL_CATEGORIES_FAIL = 'ALL_CATEGORIES_FAIL';
 export const ADD_ALL_CATEGORIES = 'ADD_ALL_CATEGORIES';
-
 
 // ------------------- Comments ------------------------
 

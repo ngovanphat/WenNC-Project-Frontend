@@ -80,8 +80,6 @@ export const signup = (signupInput) => {
   });
 }
 
-
-
 // ----------------- Course -----------------------
 
 // ------------------- New Courses ---------------------------
@@ -124,7 +122,6 @@ export const addNewestCourses = (courses) => ({
   type: actionTypes.ADD_NEWEST_COURSES,
   payload: courses
 });
-
 
 // ------------------- Single Course -------------------------------
 
@@ -210,8 +207,6 @@ export const addSameCourses = (course) => ({
   type: actionTypes.ADD_SAME_COURSES,
   payload: course
 });
-
-
 
 // ------------------- Most Viewed Courses ---------------------------
 
@@ -377,7 +372,6 @@ export const addAllCategories = (categories) => ({
   type: actionTypes.ADD_ALL_CATEGORIES,
   payload: categories
 });
-
 
 // ------------------- Comment ------------------------
 export const fetchAllComments = (id) => (dispatch) => {

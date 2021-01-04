@@ -3,7 +3,7 @@ const initialState = {
   isLoading: true,
   errMess: null,
   comments: [],
-  totalDocs: 0, 
+  totalDocs: 0,
   totalPages: 0
 };
 

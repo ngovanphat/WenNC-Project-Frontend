@@ -3,8 +3,7 @@ import { Grid, Typography, List, Button, Paper, ListItem, Avatar, LinearProgress
 import { Rating, Pagination } from '@material-ui/lab';
 import Image from 'material-ui-image';
 import { connect } from 'react-redux';
-import { withRouter} from 'react-router-dom';
-
+import { withRouter } from 'react-router-dom';
 
 import UpdateIcon from '@material-ui/icons/Update';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -15,7 +14,6 @@ import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
 import { fetchSingleCourse } from '../../redux/actions';
-
 
 const mapStateToProps = state => {
   return {
@@ -31,8 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 class CourseDetail extends Component {
 
-
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchSingleCourse(this.props.match.params.id);
   }
 
@@ -42,10 +39,10 @@ class CourseDetail extends Component {
     }
   }
 
-  countRatingStar(comments, value){
-    let sum=0;
+  countRatingStar(comments, value) {
+    let sum = 0;
     comments.forEach(comment => {
-      if(comment.rating === value)sum=sum+1;
+      if (comment.rating === value) sum = sum + 1;
     });
     return sum;
   }
@@ -70,8 +67,7 @@ class CourseDetail extends Component {
         </Grid>
       );
     }
-    else
-    {
+    else {
       return (
         <Grid container>
           <Grid container style={{ backgroundColor: '#1e1e1c' }}>
@@ -227,20 +223,20 @@ class CourseDetail extends Component {
                   <Avatar alt={course.leturer.fullname} src={course.leturer.avatar} style={{ width: 120, height: 120, marginRight: 10 }} />
                   <Grid item style={{
                     display: 'flex',
-                    flexDirection: 'column', 
+                    flexDirection: 'column',
                     padding: 20
                   }}>
-                     <Grid item style={{
+                    <Grid item style={{
                       display: 'flex',
                       flexDirection: 'row'
                     }}>
                       <PlayCircleFilledIcon style={{ width: 20, height: 20, marginRight: 10, color: 'orange' }} />
-                      <Typography variant="subtitle2" style={{color: 'orange'}}>{course.leturer.course_list.length} courses</Typography>
+                      <Typography variant="subtitle2" style={{ color: 'orange' }}>{course.leturer.course_list.length} courses</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Typography variant="p" variantMapping="p" style={{ marginTop: 20 }}>
-                    {course.leturer.description}
+                  {course.leturer.description}
                 </Typography>
               </Grid>
 
@@ -273,41 +269,41 @@ class CourseDetail extends Component {
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,5)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 5) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={5} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,5)*100/this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 5) * 100 / this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,4)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 4) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={4} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,4)*100/this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 4) * 100 / this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,3)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 3) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={3} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,3)*100/this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 3) * 100 / this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,2)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 2) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={2} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,2)*100/this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 2) * 100 / this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments,1)*100/this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
+                    <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 1) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={1} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments,1)*100/this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 1) * 100 / this.props.allComments.totalDocs}%</Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -321,13 +317,13 @@ class CourseDetail extends Component {
                 }}
               >Reviews</Typography>
               <Grid container style={{ marginTop: 20 }}>
-                <CommentList 
+                <CommentList
                   comments={this.props.allComments.comments}
                   isLoading={this.props.allComments.isLoading}
                   errMess={this.props.allComments.errMess}
                 />
                 <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Pagination count={this.props.allComments.totalPages} page={1} />
+                  <Pagination count={this.props.allComments.totalPages} page={1} />
                 </Grid>
               </Grid>
               {/*------------------More Courses---------------------*/}
@@ -340,7 +336,7 @@ class CourseDetail extends Component {
               >More Courses of {course.category}</Typography>
 
               <Grid container style={{ marginTop: 20, marginBottom: 50, display: 'flex', justifyContent: 'space-between' }}>
-                <SameCourseList 
+                <SameCourseList
                   courses={this.props.sameCourses.courses}
                   isLoading={this.props.sameCourses.isLoading}
                   errMess={this.props.sameCourses.errMess}
@@ -359,7 +355,7 @@ class CourseDetail extends Component {
                   }}>
                     <Typography variant="h4" style={{ fontWeight: 'bold' }}>${course.price}</Typography>
                     <Typography variant="p" style={{ color: 'grey', marginLeft: 10, textDecoration: 'line-through' }}>${course.actualPrice}</Typography>
-                    <Typography variant="h6" style={{ marginLeft: 10 }}>{100 - Math.ceil(course.price*100/course.actualPrice)}% off</Typography>
+                    <Typography variant="h6" style={{ marginLeft: 10 }}>{100 - Math.ceil(course.price * 100 / course.actualPrice)}% off</Typography>
                   </Grid>
 
                   <Button variant="contained" fullWidth color="secondary" style={{ marginTop: 20, height: 50, fontWeight: 'bold' }}>
@@ -376,7 +372,6 @@ class CourseDetail extends Component {
         </Grid>
       );
     }
-      
   }
 }
 
