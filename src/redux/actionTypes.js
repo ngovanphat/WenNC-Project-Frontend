@@ -54,6 +54,13 @@ export const ALL_CATEGORIES_LOADING = 'ALL_CATEGORIES_LOADING';
 export const ALL_CATEGORIES_FAIL = 'ALL_CATEGORIES_FAIL';
 export const ADD_ALL_CATEGORIES = 'ADD_ALL_CATEGORIES';
 
+
+// --------------------- Single Category -----------------
+
+export const SINGLE_CATEGORY_LOADING = 'SINGLE_CATEGORY_LOADING';
+export const SINGLE_CATEGORY_FAIL = 'SINGLE_CATEGORY_FAIL';
+export const ADD_SINGLE_CATEGORY = 'ADD_SINGLE_CATEGORY';
+
 // ------------------- Comments ------------------------
 
 // ------------------------ All Comment --------------------

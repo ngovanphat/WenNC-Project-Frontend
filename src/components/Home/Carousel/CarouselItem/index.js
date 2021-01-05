@@ -3,6 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core'
 import { Grid, Typography, Avatar, Button, Card, Hidden, CardContent } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 import Rating from '@material-ui/lab/Rating';
 import Image from 'material-ui-image'
 
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 const CarouselItem = (props) => {
   const classes = useStyles();
   const preventDefault = (event) => event.preventDefault();
-
+  const path = "/courses/" + props.item._id;
   return (
     <Paper className={classes.paper}>
       <Grid container>
@@ -109,7 +110,9 @@ const CarouselItem = (props) => {
             </Hidden>
           </Grid>
           <Grid item style={{ marginTop: 50 }}>
-            <Button className={classes.enrollButton}>Go to course</Button>
+            <Link underline='none' component={RouterLink} to={path}>
+              <Button className={classes.enrollButton}>Go to course</Button>
+            </Link>
           </Grid>
         </Grid>
         <Hidden only={["sm", "xs"]}>

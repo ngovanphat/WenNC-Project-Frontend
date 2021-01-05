@@ -17,6 +17,7 @@ import Home from "../Home";
 import UpdateProfile from "../UpdateProfile";
 import AddCourse from "../AddCourse";
 import VideoPlayer from "../VideoPlayer";
+import SingleCategory from "../SingleCategory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +79,7 @@ const App = ({ location }) => {
               <Route exact path="/categories" >
                 <Categories />
               </Route>
+              <Route exact path="/categories/:categoryName" render={({ match, location }) => <SingleCategory match={match} />} />
               <Route exact path="/profile">
                 <Profile />
               </Route>
