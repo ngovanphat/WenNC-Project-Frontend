@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -56,7 +57,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VideoPlayer() {
   const classes = useStyles();
-
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const title= params.get('title');
+  const link = params.get('link')
   return (
     <main>
       <Container maxWidth="lg">
@@ -73,7 +77,7 @@ export default function VideoPlayer() {
           </Grid>
           <Grid item xs={10}>
             <Typography className={classes.title} align="start" color="textPrimary">
-              Course Introduction
+              {title}
             </Typography>
           </Grid>
         </Grid>
@@ -82,7 +86,7 @@ export default function VideoPlayer() {
             width='95%'
             height='95%'
             controls
-            url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+            url={link}
             onReady={() => console.log('onReady callback')}
             onStart={() => console.log('onStart callback')}
             onPause={() => console.log('onPause callback')}
