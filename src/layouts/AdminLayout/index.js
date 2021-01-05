@@ -15,10 +15,11 @@ const Container = styled.div`
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    display: "flex",
-    flex: "1 1 auto",
-    overflow: "hidden",
+    overflowX: "hidden",  
+    overflowY:"auto",
+    height: "100%",
     paddingTop: 64,
+    paddingBottom:64,
     [theme.breakpoints.up("lg")]: {
       paddingLeft: 256,
     },
@@ -26,40 +27,34 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     display: "flex",
     flex: "1 1 auto",
-    overflow: "hidden",
+    overflowX:"hidden",    
     background: Colors.white,
     marginLeft: 5,
     marginRight: 5
   },
-  content: {
-    flex: "1 1 auto",
-    height: "100%",
-    overflow: "auto",
-  },
   container: {
     minHeight: '100%',
     paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
+    paddingTop: theme.spacing(3),
+    overflowY:"auto",
   }
 }));
 
-const Dashboard = ({ children }) => {
+const AdminLayout = ({ children }) => {
   const classes = useStyles();
   //const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <Container>
+    <Container className={classes.container}>
       <Header />
       <SideNavBar />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
-          <div className={classes.content}>
             {children}
-          </div>
         </div>
       </div>
     </Container>
   );
 };
 
-export default Dashboard;
+export default AdminLayout;

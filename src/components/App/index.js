@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import Header from "../Header";
 import Login from "../Login";
@@ -17,6 +17,10 @@ import Home from "../Home";
 import UpdateProfile from "../UpdateProfile";
 import AddCourse from "../AddCourse";
 import VideoPlayer from "../VideoPlayer";
+import Courses from "../Admin/Courses";
+import CourseDetails from "../Admin/CourseDetails";
+import Dashboard from "../Admin/Dashboard";
+import Account from "../Admin/Account";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,17 +57,30 @@ const App = ({ location }) => {
           </Grid>
           <Grid item className={classes.main}>
             <Switch>
-              <Route path="/admin/:path?" exact>
+              <Route path="/admin/:path?" >
                 <AdminLayout>
                   <Switch>
                     <Route exact path="/admin/dashboard">
-
+                      <Dashboard/>
+                    </Route>
+                    <Route exact path="/admin/courses">
+                      <Courses/>
+                    </Route>
+                    <Route exact path="/admin/courses/:id">
+                        <CourseDetails/>
                     </Route>
                     <Route exact path="/admin/users">
                       <Users />
                     </Route>
+                    <Route exact path="/admin/account">
+                      <Account />
+                    </Route>
+                    <Route exact path="/admin/settings">
+                      <Account />
+                    </Route>
                   </Switch>
                 </AdminLayout>
+                <Redirect from="/admin" to="/admin/dashboard"/>
               </Route>
               <Route exact path="/login">
                 <Login />

@@ -20,6 +20,7 @@ import { Colors } from "../../../helpers/colors";
 const useStyles = makeStyles(() => ({
   root: {
     background: Colors.primary,
+    position:"absolute"
   },
   logo: {
     color: Colors.white,

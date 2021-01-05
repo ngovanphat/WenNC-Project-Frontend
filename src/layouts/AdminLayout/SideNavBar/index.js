@@ -20,7 +20,7 @@ import SecurityIcon from "@material-ui/icons/Security";
 import SettingsIcon from "@material-ui/icons/Settings";
 const user = {
   avatar: "/public/logo192.png",
-  name: "Katarina Smith",
+  name: "Username",
 };
 
 const items = [
@@ -74,8 +74,7 @@ const SideNavBar = ({ onMobileClose, openMobile }) => {
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   const content = (
@@ -85,7 +84,7 @@ const SideNavBar = ({ onMobileClose, openMobile }) => {
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/account"
+          to="/admin/account"
         />
         <Typography className={classes.name} color="textPrimary" variant="h5">
           {user.name}
@@ -100,7 +99,8 @@ const SideNavBar = ({ onMobileClose, openMobile }) => {
           {items.map((item) => (
             <NavItem
               href={item.href}
-              key={item.title}
+              key={item.href}
+              id={item.title}
               title={item.title}
               icon={item.icon}
             />
@@ -137,5 +137,13 @@ const SideNavBar = ({ onMobileClose, openMobile }) => {
     </>
   );
 };
+SideNavBar.propTypes = {
+  onMobileClose: PropTypes.func,
+  openMobile: PropTypes.bool
+};
 
+SideNavBar.defaultProps = {
+  onMobileClose: () => {},
+  openMobile: false
+};
 export default SideNavBar;
