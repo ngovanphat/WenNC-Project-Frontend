@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { List, Grid, Typography, ListItem, Hidden, Collapse, FormGroup, ListItemText, Divider, Container, Checkbox, FormControl, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import { Rating } from '@material-ui/lab';
+import { Rating, Pagination } from '@material-ui/lab';
 
 import CourseTile from './CourseTile';
 
@@ -157,7 +157,7 @@ function CourseList(props) {
         </Hidden>
         <Grid xs={12} sm={8} style={{ marginLeft: 20 }}>
           <List>
-            {props.courses.map((course) => 
+            {props.courses.docs.map((course) => 
 
                 <CourseTile
                   key={course._id}
@@ -172,6 +172,9 @@ function CourseList(props) {
                 />
             )}
           </List>
+          <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Pagination page={1} count={props.courses.totalPages}/>
+          </Grid>
         </Grid>
       </Grid>
 

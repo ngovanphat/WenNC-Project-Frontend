@@ -21,6 +21,7 @@ import Courses from "../Admin/Courses";
 import CourseDetails from "../Admin/CourseDetails";
 import Dashboard from "../Admin/Dashboard";
 import Account from "../Admin/Account";
+import SingleCategory from "../SingleCategory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,6 +96,7 @@ const App = ({ location }) => {
               <Route exact path="/categories" >
                 <Categories />
               </Route>
+              <Route exact path="/categories/:categoryName" render={({ match, location }) => <SingleCategory match={match} />} />
               <Route exact path="/profile">
                 <Profile />
               </Route>

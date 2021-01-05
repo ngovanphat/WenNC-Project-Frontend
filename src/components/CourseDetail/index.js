@@ -9,7 +9,7 @@ import UpdateIcon from '@material-ui/icons/Update';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
-import VideoTile from './VideoTile';
+import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
@@ -149,44 +149,7 @@ class CourseDetail extends Component {
               >Course content</Typography>
               <Typography variant="caption" style={{ marginTop: 30, marginBottom: 5, color: 'grey' }}>{course.videos.length} videos</Typography>
               <Paper style={{ color: 'white' }} variant="outlined">
-                <List>
-                  <ListItem>
-                    <VideoTile videoTitle="Course Introduction" videoTime="6:39" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Course Curriculum Overview" videoTime="4:00" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Why Python?" videoTime="5:18" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Command Line Basics" videoTime="8:15" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Course Introduction" videoTime="6:39" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Course Curriculum Overview" videoTime="4:00" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Why Python?" videoTime="5:18" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Command Line Basics" videoTime="8:15" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Course Introduction" videoTime="6:39" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Course Curriculum Overview" videoTime="4:00" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Why Python?" videoTime="5:18" />
-                  </ListItem>
-                  <ListItem>
-                    <VideoTile videoTitle="Command Line Basics" videoTime="8:15" />
-                  </ListItem>
-                </List>
+                  <VideoList videos={course.videos} courseId={course._id} />
               </Paper>
               {/*------------------Description---------------------*/}
               <Typography

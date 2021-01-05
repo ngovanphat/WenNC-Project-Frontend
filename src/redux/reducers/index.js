@@ -13,6 +13,7 @@ import { singleCourse } from './singleCourse';
 import { sameCourses } from './sameCourses';
 import { hotCategories } from './hotCategories';
 import { allCategories } from './allCategories';
+import { singleCategory } from './singleCategory';
 
 import { allComments } from './allComments';
-export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, singleCourse, sameCourses, hotCategories, allCategories, allComments });
+export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, singleCourse, sameCourses, hotCategories, allCategories, singleCategory, allComments });

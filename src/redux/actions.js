@@ -373,6 +373,49 @@ export const addAllCategories = (categories) => ({
   payload: categories
 });
 
+// -------------------- Single Category ----------------------
+
+export const fetchSingleCategory = (categoryName) => (dispatch) => {
+  dispatch(singleCategoryLoading(true));
+
+  return fetch(ApiURL + `/categories/byName?categoryName=${categoryName}`)
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(category => dispatch(addSingleCategory(category)))
+    .catch(error => dispatch(singleCategoryFailed(error.message)));
+}
+
+export const singleCategoryLoading = () => ({
+  type: actionTypes.SINGLE_CATEGORY_LOADING
+});
+
+export const singleCategoryFailed = (errmess) => ({
+  type: actionTypes.SINGLE_CATEGORY_FAIL,
+  payload: errmess
+});
+
+export const addSingleCategory = (category) => ({
+  type: actionTypes.ADD_SINGLE_CATEGORY,
+  payload: category
+});
+
+
+
+
 // ------------------- Comment ------------------------
 export const fetchAllComments = (id) => (dispatch) => {
   dispatch(allCommentsLoading(true));
