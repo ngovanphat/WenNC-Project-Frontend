@@ -6,9 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/actions';
 
@@ -35,10 +34,11 @@ function Login() {
   const { register, handleSubmit, errors } = useForm();
 
   const dispatch = useDispatch();
-
+  let history = useHistory();
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    await dispatch(login({ 'email': email, 'password': password }));
+    const res = await dispatch(login({ 'email': email, 'password': password }));
+    if (res) history.push('/');
   };
 
   return (

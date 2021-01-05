@@ -26,7 +26,7 @@ export const singleCategory = (state = initialState, action) => {
         ...state,
         isLoading: false,
         errMess: action.payload,
-        category:null
+        category: null
       };
     default:
       return state;

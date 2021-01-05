@@ -149,7 +149,7 @@ class CourseDetail extends Component {
               >Course content</Typography>
               <Typography variant="caption" style={{ marginTop: 30, marginBottom: 5, color: 'grey' }}>{course.videos.length} videos</Typography>
               <Paper style={{ color: 'white' }} variant="outlined">
-                  <VideoList videos={course.videos} courseId={course._id} />
+                <VideoList videos={course.videos} courseId={course._id} />
               </Paper>
               {/*------------------Description---------------------*/}
               <Typography

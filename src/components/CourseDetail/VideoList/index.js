@@ -5,9 +5,9 @@ import VideoTile from './VideoTile';
 export default function VideoList(props) {
   const videoList = props.videos.map((video) => {
     return (
-        <ListItem>
-            <VideoTile data={video}/>
-        </ListItem>
+      <ListItem>
+        <VideoTile data={video} />
+      </ListItem>
     );
   })
 

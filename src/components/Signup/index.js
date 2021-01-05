@@ -7,9 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { NavLink, useHistory } from 'react-router-dom';
-
 import { useForm } from "react-hook-form";
-
 import { signup } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +41,6 @@ function Signup() {
     const res = await signup({ fullname, email, password });
     if (res) history.push('/login')
   };
-
 
   return (
     <Container component="main" maxWidth="xs">

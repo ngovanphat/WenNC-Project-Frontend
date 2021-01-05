@@ -41,6 +41,7 @@ export const login = (loginInput) => {
           const data = { ...json, userId: email };
           setLoginLocal(data); // storing in local storage for next launch
           dispatch(setLoginState(data));
+          return true;
         } else {
           alert('Login Failed Username or Password is incorrect');
         }
@@ -68,8 +69,8 @@ export const signup = (signupInput) => {
     body: JSON.stringify(o),
   }).then((response) => {
     if (response.status === 201) { // response success checking logic could differ
-      alert("Sign up successfully");
       return true;
+      alert("Sign up successfully");
     } else {
       alert('Something failed');
       return false;
@@ -412,9 +413,6 @@ export const addSingleCategory = (category) => ({
   type: actionTypes.ADD_SINGLE_CATEGORY,
   payload: category
 });
-
-
-
 
 // ------------------- Comment ------------------------
 export const fetchAllComments = (id) => (dispatch) => {
