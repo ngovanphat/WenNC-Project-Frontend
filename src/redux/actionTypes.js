@@ -77,3 +77,9 @@ export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
 export const USER_PROFILE_LOADING = 'USER_PROFILE_LOADING';
 export const USER_PROFILE_FAIL = 'USER_PROFILE_FAIL';
 export const ADD_USER_PROFILE = 'ADD_USER_PROFILE';
+
+// ------------------------ My Courses --------------------
+
+export const MY_COURSES_LOADING = 'ALL_COURSES_LOADING';
+export const MY_COURSES_FAIL = 'ALL_COURSES_FAIL';
+export const ADD_MY_COURSES = 'ADD_ALL_COURSES';

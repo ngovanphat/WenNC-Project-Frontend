@@ -46,10 +46,13 @@ const myCoursesList = [
 ];
 
 export default function MyCourseList(props) {
+  console.log(props.courses);
+
   const classes = useStyles();
 
   function Body() {
-    const len = props.user.user.join_list.length;
+    const len = props.courses.join_list.length;
+
     if (len == 0) {
       return <Grid container>
         <Typography variant="h7" align="left" color="black">
@@ -61,20 +64,20 @@ export default function MyCourseList(props) {
       </Grid>;
     }
     return <Grid container spacing={2}>
-      {props.user.user.join_list.map((course) => (
+      {props.courses.join_list.map((course) => (
         <MyCourseCard key={course.title} course={course} />
       ))}
     </Grid>;
   }
 
   function Paging() {
-    const len = props.user.user.join_list.length;
+    const len = props.courses.join_list.length;
     if (len == 0) { 
       return <Grid item xs={12}>
         </Grid>;
      }
     return <Grid item xs={12}>
-      <Pagination count={props.user.user.join_list.length} shape="rounded" size="large" />
+      <Pagination count={props.courses.join_list.length} shape="rounded" size="large" />
     </Grid>;
   }
 

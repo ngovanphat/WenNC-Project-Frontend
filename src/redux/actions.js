@@ -509,3 +509,50 @@ export const addUserProfile = (course) => ({
   type: actionTypes.ADD_USER_PROFILE,
   payload: course
 });
+
+// ------------------- My Courses -------------------------
+
+export const fetchMyCourses = () => (dispatch) => {
+  dispatch(myCoursesLoading(true));
+
+  return fetch(ApiURL + `/users/getJoinCourse`, {
+    headers: {  // these could be different for your API call
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(courses => {
+      dispatch(addMyCourses(courses));
+    })
+    .catch(error => dispatch(myCoursesFailed(error.message)));
+}
+
+export const myCoursesLoading = () => ({
+  type: actionTypes.MY_COURSES_LOADING
+});
+
+export const myCoursesFailed = (errmess) => ({
+  type: actionTypes.MY_COURSES_FAIL,
+  payload: errmess
+});
+
+export const addMyCourses = (course) => ({
+  type: actionTypes.ADD_MY_COURSES,
+  payload: course
+});

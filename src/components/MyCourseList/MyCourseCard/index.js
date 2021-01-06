@@ -98,7 +98,7 @@ export default function MyCourseCard(props) {
           </CardContent>
         </div>
         <Hidden xsDown>
-          <CardMedia className={classes.cardMedia} image={course.thumbnail} />
+          <CardMedia className={classes.cardMedia} image={course.thumnail} />
         </Hidden>
       </Card>
       {/* </CardActionArea> */}

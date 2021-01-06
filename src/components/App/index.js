@@ -24,17 +24,19 @@ import SingleCategory from "../SingleCategory";
 import MyCourseList from "../MyCourseList";
 import MyFavoriteList from "../MyFavoriteList";
 
-import { fetchUserProfile } from "../../redux/actions";
+import { fetchUserProfile, fetchMyCourses } from "../../redux/actions";
 
 const mapStateToProps = state => {
   return {
     loginReducer: state.loginReducer,
-    userProfile: state.userProfile
+    userProfile: state.userProfile,
+    myCourses: state.myCourses
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUserProfile: () => { dispatch(fetchUserProfile()) }
+  fetchUserProfile: () => { dispatch(fetchUserProfile()) },
+  fetchMyCourses: () => { dispatch(fetchMyCourses()) }
 });
 
 class App extends Component {
@@ -44,6 +46,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchUserProfile();
+    this.props.fetchMyCourses()
   }
 
   render() {
@@ -110,7 +113,7 @@ class App extends Component {
                   <Profile user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/myCourses">
-                  <MyCourseList user={this.props.userProfile.user} />
+                  <MyCourseList courses={this.props.myCourses.courses} />
                 </Route>
                 <Route exact path="/wishList">
                   <MyFavoriteList user={this.props.userProfile.user} />
