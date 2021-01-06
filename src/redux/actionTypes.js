@@ -68,3 +68,12 @@ export const ADD_SINGLE_CATEGORY = 'ADD_SINGLE_CATEGORY';
 export const ALL_COMMENTS_LOADING = 'ALL_COMMENTS_LOADING';
 export const ALL_COMMENTS_FAIL = 'ALL_COMMENTS_FAIL';
 export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
+
+
+// ------------------- User ------------------------
+
+// ------------------------ User Profile --------------------
+
+export const USER_PROFILE_LOADING = 'USER_PROFILE_LOADING';
+export const USER_PROFILE_FAIL = 'USER_PROFILE_FAIL';
+export const ADD_USER_PROFILE = 'ADD_USER_PROFILE';

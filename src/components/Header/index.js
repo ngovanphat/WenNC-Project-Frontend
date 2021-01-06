@@ -8,6 +8,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
 import HoverMenu from "./HoverMenu";
+import UserMenu from "./UserMenu";
 
 const useStyles = makeStyles((theme) => ({
   style: {
@@ -53,9 +54,9 @@ const Header = (props) => {
 
   function TopRightContainer() {
     const isLoggedIn = props.isLoggedIn;
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       return <Grid>
-        <Avatar src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" className={classes.avatar} />
+        <UserMenu avatar={props.user.user.avatar} />
       </Grid>;
     }
     return <Grid container lg={3} md={5}>

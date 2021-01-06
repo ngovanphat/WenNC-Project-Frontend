@@ -40,7 +40,9 @@ export const login = (loginInput) => {
         if (json.authenticated === true) { // response success checking logic could differ
           const data = { ...json, userId: email };
           setLoginLocal(data); // storing in local storage for next launch
+          getLoginLocal();
           dispatch(setLoginState(data));
+          alert("Log in successfully");
           return true;
         } else {
           alert('Login Failed Username or Password is incorrect');
@@ -69,8 +71,8 @@ export const signup = (signupInput) => {
     body: JSON.stringify(o),
   }).then((response) => {
     if (response.status === 201) { // response success checking logic could differ
-      return true;
       alert("Sign up successfully");
+      return true;
     } else {
       alert('Something failed');
       return false;
@@ -415,6 +417,7 @@ export const addSingleCategory = (category) => ({
 });
 
 // ------------------- Comment ------------------------
+
 export const fetchAllComments = (id) => (dispatch) => {
   dispatch(allCommentsLoading(true));
 
@@ -451,4 +454,58 @@ export const allCommentsFailed = (errmess) => ({
 export const addAllComments = (comments) => ({
   type: actionTypes.ADD_ALL_COMMENTS,
   payload: comments
+});
+
+//-------------- User --------------------------
+
+// ------------------- User Profile -------------------------
+
+const getLoginLocal = () => {
+  const loginData = localStorage.getItem('loginData');
+  return JSON.parse(loginData).accessToken;
+};
+
+export const fetchUserProfile = () => (dispatch) => {
+  dispatch(userProfileLoading(true));
+
+  return fetch(ApiURL + `/users/me`, {
+    headers: {  // these could be different for your API call
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(user => {
+      dispatch(addUserProfile(user));
+    })
+    .catch(error => dispatch(userProfileFailed(error.message)));
+}
+
+export const userProfileLoading = () => ({
+  type: actionTypes.USER_PROFILE_LOADING
+});
+
+export const userProfileFailed = (errmess) => ({
+  type: actionTypes.USER_PROFILE_FAIL,
+  payload: errmess
+});
+
+export const addUserProfile = (course) => ({
+  type: actionTypes.ADD_USER_PROFILE,
+  payload: course
 });

@@ -45,7 +45,7 @@ export default function MyCourseList() {
       <div className={classes.heroContent}>
         <Container maxWidth="md">
           <Typography variant="h6" align="left" color="textSecondary">
-            My favorite courses
+            Wish list
           </Typography>
         </Container>
       </div>
