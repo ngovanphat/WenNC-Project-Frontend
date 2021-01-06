@@ -107,16 +107,16 @@ class App extends Component {
                 </Route>
                 <Route exact path="/categories/:categoryName" render={({ match, location }) => <SingleCategory match={match} />} />
                 <Route exact path="/profile">
-                  <Profile />
+                  <Profile user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/myCourses">
-                  <MyCourseList />
+                  <MyCourseList user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/wishList">
-                  <MyFavoriteList />
+                  <MyFavoriteList user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/profile/update">
-                  <UpdateProfile />
+                  <UpdateProfile user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/addCourse">
                   <AddCourse />

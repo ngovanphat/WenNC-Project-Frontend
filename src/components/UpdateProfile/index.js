@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UpdateProfile() {
+export default function UpdateProfile(props) {
   const classes = useStyles();
 
   return (
@@ -67,7 +67,7 @@ export default function UpdateProfile() {
             <Grid item xs={6}>
               <TextField
                 label="Full name"
-                defaultValue="Christian Dior"
+                defaultValue={props.user.user.fullname}
                 variant="outlined"
                 fullWidth
               />
@@ -75,7 +75,7 @@ export default function UpdateProfile() {
             <Grid item xs={6}>
               <TextField
                 label="Email"
-                defaultValue="1234567@student.hcmus.edu.vn"
+                defaultValue={props.user.user.email}
                 variant="outlined"
                 fullWidth
               />
@@ -96,7 +96,7 @@ export default function UpdateProfile() {
           </Grid>
           <Grid item container direction="row">
             <Grid item container direction="column" alignItems="flex-start" xs={2}>
-              <Avatar variant="rounded" src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" className={classes.avatar} />
+              <Avatar variant="rounded" src={props.user.user.avatar} className={classes.avatar} />
             </Grid>
             <Grid item container direction="column" alignItems="flex-start" xs={10}>
               <Button variant="outlined" align="start" className={classes.uploadButton}>

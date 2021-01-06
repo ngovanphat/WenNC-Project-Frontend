@@ -45,7 +45,7 @@ function Login() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h4" color="primary">
+        <Typography component="h1" variant="h4" style={{color: "#005580"}}>
           Log in
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -92,7 +92,7 @@ function Login() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            style={{backgroundColor: '#005580', color: 'white'}}
             className={classes.submit}
           >
             Login
