@@ -24,27 +24,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// const myCoursesList = [
-//   {
-//     title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
-//     points: 4.5,
-//     leturer: 'Andrew Garfield',
-//     category: 'Mobile Development',
-//     description:
-//       'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
-//     thumbnail: 'https://source.unsplash.com/random',
-//   },
-//   {
-//     title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
-//     points: 4.8,
-//     leturer: 'Andrew Garfield',
-//     category: 'Mobile Development',
-//     description:
-//       'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
-//     thumbnail: 'https://source.unsplash.com/random',
-//   },
-// ];
-
 export default function MyFavoriteList(props) {
   const classes = useStyles();
   console.log(props);
@@ -108,11 +87,6 @@ export default function MyFavoriteList(props) {
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* <Grid container spacing={2}>
-          {myCoursesList.map((course) => (
-            <MyFavoriteCard key={course.title} course={course} />
-          ))}
-        </Grid> */}
           <Body />
         </Container>
         <Grid
@@ -123,9 +97,6 @@ export default function MyFavoriteList(props) {
           justify="center"
           style={{ minHeight: '5vh' }}
         >
-          {/* <Grid item xs={12}>
-          <Pagination count={10} shape="rounded" size="large" />
-        </Grid> */}
           <Paging />
         </Grid>
       </main>

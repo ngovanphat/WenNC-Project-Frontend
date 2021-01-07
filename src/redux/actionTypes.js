@@ -83,6 +83,7 @@ export const ADD_USER_PROFILE = 'ADD_USER_PROFILE';
 export const MY_COURSES_LOADING = 'MY_COURSES_LOADING';
 export const MY_COURSES_FAIL = 'MY_COURSES_FAIL';
 export const ADD_MY_COURSES = 'ADD_MY_COURSES';
+// export const JOIN_COURSES = 'JOIN_COURSES';
 
 // ------------------------ My Wishlist --------------------
 

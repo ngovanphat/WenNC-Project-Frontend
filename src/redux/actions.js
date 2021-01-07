@@ -542,6 +542,56 @@ export const fetchMyCourses = () => (dispatch) => {
     .catch(error => dispatch(myCoursesFailed(error.message)));
 }
 
+export const joinCourse = (input) => {
+  return (dispatch) => {
+    return fetch(ApiURL + '/users/joinCourse', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      body: JSON.stringify(input),
+    })
+      .then(response => {
+        if (response.ok) {
+          fetchMyCourses();
+          alert("Join course successfully");
+        }
+        else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+        error => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      // .then(response => response.json())
+      // .then(courses => {
+      //   dispatch(addMyCourses(courses));
+      // })
+      .catch(error => dispatch(myCoursesFailed(error.message)));
+    // .then((response) => response.json())
+    // .then((json) => {
+    //   if (json.authenticated === true) { // response success checking logic could differ
+    //     const data = { ...json, userId: email };
+    //     setLoginLocal(data); // storing in local storage for next launch
+    //     dispatch(setJoinCoursesState(data));
+    //     alert("Join course successfully");
+    //     return true;
+    //   } else {
+    //     alert('Join course failed');
+    //   }
+    // })
+    // .catch((err) => {
+    //   alert('Join course Failed Some error occured, please retry');
+    //   console.log(err);
+    // });
+  };
+};
+
 export const myCoursesLoading = () => ({
   type: actionTypes.MY_COURSES_LOADING
 });

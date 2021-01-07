@@ -13,7 +13,7 @@ class AddCourse extends Component {
           display: 'flex',
           alignItems: 'center'
         }}>
-          <Typography variant="h5" color="primary" style={{ textAlign: 'center', width: '100%', fontWeight: 'bold' }}>Course Overview</Typography>
+          <Typography variant="h5" style={{ color: '#005580', textAlign: 'center', width: '100%', fontWeight: 'bold' }}>Course Overview</Typography>
           <Grid container xs={12} style={{ marginTop: 20 }}>
             <Grid container xs={12} style={{
               display: 'flex',
@@ -127,7 +127,7 @@ class AddCourse extends Component {
               justifyContent: 'flex-end',
               marginTop: 40
             }}>
-              <Button color="primary" variant="contained">
+              <Button style={{backgroundColor: '#005580', color: 'white' }} variant="contained">
                 Create
               </Button>
             </Grid>
