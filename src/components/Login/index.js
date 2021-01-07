@@ -38,7 +38,7 @@ function Login() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     const res = await dispatch(login({ 'email': email, 'password': password }));
-    if (res) history.push('/');
+    if (res == true) history.push('/');
   };
 
   return (

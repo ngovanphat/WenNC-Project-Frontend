@@ -80,6 +80,12 @@ export const ADD_USER_PROFILE = 'ADD_USER_PROFILE';
 
 // ------------------------ My Courses --------------------
 
-export const MY_COURSES_LOADING = 'ALL_COURSES_LOADING';
-export const MY_COURSES_FAIL = 'ALL_COURSES_FAIL';
-export const ADD_MY_COURSES = 'ADD_ALL_COURSES';
+export const MY_COURSES_LOADING = 'MY_COURSES_LOADING';
+export const MY_COURSES_FAIL = 'MY_COURSES_FAIL';
+export const ADD_MY_COURSES = 'ADD_MY_COURSES';
+
+// ------------------------ My Wishlist --------------------
+
+export const MY_WISHLIST_LOADING = 'MY_WISHLIST_LOADING';
+export const MY_WISHLIST_FAIL = 'MY_WISHLIST_FAIL';
+export const ADD_MY_WISHLIST = 'ADD_MY_WISHLIST';

@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
 
 const TitleStyled = styled.div`
     overflow: hidden;
@@ -72,6 +73,7 @@ const useStyles = makeStyles({
 export default function MyFavoriteCard(props) {
   const classes = useStyles();
   const { course } = props;
+  const path = "/courses/" + course._id;
   const preventDefault = (event) => event.preventDefault();
 
   return (
@@ -115,7 +117,9 @@ export default function MyFavoriteCard(props) {
               </DescriptionStyled>
             </Typography>
             <Button variant="outlined" className={classes.resumeButton}>
-              Go to course
+              <Link underline='none' style={{ color: '#005580' }} component={RouterLink} to={path}>
+                Go to course
+              </Link>
             </Button>
             <Button variant="outlined" className={classes.removeButton}>
               Remove
@@ -123,7 +127,7 @@ export default function MyFavoriteCard(props) {
           </CardContent>
         </div>
         <Hidden xsDown>
-          <CardMedia className={classes.cardMedia} image={course.thumbnail} />
+          <CardMedia className={classes.cardMedia} image={course.thumnail} />
         </Hidden>
       </Card>
     </Grid>

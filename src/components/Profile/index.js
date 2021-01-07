@@ -76,7 +76,7 @@ export default function Profile(props) {
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText primary="Member since" secondary="Nov 6, 2020" />
+                <ListItemText primary="Member since" secondary={props.user.user.createdAt} />
               </ListItem>
               <Divider />
             </List>

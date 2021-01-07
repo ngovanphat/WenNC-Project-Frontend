@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
 
 const TitleStyled = styled.div`
     overflow: hidden;
@@ -55,6 +56,7 @@ const useStyles = makeStyles({
 export default function MyCourseCard(props) {
   const classes = useStyles();
   const { course } = props;
+  const path = "/courses/" + course._id;
   const preventDefault = (event) => event.preventDefault();
 
   return (
@@ -93,8 +95,10 @@ export default function MyCourseCard(props) {
               </DescriptionStyled>
             </Typography>
             <Button variant="outlined" className={classes.resumeButton} style={{ marginTop: 10 }}>
-              Resume course
-              </Button>
+              <Link underline='none' style={{color: '#005580'}} component={RouterLink} to={path}>
+                Resume course
+              </Link>
+            </Button>
           </CardContent>
         </div>
         <Hidden xsDown>

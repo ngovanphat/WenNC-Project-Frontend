@@ -24,19 +24,21 @@ import SingleCategory from "../SingleCategory";
 import MyCourseList from "../MyCourseList";
 import MyFavoriteList from "../MyFavoriteList";
 
-import { fetchUserProfile, fetchMyCourses } from "../../redux/actions";
+import { fetchUserProfile, fetchMyCourses, fetchMyWishlist } from "../../redux/actions";
 
 const mapStateToProps = state => {
   return {
     loginReducer: state.loginReducer,
     userProfile: state.userProfile,
-    myCourses: state.myCourses
+    myCourses: state.myCourses,
+    myWishlist: state.myWishlist
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUserProfile: () => { dispatch(fetchUserProfile()) },
-  fetchMyCourses: () => { dispatch(fetchMyCourses()) }
+  fetchMyCourses: () => { dispatch(fetchMyCourses()) },
+  fetchMyWishlist: () => { dispatch(fetchMyWishlist()) },
 });
 
 class App extends Component {
@@ -46,7 +48,8 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchUserProfile();
-    this.props.fetchMyCourses()
+    this.props.fetchMyCourses();
+    this.props.fetchMyWishlist();
   }
 
   render() {
@@ -113,10 +116,16 @@ class App extends Component {
                   <Profile user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/myCourses">
-                  <MyCourseList courses={this.props.myCourses.courses} />
+                  <MyCourseList
+                    courses={this.props.myCourses.courses}
+                    coursesLoading={this.props.myCourses.isLoading}
+                    coursesErrMess={this.props.myCourses.errMess} />
                 </Route>
                 <Route exact path="/wishList">
-                  <MyFavoriteList user={this.props.userProfile.user} />
+                  <MyFavoriteList 
+                    courses={this.props.myWishlist.courses}
+                    coursesLoading={this.props.myWishlist.isLoading}
+                    coursesErrMess={this.props.myWishlist.errMess} />
                 </Route>
                 <Route exact path="/profile/update">
                   <UpdateProfile user={this.props.userProfile.user} />

@@ -40,7 +40,6 @@ export const login = (loginInput) => {
         if (json.authenticated === true) { // response success checking logic could differ
           const data = { ...json, userId: email };
           setLoginLocal(data); // storing in local storage for next launch
-          getLoginLocal();
           dispatch(setLoginState(data));
           alert("Log in successfully");
           return true;
@@ -554,5 +553,52 @@ export const myCoursesFailed = (errmess) => ({
 
 export const addMyCourses = (course) => ({
   type: actionTypes.ADD_MY_COURSES,
+  payload: course
+});
+
+// ------------------- My Wishlist -------------------------
+
+export const fetchMyWishlist = () => (dispatch) => {
+  dispatch(myWishlistLoading(true));
+
+  return fetch(ApiURL + `/users/getFavoriteCourse`, {
+    headers: {  // these could be different for your API call
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      }
+      else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(courses => {
+      dispatch(addMyWishlist(courses));
+    })
+    .catch(error => dispatch(myWishlistFailed(error.message)));
+}
+
+export const myWishlistLoading = () => ({
+  type: actionTypes.MY_WISHLIST_LOADING
+});
+
+export const myWishlistFailed = (errmess) => ({
+  type: actionTypes.MY_WISHLIST_FAIL,
+  payload: errmess
+});
+
+export const addMyWishlist = (course) => ({
+  type: actionTypes.ADD_MY_WISHLIST,
   payload: course
 });

@@ -24,30 +24,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const myCoursesList = [
-  {
-    title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
-    last_updated: 'Nov 12, 2020',
-    leturer: 'Andrew Garfield',
-    category: 'Mobile Development',
-    description:
-      'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
-    thumbnail: 'https://source.unsplash.com/random',
-  },
-  {
-    title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
-    last_updated: 'Nov 12, 2020',
-    leturer: 'Andrew Garfield',
-    category: 'Mobile Development',
-    description:
-      'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
-    thumbnail: 'https://source.unsplash.com/random',
-  },
-];
-
 export default function MyCourseList(props) {
-  console.log(props.courses);
-
   const classes = useStyles();
 
   function Body() {
@@ -72,37 +49,57 @@ export default function MyCourseList(props) {
 
   function Paging() {
     const len = props.courses.join_list.length;
-    if (len == 0) { 
+    if (len == 0) {
       return <Grid item xs={12}>
-        </Grid>;
-     }
+      </Grid>;
+    }
     return <Grid item xs={12}>
       <Pagination count={props.courses.join_list.length} shape="rounded" size="large" />
     </Grid>;
   }
 
-  return (
-    <main>
-      <div className={classes.heroContent}>
-        <Container maxWidth="md">
-          <Typography variant="h6" align="left" color="textSecondary">
-            My courses
-          </Typography>
-        </Container>
-      </div>
-      <Container className={classes.cardGrid} maxWidth="md">
-        <Body></Body>
-      </Container>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '5vh' }}
-      >
-        <Paging />
+  if (props.coursesLoading) {
+    return (
+      <Grid container>
+        <Grid item row xs={12}>
+          <Typography variant="h4">Loading....</Typography>
+        </Grid>
       </Grid>
-    </main>
-  );
+    );
+  }
+  else if (props.coursesErrMess) {
+    return (
+      <Grid container>
+        <Grid item row xs={12}>
+          <Typography variant="h4">{props.coursesErrMess}</Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+  else {
+    return (
+      <main>
+        <div className={classes.heroContent}>
+          <Container maxWidth="md">
+            <Typography variant="h6" align="left" color="textSecondary">
+              My courses
+          </Typography>
+          </Container>
+        </div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          <Body></Body>
+        </Container>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: '5vh' }}
+        >
+          <Paging />
+        </Grid>
+      </main>
+    );
+  }
 }

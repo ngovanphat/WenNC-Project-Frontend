@@ -24,32 +24,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const myCoursesList = [
-  {
-    title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
-    points: 4.5,
-    leturer: 'Andrew Garfield',
-    category: 'Mobile Development',
-    description:
-      'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
-    thumbnail: 'https://source.unsplash.com/random',
-  },
-  {
-    title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
-    points: 4.8,
-    leturer: 'Andrew Garfield',
-    category: 'Mobile Development',
-    description:
-      'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
-    thumbnail: 'https://source.unsplash.com/random',
-  },
-];
+// const myCoursesList = [
+//   {
+//     title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
+//     points: 4.5,
+//     leturer: 'Andrew Garfield',
+//     category: 'Mobile Development',
+//     description:
+//       'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
+//     thumbnail: 'https://source.unsplash.com/random',
+//   },
+//   {
+//     title: 'The Complete 2020 Flutter Development Bootcamp with Dart',
+//     points: 4.8,
+//     leturer: 'Andrew Garfield',
+//     category: 'Mobile Development',
+//     description:
+//       'Welcome to the Complete Flutter App Development Bootcamp with Dart - created in collaboration with the Google Flutter team.',
+//     thumbnail: 'https://source.unsplash.com/random',
+//   },
+// ];
 
-export default function MyCourseList(props) {
+export default function MyFavoriteList(props) {
   const classes = useStyles();
+  console.log(props);
 
   function Body() {
-    const len = props.user.user.favorite_list.length;
+    const len = props.courses.favorite_list.length;
+
     if (len == 0) {
       return <Grid container>
         <Typography variant="h7" align="left" color="black">
@@ -61,53 +63,72 @@ export default function MyCourseList(props) {
       </Grid>;
     }
     return <Grid container spacing={2}>
-      {props.user.user.favorite_list.map((course) => (
+      {props.courses.favorite_list.map((course) => (
         <MyFavoriteCard key={course.title} course={course} />
       ))}
     </Grid>;
   }
 
   function Paging() {
-    const len = props.user.user.favorite_list.length;
-    if (len == 0) { 
+    const len = props.courses.favorite_list.length;
+    if (len == 0) {
       return <Grid item xs={12}>
-        </Grid>;
-     }
+      </Grid>;
+    }
     return <Grid item xs={12}>
-      <Pagination count={props.user.user.favorite_list.length} shape="rounded" size="large" />
+      <Pagination count={props.courses.favorite_list.length} shape="rounded" size="large" />
     </Grid>;
   }
-
-  return (
-    <main>
-      <div className={classes.heroContent}>
-        <Container maxWidth="md">
-          <Typography variant="h6" align="left" color="textSecondary">
-            Wish list
+  if (props.coursesLoading) {
+    return (
+      <Grid container>
+        <Grid item row xs={12}>
+          <Typography variant="h4">Loading....</Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+  else if (props.coursesErrMess) {
+    return (
+      <Grid container>
+        <Grid item row xs={12}>
+          <Typography variant="h4">{props.coursesErrMess}</Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+  else {
+    return (
+      <main>
+        <div className={classes.heroContent}>
+          <Container maxWidth="md">
+            <Typography variant="h6" align="left" color="textSecondary">
+              Wish list
           </Typography>
-        </Container>
-      </div>
-      <Container className={classes.cardGrid} maxWidth="md">
-        {/* <Grid container spacing={2}>
+          </Container>
+        </div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* <Grid container spacing={2}>
           {myCoursesList.map((course) => (
             <MyFavoriteCard key={course.title} course={course} />
           ))}
         </Grid> */}
-        <Body />
-      </Container>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '5vh' }}
-      >
-        {/* <Grid item xs={12}>
+          <Body />
+        </Container>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: '5vh' }}
+        >
+          {/* <Grid item xs={12}>
           <Pagination count={10} shape="rounded" size="large" />
         </Grid> */}
-        <Paging />
-      </Grid>
-    </main>
-  );
+          <Paging />
+        </Grid>
+      </main>
+    );
+  }
 }
