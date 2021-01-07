@@ -461,7 +461,7 @@ export const addAllComments = (comments) => ({
 
 const getLoginLocal = () => {
   const loginData = localStorage.getItem('loginData');
-  return JSON.parse(loginData).accessToken;
+  return loginData?JSON.parse(loginData).accessToken:null;
 };
 
 export const fetchUserProfile = () => (dispatch) => {

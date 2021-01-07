@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
 class CourseDetail extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.userProfile.user.user._id) 
+    this.props.userProfile.user===null??console.log(this.props.userProfile.user.user._id); 
     console.log(this.props.match.params.id)
   }
 

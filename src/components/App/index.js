@@ -7,8 +7,7 @@ import Login from "../Login";
 import Signup from "../Signup";
 import Footer from "../Footer";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AdminLayout from "../../layouts/AdminLayout";
-import Users from "../Admin/Users";
+
 import Categories from "../Categories";
 import CourseDetail from "../CourseDetail";
 import Profile from "../Profile";
@@ -16,13 +15,20 @@ import Home from "../Home";
 import UpdateProfile from "../UpdateProfile";
 import AddCourse from "../AddCourse";
 import VideoPlayer from "../VideoPlayer";
+import SingleCategory from "../SingleCategory";
+import MyCourseList from "../MyCourseList";
+import MyFavoriteList from "../MyFavoriteList";
+
+//Admins
 import Courses from "../Admin/Courses";
 import CourseDetails from "../Admin/CourseDetails";
 import Dashboard from "../Admin/Dashboard";
 import Account from "../Admin/Account";
-import SingleCategory from "../SingleCategory";
-import MyCourseList from "../MyCourseList";
-import MyFavoriteList from "../MyFavoriteList";
+import AdminLayout from "../../layouts/AdminLayout";
+import Users from "../Admin/Users";
+import AdminCategories from "../Admin/Categories";
+import UserDetails from "../Admin/UserDetails";
+import Settings from "../Admin/Settings";
 
 import { fetchUserProfile, fetchMyCourses, fetchMyWishlist } from "../../redux/actions";
 
@@ -79,21 +85,28 @@ class App extends Component {
                       <Route exact path="/admin/dashboard">
                         <Dashboard />
                       </Route>
-                      <Route exact path="/admin/courses">
-                        <Courses />
-                      </Route>
                       <Route exact path="/admin/courses/:id">
                         <CourseDetails />
                       </Route>
+                      <Route exact path="/admin/courses">
+                        <Courses />
+                      </Route>
+                      <Route exact path="/admin/users/:id">
+                        <UserDetails />
+                      </Route>
                       <Route exact path="/admin/users">
                         <Users />
+                      </Route>
+                      <Route exact path="/admin/categories">
+                        <AdminCategories />
                       </Route>
                       <Route exact path="/admin/account">
                         <Account />
                       </Route>
                       <Route exact path="/admin/settings">
-                        <Account />
+                        <Settings />
                       </Route>
+                      
                     </Switch>
                   </AdminLayout>
                   <Redirect from="/admin" to="/admin/dashboard" />

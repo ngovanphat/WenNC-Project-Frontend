@@ -18,6 +18,9 @@ import NavItem from "./item";
 import SubjectIcon from '@material-ui/icons/Subject';
 import SecurityIcon from "@material-ui/icons/Security";
 import SettingsIcon from "@material-ui/icons/Settings";
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import CategoryIcon from '@material-ui/icons/Category';
+
 const user = {
   avatar: "/public/logo192.png",
   name: "Username",
@@ -38,6 +41,16 @@ const items = [
     href: "/admin/courses",
     icon: SubjectIcon,
     title: "Courses",
+  },
+  {
+    href: "/admin/categories",
+    icon: CategoryIcon,
+    title: "Categories",
+  },
+  {
+    href: "/admin/feedbacks",
+    icon: FeedbackIcon,
+    title: "Feedbacks",
   },
   {
     href: "/admin/account",
