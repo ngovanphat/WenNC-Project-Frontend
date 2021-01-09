@@ -12,6 +12,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { removeFromWishlist } from '../../../redux/actions';
 
 const TitleStyled = styled.div`
     overflow: hidden;
@@ -72,9 +74,15 @@ const useStyles = makeStyles({
 
 export default function MyFavoriteCard(props) {
   const classes = useStyles();
-  const { course } = props;
+  const { course, user } = props;
   const path = "/courses/" + course._id;
   const preventDefault = (event) => event.preventDefault();
+
+  const dispatch = useDispatch();
+  const onClick = async (e) => {
+    e.preventDefault();
+    await dispatch(removeFromWishlist({ 'userId': user.user._id, 'courseId': course._id }));
+  };
 
   return (
     <Grid item xs={12}>
@@ -121,7 +129,7 @@ export default function MyFavoriteCard(props) {
                 Go to course
               </Link>
             </Button>
-            <Button variant="outlined" className={classes.removeButton}>
+            <Button onClick={(e) => onClick(e)} variant="outlined" className={classes.removeButton}>
               Remove
             </Button>
           </CardContent>

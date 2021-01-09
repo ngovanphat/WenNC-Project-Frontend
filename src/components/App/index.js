@@ -110,7 +110,6 @@ class App extends Component {
                       <Route exact path="/admin/settings">
                         <Settings />
                       </Route>
-                      
                     </Switch>
                   </AdminLayout>
                   <Redirect from="/admin" to="/admin/dashboard" />
@@ -133,16 +132,10 @@ class App extends Component {
                   <Profile user={this.props.userProfile.user} />
                 </Route>
                 <Route exact path="/myCourses">
-                  <MyCourseList
-                    courses={this.props.myCourses.courses}
-                    coursesLoading={this.props.myCourses.isLoading}
-                    coursesErrMess={this.props.myCourses.errMess} />
+                  <MyCourseList />
                 </Route>
                 <Route exact path="/wishList">
-                  <MyFavoriteList 
-                    courses={this.props.myWishlist.courses}
-                    coursesLoading={this.props.myWishlist.isLoading}
-                    coursesErrMess={this.props.myWishlist.errMess} />
+                  <MyFavoriteList />
                 </Route>
                 <Route exact path="/profile/update">
                   <UpdateProfile user={this.props.userProfile.user} />

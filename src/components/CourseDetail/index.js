@@ -13,7 +13,7 @@ import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { fetchSingleCourse, joinCourse } from '../../redux/actions';
+import { fetchSingleCourse, joinCourse, addToWishlist } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
@@ -26,14 +26,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) },
-  joinCourse: () => { dispatch(joinCourse()) },
-});
+  joinCourse: (input) => { dispatch(joinCourse(input)) },
+  addToWishlist: (input) => { dispatch(addToWishlist(input)) },
+});    
 
 class CourseDetail extends Component {
   constructor(props) {
     super(props);
-    this.props.userProfile.user===null??console.log(this.props.userProfile.user.user._id); 
-    console.log(this.props.match.params.id)
   }
 
   componentDidMount() {
@@ -49,6 +48,11 @@ class CourseDetail extends Component {
   handleClick = async (e) => {
     e.preventDefault();
     await this.props.joinCourse({ 'userId': this.props.userProfile.user.user._id, 'courseId': this.props.match.params.id });
+  };
+
+  handlePress = async (e) => {
+    e.preventDefault();
+    await this.props.addToWishlist({ 'userId': this.props.userProfile.user.user._id, 'courseId': this.props.match.params.id });
   };
 
   countRatingStar(comments, value) {
@@ -130,7 +134,7 @@ class CourseDetail extends Component {
                   </Grid>
 
                   <Grid item container style={{ color: 'white', marginTop: 20, display: 'flex' }}>
-                    <Button variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
+                    <Button onClick={(e) => this.handlePress(e)}  variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
                   </Grid>
 
                 </List>
