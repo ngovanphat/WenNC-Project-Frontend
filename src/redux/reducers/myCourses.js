@@ -2,31 +2,31 @@ import * as actionTypes from '../actionTypes';
 const initialState = {
   isLoading: true,
   errMess: null,
-  category: null
+  courses: []
 };
 
-export const singleCategory = (state = initialState, action) => {
+export const myCourses = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_SINGLE_CATEGORY:
+    case actionTypes.ADD_MY_COURSES:
       return {
         ...state,
         isLoading: false,
         errMess: null,
-        category: action.payload
+        courses: action.payload
       };
-    case actionTypes.SINGLE_CATEGORY_LOADING:
+    case actionTypes.MY_COURSES_LOADING:
       return {
         ...state,
         isLoading: true,
         errMess: null,
-        category: null
+        courses: []
       };
-    case actionTypes.SINGLE_CATEGORY_FAIL:
+    case actionTypes.MY_COURSES_FAIL:
       return {
         ...state,
         isLoading: false,
         errMess: action.payload,
-        category: null
+        courses: []
       };
     default:
       return state;

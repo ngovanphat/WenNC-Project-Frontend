@@ -7,9 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { NavLink, useHistory } from 'react-router-dom';
-
 import { useForm } from "react-hook-form";
-
 import { signup } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,12 +42,11 @@ function Signup() {
     if (res) history.push('/login')
   };
 
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h4" color="primary" >
+        <Typography component="h1" variant="h4" style={{color: '#005580'}}>
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -121,7 +118,7 @@ function Signup() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            style={{backgroundColor: '#005580', color: 'white'}}
             className={classes.submit}
           >
             Sign Up

@@ -13,21 +13,28 @@ import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { fetchSingleCourse } from '../../redux/actions';
+import { fetchSingleCourse, joinCourse } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
     singleCourse: state.singleCourse,
     sameCourses: state.sameCourses,
-    allComments: state.allComments
+    allComments: state.allComments,
+    userProfile: state.userProfile,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) }
+  fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) },
+  joinCourse: () => { dispatch(joinCourse()) },
 });
 
 class CourseDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.props.userProfile.user===null??console.log(this.props.userProfile.user.user._id); 
+    console.log(this.props.match.params.id)
+  }
 
   componentDidMount() {
     this.props.fetchSingleCourse(this.props.match.params.id);
@@ -38,6 +45,11 @@ class CourseDetail extends Component {
       this.props.fetchSingleCourse(this.props.match.params.id);
     }
   }
+
+  handleClick = async (e) => {
+    e.preventDefault();
+    await this.props.joinCourse({ 'userId': this.props.userProfile.user.user._id, 'courseId': this.props.match.params.id });
+  };
 
   countRatingStar(comments, value) {
     let sum = 0;
@@ -149,7 +161,7 @@ class CourseDetail extends Component {
               >Course content</Typography>
               <Typography variant="caption" style={{ marginTop: 30, marginBottom: 5, color: 'grey' }}>{course.videos.length} videos</Typography>
               <Paper style={{ color: 'white' }} variant="outlined">
-                  <VideoList videos={course.videos} courseId={course._id} />
+                <VideoList videos={course.videos} courseId={course._id} />
               </Paper>
               {/*------------------Description---------------------*/}
               <Typography
@@ -320,8 +332,7 @@ class CourseDetail extends Component {
                     <Typography variant="p" style={{ color: 'grey', marginLeft: 10, textDecoration: 'line-through' }}>${course.actualPrice}</Typography>
                     <Typography variant="h6" style={{ marginLeft: 10 }}>{100 - Math.ceil(course.price * 100 / course.actualPrice)}% off</Typography>
                   </Grid>
-
-                  <Button variant="contained" fullWidth color="secondary" style={{ marginTop: 20, height: 50, fontWeight: 'bold' }}>
+                  <Button onClick={(e) => this.handleClick(e)} variant="contained" fullWidth color="secondary" style={{ marginTop: 20, height: 50, fontWeight: 'bold' }}>
                     Join course
                   </Button>
                   <Button variant="outlined" fullWidth color="primary" style={{ marginTop: 5, height: 50, fontWeight: 'bold' }}>

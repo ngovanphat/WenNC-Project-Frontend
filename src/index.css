@@ -20,5 +20,6 @@ code {
     display: flex;
     height: 100%;
     overflow-x: hidden;
+    overflow: initial;
     flex-direction: column;
 }

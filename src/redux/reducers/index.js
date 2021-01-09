@@ -14,6 +14,8 @@ import { sameCourses } from './sameCourses';
 import { hotCategories } from './hotCategories';
 import { allCategories } from './allCategories';
 import { singleCategory } from './singleCategory';
-
 import { allComments } from './allComments';
-export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, singleCourse, sameCourses, hotCategories, allCategories, singleCategory, allComments });
+import { userProfile } from './userProfile';
+import { myCourses } from './myCourses';
+import { myWishlist } from './myWishlist';
+export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, singleCourse, sameCourses, hotCategories, allCategories, singleCategory, allComments, userProfile, myCourses, myWishlist });

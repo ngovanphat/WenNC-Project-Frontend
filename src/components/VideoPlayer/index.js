@@ -9,16 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 
-
 import VideoList from '../CourseDetail/VideoList';
-
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     marginTop: 20,
     marginBottom: 30,
     paddingLeft: 12,
-    paddingRight:12 
+    paddingRight: 12
   },
   home: {
     fontFamily: "Arial",
@@ -44,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VideoPlayer() {
   const classes = useStyles();
-  const course=useSelector(state => state.singleCourse.course);
+  const course = useSelector(state => state.singleCourse.course);
   const path = useRouteMatch();
   const video = (course.videos.filter((video) => video._id === path.params.videoid))[0];
   return (
     <main>
       <Grid container>
         <Grid xs={7}>
-          <Container maxWidth="lg" className={classes.heroContent}>    
+          <Container maxWidth="lg" className={classes.heroContent}>
             <div className={classes.video}>
               <ReactPlayer
                 width='95%'
@@ -75,20 +73,18 @@ export default function VideoPlayer() {
           </Container>
         </Grid>
         <Grid xs={5}>
-          <Container style={{marginTop:15, padding: 0}} maxWidth="lg">
-            <Typography align="start" variant="h6" style={{fontWeight: 500, fontSize: 24}}>
+          <Container style={{ marginTop: 15, padding: 0 }} maxWidth="lg">
+            <Typography align="start" variant="h6" style={{ fontWeight: 500, fontSize: 24 }}>
               <Link href="#" onClick={(event) => event.preventDefault()} style={{ textDecoration: "none", color: "black" }}>
                 {course.title}
               </Link>
             </Typography>
           </Container>
-          <Paper style={{ color: 'white', marginRight: 20, marginTop:20 }} variant="outlined">
+          <Paper style={{ color: 'white', marginRight: 20, marginTop: 20 }} variant="outlined">
             <VideoList videos={course.videos} courseId={course._id} />
           </Paper>
         </Grid>
       </Grid>
-      
-      
     </main>
   );
 };

@@ -68,3 +68,25 @@ export const ADD_SINGLE_CATEGORY = 'ADD_SINGLE_CATEGORY';
 export const ALL_COMMENTS_LOADING = 'ALL_COMMENTS_LOADING';
 export const ALL_COMMENTS_FAIL = 'ALL_COMMENTS_FAIL';
 export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
+
+
+// ------------------- User ------------------------
+
+// ------------------------ User Profile --------------------
+
+export const USER_PROFILE_LOADING = 'USER_PROFILE_LOADING';
+export const USER_PROFILE_FAIL = 'USER_PROFILE_FAIL';
+export const ADD_USER_PROFILE = 'ADD_USER_PROFILE';
+
+// ------------------------ My Courses --------------------
+
+export const MY_COURSES_LOADING = 'MY_COURSES_LOADING';
+export const MY_COURSES_FAIL = 'MY_COURSES_FAIL';
+export const ADD_MY_COURSES = 'ADD_MY_COURSES';
+// export const JOIN_COURSES = 'JOIN_COURSES';
+
+// ------------------------ My Wishlist --------------------
+
+export const MY_WISHLIST_LOADING = 'MY_WISHLIST_LOADING';
+export const MY_WISHLIST_FAIL = 'MY_WISHLIST_FAIL';
+export const ADD_MY_WISHLIST = 'ADD_MY_WISHLIST';

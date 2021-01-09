@@ -2,31 +2,31 @@ import * as actionTypes from '../actionTypes';
 const initialState = {
   isLoading: true,
   errMess: null,
-  category: null
+  user: null
 };
 
-export const singleCategory = (state = initialState, action) => {
+export const userProfile = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_SINGLE_CATEGORY:
+    case actionTypes.ADD_USER_PROFILE:
       return {
         ...state,
         isLoading: false,
         errMess: null,
-        category: action.payload
+        user: action.payload
       };
-    case actionTypes.SINGLE_CATEGORY_LOADING:
+    case actionTypes.USER_PROFILE_LOADING:
       return {
         ...state,
         isLoading: true,
         errMess: null,
-        category: null
+        user: null
       };
-    case actionTypes.SINGLE_CATEGORY_FAIL:
+    case actionTypes.USER_PROFILE_FAIL:
       return {
         ...state,
         isLoading: false,
         errMess: action.payload,
-        category: null
+        user: null
       };
     default:
       return state;

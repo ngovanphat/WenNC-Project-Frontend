@@ -40,7 +40,7 @@ class Home extends Component {
         <Grid item container>
           <Grid item />
           <Grid item xs={12}>
-            <CarouselSlide 
+            <CarouselSlide
               courses={this.props.newestCourses.courses}
               coursesLoading={this.props.newestCourses.isLoading}
               coursesErrMess={this.props.newestCourses.errMess}

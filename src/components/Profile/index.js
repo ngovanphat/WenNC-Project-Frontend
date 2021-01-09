@@ -4,7 +4,7 @@ import { makeStyles, fade } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile() {
+export default function Profile(props) {
   const classes = useStyles();
 
   return (
@@ -61,22 +61,22 @@ export default function Profile() {
         <Grid container direction="row">
           <Grid item container direction="column" alignItems="center" justify="center" xs={6}>
             <Grid item>
-              <Avatar src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" className={classes.avatar} />
+              <Avatar src={props.user.user.avatar} className={classes.avatar} />
             </Grid>
           </Grid>
           <Grid item container direction="column" xs={6}>
             <List className={classes.list}>
               <Divider />
               <ListItem>
-                <ListItemText primary="Full name" secondary="Christian Dior" />
+                <ListItemText primary="Full name" secondary={props.user.user.fullname} />
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText primary="Email" secondary="1234567@student.hcmus.edu.vn" />
+                <ListItemText primary="Email" secondary={props.user.user.email} />
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText primary="Member since" secondary="Nov 6, 2020" />
+                <ListItemText primary="Member since" secondary={props.user.user.createdAt} />
               </ListItem>
               <Divider />
             </List>
@@ -84,7 +84,9 @@ export default function Profile() {
         </Grid>
         <Grid item container direction="column" alignItems="center" justify="center" xs={12}>
           <Button variant="outlined" align="center" className={classes.button}>
-            Update your profile
+            <NavLink to="/profile/update" style={{ textDecoration: 'none', color: "#005580" }}>
+              Update your profile
+            </NavLink>
           </Button>
         </Grid>
       </Container>

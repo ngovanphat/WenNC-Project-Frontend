@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import ImageUpload from '../AddCourse/ImageUpload';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -30,9 +31,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 550,
   },
   avatar: {
-    marginTop: 10,
     width: theme.spacing(15),
-    height: theme.spacing(15),
+    height: theme.spacing(15)
+  },
+  avatarUpload: {
+    paddingLeft: 0
   },
   button: {
     marginTop: 25,
@@ -40,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#005580'
   },
   uploadButton: {
-    marginTop: 10,
     marginBottom: 10,
     borderColor: "#005580",
     color: '#005580'
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UpdateProfile() {
+export default function UpdateProfile(props) {
   const classes = useStyles();
 
   return (
@@ -67,7 +69,7 @@ export default function UpdateProfile() {
             <Grid item xs={6}>
               <TextField
                 label="Full name"
-                defaultValue="Christian Dior"
+                defaultValue={props.user.user.fullname}
                 variant="outlined"
                 fullWidth
               />
@@ -75,7 +77,7 @@ export default function UpdateProfile() {
             <Grid item xs={6}>
               <TextField
                 label="Email"
-                defaultValue="1234567@student.hcmus.edu.vn"
+                defaultValue={props.user.user.email}
                 variant="outlined"
                 fullWidth
               />
@@ -90,17 +92,20 @@ export default function UpdateProfile() {
             <Divider />
           </List>
           <Grid item container direction="column" alignItems="flex-start" xs={12}>
-            <Typography className={classes.label} color="textPrimary">
+            <Typography className={classes.label} style={{marginBottom: 10}} color="textPrimary">
               Profile photo
             </Typography>
           </Grid>
-          <Grid item container direction="row">
+          <Grid item container direction="row" xs={12}>
             <Grid item container direction="column" alignItems="flex-start" xs={2}>
-              <Avatar variant="rounded" src="https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg" className={classes.avatar} />
+              {/* <Avatar variant="rounded" src={props.user.user.avatar} className={classes.avatar} /> */}
+              <Container className={classes.avatarUpload}>
+                <ImageUpload />
+              </Container>
             </Grid>
             <Grid item container direction="column" alignItems="flex-start" xs={10}>
               <Button variant="outlined" align="start" className={classes.uploadButton}>
-                Upload photo
+                Save
               </Button>
               <Typography variant="h7" color="textSecondary">
                 Maximum size of 1MB. JPG, GIF, or PNG.

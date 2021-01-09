@@ -19,7 +19,7 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: '100%',
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-end",

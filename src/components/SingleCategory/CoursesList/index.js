@@ -6,7 +6,6 @@ import { Rating, Pagination } from '@material-ui/lab';
 import CourseTile from './CourseTile';
 
 function CourseList(props) {
-
   const [state, setState] = useState({
     openRating: false,
     openPrice: false,
@@ -22,9 +21,11 @@ function CourseList(props) {
       setState({ ...state, [event.target.name]: event.target.checked });
     }
   };
+
   const handleRating = () => {
     setState({ ...state, openRating: !state.openRating })
   }
+
   const handlePrice = () => {
     setState({ ...state, openPrice: !state.openPrice })
   }
@@ -157,27 +158,25 @@ function CourseList(props) {
         </Hidden>
         <Grid xs={12} sm={8} style={{ marginLeft: 20 }}>
           <List>
-            {props.courses.docs.map((course) => 
-
-                <CourseTile
-                  key={course._id}
-                  _id={course._id}
-                  imageUrl={course.thumnail}
-                  title={course.title}
-                  description={course.shortDescription}
-                  lecturer={course.leturer}
-                  rating={course.points}
-                  price={course.price}
-                  actualPrice={course.actualPrice}
-                />
+            {props.courses.docs.map((course) =>
+              <CourseTile
+                key={course._id}
+                _id={course._id}
+                imageUrl={course.thumnail}
+                title={course.title}
+                description={course.shortDescription}
+                lecturer={course.leturer}
+                rating={course.points}
+                price={course.price}
+                actualPrice={course.actualPrice}
+              />
             )}
           </List>
           <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Pagination page={1} count={props.courses.totalPages}/>
+            <Pagination page={1} count={props.courses.totalPages} />
           </Grid>
         </Grid>
       </Grid>
-
     );
 }
 

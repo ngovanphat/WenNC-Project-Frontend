@@ -6,7 +6,6 @@ import { Rating } from '@material-ui/lab';
 import CourseTile from './CourseTile';
 
 function CourseList(props) {
-
   const [state, setState] = useState({
     openRating: false,
     openPrice: false,
@@ -22,9 +21,11 @@ function CourseList(props) {
       setState({ ...state, [event.target.name]: event.target.checked });
     }
   };
+
   const handleRating = () => {
     setState({ ...state, openRating: !state.openRating })
   }
+  
   const handlePrice = () => {
     setState({ ...state, openPrice: !state.openPrice })
   }
@@ -157,19 +158,19 @@ function CourseList(props) {
         </Hidden>
         <Grid xs={12} sm={8} style={{ marginLeft: 20 }}>
           <List>
-            {props.courses.map((course) => 
+            {props.courses.map((course) =>
 
-                <CourseTile
-                  key={course._id}
-                  _id={course._id}
-                  imageUrl={course.thumnail}
-                  title={course.title}
-                  description={course.shortDescription}
-                  lecturer={course.leturer}
-                  rating={course.points}
-                  price={course.price}
-                  actualPrice={course.actualPrice}
-                />
+              <CourseTile
+                key={course._id}
+                _id={course._id}
+                imageUrl={course.thumnail}
+                title={course.title}
+                description={course.shortDescription}
+                lecturer={course.leturer}
+                rating={course.points}
+                price={course.price}
+                actualPrice={course.actualPrice}
+              />
             )}
           </List>
         </Grid>

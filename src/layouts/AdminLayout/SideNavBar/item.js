@@ -2,8 +2,9 @@ import React from "react";
 import { NavLink as RouterLink } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import { Button, ListItem, makeStyles } from "@material-ui/core";
+import { Button, colors, ListItem, makeStyles } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import { Colors } from "../../../helpers/colors";
 const useStyles = makeStyles((theme) => ({
   item: {
     display: "flex",
@@ -11,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
   },
   button: {
-    color: theme.palette.text.secondary,
-    fontWeight: theme.typography.fontWeightMedium,
+    color: colors.grey,
+    fontWeight: 16,
     justifyContent: "flex-start",
     letterSpacing: 0,
     padding: "10px 8px",
@@ -26,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "auto",
   },
   active: {
-    color: theme.palette.primary.main,
+    color: Colors.primary,
     "& $title": {
-      fontWeight: theme.typography.fontWeightMedium,
+      fontWeight: 16,
     },
     "& $icon": {
-      color: theme.palette.primary.main,
+      color: Colors.primary,
     },
   },
 }));
@@ -44,7 +45,7 @@ const NavItem = (props) => {
     <ListItem
       className={clsx(classes.item, props.className)}
       disableGutters
-      key={props.key}
+      key={props.id}
     >
       <Button
         activeClassName={classes.active}

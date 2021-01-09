@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Typography} from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 import CourseList from './CoursesList';
 import CategoriesList from './CategoriesList';
 
-
-import { fetchAllCourses, fetchAllCategories } from '../../redux/actions'; 
+import { fetchAllCourses, fetchAllCategories } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
-      allCourses: state.allCourses,
-      allCategories: state.allCategories
+    allCourses: state.allCourses,
+    allCategories: state.allCategories
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAllCourses: () => {dispatch(fetchAllCourses())},
-  fetchAllCategories: () => {dispatch(fetchAllCategories())}
+  fetchAllCourses: () => { dispatch(fetchAllCourses()) },
+  fetchAllCategories: () => { dispatch(fetchAllCategories()) }
 });
 
 class Categories extends Component {
@@ -40,13 +39,13 @@ class Categories extends Component {
           <Grid item xs={4} style={{ marginLeft: 20, marginTop: 50 }}>
             <Typography variant="h5" style={{ fontWeight: '700' }}>All topics</Typography>
           </Grid>
-          <CategoriesList 
-                categories={this.props.allCategories.categories}
-                isLoading={this.props.allCategories.isLoading}
-                errMess={this.props.allCategories.errMess}
-          /> 
+          <CategoriesList
+            categories={this.props.allCategories.categories}
+            isLoading={this.props.allCategories.isLoading}
+            errMess={this.props.allCategories.errMess}
+          />
         </Grid>
-        <Grid  container style={{ marginTop: 50, marginLeft: 20 }}>
+        <Grid container style={{ marginTop: 50, marginLeft: 20 }}>
           <Grid item xs={4} style={{ marginBottom: 20 }}>
             <Typography variant="h5" style={{ fontWeight: '700' }}>All development courses</Typography>
           </Grid>

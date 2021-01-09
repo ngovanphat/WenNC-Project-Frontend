@@ -60,9 +60,9 @@ const TopCategoriesContainer = (props) => {
         <Grid className={classes.wrapper} item container>
           <Typography className={classes.lable}>{props.label}</Typography>
           <Typography>
-            <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none', color: 'grey', marginRight: 20 }} className={classes.showMore}>
+            <Link component={RouterLink} to='/categories' style={{ textDecoration: 'none', marginRight: 20 }} className={classes.showMore}>
               Explore more
-              </Link>
+            </Link>
           </Typography>
         </Grid>
         <Grid container>
