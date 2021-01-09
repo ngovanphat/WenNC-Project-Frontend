@@ -30,19 +30,17 @@ import AdminCategories from "../Admin/Categories";
 import UserDetails from "../Admin/UserDetails";
 import Settings from "../Admin/Settings";
 
-import { fetchUserProfile, fetchMyWishlist } from "../../redux/actions";
+import { fetchUserProfile } from "../../redux/actions";
 
 const mapStateToProps = state => {
   return {
     loginReducer: state.loginReducer,
     userProfile: state.userProfile,
-    myWishlist: state.myWishlist
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUserProfile: () => { dispatch(fetchUserProfile()) },
-  fetchMyWishlist: () => { dispatch(fetchMyWishlist()) },
+  fetchUserProfile: () => { dispatch(fetchUserProfile()) }
 });
 
 class App extends Component {
@@ -52,7 +50,6 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchUserProfile();
-    this.props.fetchMyWishlist();
   }
 
   render() {
@@ -128,10 +125,7 @@ class App extends Component {
                   <MyCourseList />
                 </Route>
                 <Route exact path="/wishList">
-                  <MyFavoriteList
-                    courses={this.props.myWishlist.courses}
-                    coursesLoading={this.props.myWishlist.isLoading}
-                    coursesErrMess={this.props.myWishlist.errMess} />
+                  <MyFavoriteList />
                 </Route>
                 <Route exact path="/profile/update">
                   <UpdateProfile user={this.props.userProfile.user} />

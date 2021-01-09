@@ -625,6 +625,74 @@ export const fetchMyWishlist = () => (dispatch) => {
     .catch(error => dispatch(myWishlistFailed(error.message)));
 }
 
+export const addToWishlist = (input) => {
+  const { userId, courseId } = input;
+  return (dispatch) => {
+    return axios({
+      method: 'post',
+      url: ApiURL + '/users/addFavoriteCourse',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: {
+        userId: userId,
+        courseId: courseId
+      }
+    })
+      .then(response => {
+        if (response.status == 200) {
+          alert("Add to wishlist successfully");
+        }
+        else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+        error => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch(error => dispatch(myWishlistFailed(error.message)));
+  };
+};
+
+export const removeFromWishlist = (input) => {
+  const { userId, courseId } = input;
+  return (dispatch) => {
+    return axios({
+      method: 'delete',
+      url: ApiURL + '/users/removeFavoriteCourse',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: {
+        userId: userId,
+        courseId: courseId
+      }
+    })
+      .then(response => {
+        if (response.status == 200) {
+          alert("Remove from wishlist successfully");
+        }
+        else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+        error => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch(error => dispatch(myWishlistFailed(error.message)));
+  };
+};
+
 export const myWishlistLoading = () => ({
   type: actionTypes.MY_WISHLIST_LOADING
 });
