@@ -30,14 +30,15 @@ import AdminCategories from "../Admin/Categories";
 import UserDetails from "../Admin/UserDetails";
 import Settings from "../Admin/Settings";
 
-import { fetchUserProfile, fetchMyCourses, fetchMyWishlist } from "../../redux/actions";
+import { fetchUserProfile, fetchMyCourses, fetchMyWishlist, fetchAllCategories } from "../../redux/actions";
 
 const mapStateToProps = state => {
   return {
     loginReducer: state.loginReducer,
     userProfile: state.userProfile,
     myCourses: state.myCourses,
-    myWishlist: state.myWishlist
+    myWishlist: state.myWishlist,
+    allCategories: state.allCategories
   };
 };
 
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchUserProfile: () => { dispatch(fetchUserProfile()) },
   fetchMyCourses: () => { dispatch(fetchMyCourses()) },
   fetchMyWishlist: () => { dispatch(fetchMyWishlist()) },
+  fetchAllCategories: () => {dispatch(fetchAllCategories())}
 });
 
 class App extends Component {
@@ -56,6 +58,7 @@ class App extends Component {
     this.props.fetchUserProfile();
     this.props.fetchMyCourses();
     this.props.fetchMyWishlist();
+    this.props.fetchAllCategories();
   }
 
   render() {
@@ -73,6 +76,7 @@ class App extends Component {
           }}>
             <Grid item xs>
               <Header
+                allCategories={this.props.allCategories.categories}
                 isLoggedIn={this.props.loginReducer.isLoggedIn}
                 user={this.props.userProfile.user}
               />

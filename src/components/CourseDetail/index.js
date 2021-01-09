@@ -319,7 +319,7 @@ class CourseDetail extends Component {
               </Grid>
 
             </Grid>
-            <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80 }}>
+            <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
               <Paper >
                 <Grid container style={{ padding: 10 }}>
                   <Grid container style={{

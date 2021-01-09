@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector,  useDispatch } from 'react-redux';
 import { fade, makeStyles } from "@material-ui/core/styles";
-import { AppBar, Grid, Toolbar, Typography, Hidden, Avatar } from "@material-ui/core";
+import { AppBar, Grid, Toolbar, Typography, Hidden, Avatar, Popper } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
 import HoverMenu from "./HoverMenu";
@@ -51,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles();
-
   function TopRightContainer() {
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn) {
@@ -85,6 +86,10 @@ const Header = (props) => {
     </Grid>;
   }
 
+ 
+  function handleSearch(query) {
+    console.log(query);
+  }
   return (
     <Grid container xs={12}>
       <AppBar position="static" className={classes.style}>
@@ -98,28 +103,40 @@ const Header = (props) => {
           </Grid>
           <Grid item md={2}>
             <Hidden only={["sm", "xs"]}>
-              <HoverMenu />
+              <HoverMenu categories={props.allCategories} />
             </Hidden>
           </Grid>
           <Grid item md={5}>
             <Hidden only={["sm", "xs"]}>
-              <TextField
-                className={classes.textField}
-                placeholder="What do you want to learn?"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment>
+            <Autocomplete
+              freeSolo
+              disableClearable
+              id="free-solo-2-demo"
+              options={props.allCategories.map(category => category.title)}
+              renderInput={(params) => {
+                return (
+                <TextField
+                  {...params}
+                  label="Search"
+                  margin="normal"
+                  variant="outlined"
+                  InputProps={{ 
+                    ...params.InputProps,
+                    type: 'search',
+                    startAdornment: (
                       <IconButton>
                         <SearchIcon />
                       </IconButton>
-                    </InputAdornment>
-                  ),
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              />
+                      ), 
+                  }}
+                  onChange={(e)=> handleSearch(e.target.value)}
+                />
+              )}
+            }
+            />
+             
             </Hidden>
+              
           </Grid>
           <TopRightContainer />
         </Toolbar>

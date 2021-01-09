@@ -10,15 +10,14 @@ function CourseList(props) {
     openRating: false,
     openPrice: false,
     valueRating: 5,
-    paid: false,
-    free: false
+    desc: 1
   });
 
   const handleChange = (event) => {
     if (event.target.name === "rating")
       setState({ ...state, valueRating: +event.target.value });
     else {
-      setState({ ...state, [event.target.name]: event.target.checked });
+      setState({ ...state, desc: +event.target.value });
     }
   };
 
@@ -29,7 +28,7 @@ function CourseList(props) {
   const handlePrice = () => {
     setState({ ...state, openPrice: !state.openPrice })
   }
-  console.log(props);
+  
 
   if (props.isLoading) {
     return (
@@ -50,6 +49,12 @@ function CourseList(props) {
     );
   }
   else
+  {
+    const courseList = props.courses.docs
+    .filter(course => (course.points >= state.valueRating && course.points < state.valueRating +1))
+    .sort(function(a,b){
+      return state.desc === 1 ?  a.price - b.price : (b.price-a.price);
+    });
     return (
       <Grid container>
         <Hidden only={['xs', 'sm']}>
@@ -127,30 +132,30 @@ function CourseList(props) {
             </ListItem>
             <Collapse in={state.openPrice} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <FormGroup column>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={state.paid}
-                        onChange={handleChange}
-                        name="paid"
-                        color="primary"
-                      />
-                    }
-                    label="Paid"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={state.free}
-                        onChange={handleChange}
-                        name="free"
-                        color="primary"
-                      />
-                    }
-                    label="Free"
-                  />
-                </FormGroup>
+              <FormControl component="fieldset">
+                  <RadioGroup aria-label="rating" name="price" value={state.desc} onChange={handleChange}>
+                    <FormControlLabel label={
+                      <Container disableGutters style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        alignItems: 'center'
+                      }}>
+                        <Typography variant="p">Ascending</Typography>
+                      </Container>
+                    } control={<Radio />} value={1} />
+                    <FormControlLabel label={
+                      <Container disableGutters style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        alignItems: 'center'
+                      }}>
+                        <Typography variant="p">Descending</Typography>
+                      </Container>
+                    } control={<Radio />} value={-1} />
+                  </RadioGroup>
+                </FormControl>
               </List>
             </Collapse>
             <Divider />
@@ -158,7 +163,7 @@ function CourseList(props) {
         </Hidden>
         <Grid xs={12} sm={8} style={{ marginLeft: 20 }}>
           <List>
-            {props.courses.docs.map((course) =>
+            {courseList.map((course) =>
               <CourseTile
                 key={course._id}
                 _id={course._id}
@@ -172,12 +177,21 @@ function CourseList(props) {
               />
             )}
           </List>
-          <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Pagination page={1} count={props.courses.totalPages} />
-          </Grid>
+          {courseList.length !== 0 ? 
+            <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
+             <Pagination page={1} count={Math.ceil(courseList.length/10)} />
+            </Grid> 
+            : 
+            <Grid style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              We do not have any course for your requirement
+            </Grid>
+          }
+          
         </Grid>
       </Grid>
     );
+  
+  }
 }
 
 export default CourseList;

@@ -4,6 +4,8 @@ import { fade, withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -52,7 +54,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function HoverMenu() {
+export default function HoverMenu(props) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -64,7 +66,6 @@ export default function HoverMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
     <div>
       <Button
@@ -82,20 +83,21 @@ export default function HoverMenu() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem
-          onClick={handleClose}
-        >
-          <NavLink to="/categories/Web Development" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
-            <ListItemText primary="Web Development" />
-          </NavLink>
-        </StyledMenuItem>
-        <StyledMenuItem
-          onClick={handleClose}
-        >
-          <NavLink to="/categories/Mobile Development" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
-            <ListItemText primary="Mobile Development" />
-          </NavLink>
-        </StyledMenuItem>
+        {props.categories ? props.categories.map(category => 
+           <StyledMenuItem
+           onClick={handleClose}
+          >
+            <NavLink to={`/categories/${category.title}`} style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
+              <ListItemText primary={category.title} />
+            </NavLink>
+         </StyledMenuItem>
+         )
+          : 
+          <Grid 
+          style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <Typography variant="p">Loading...</Typography>
+          </Grid>
+        }
       </StyledMenu>
     </div>
   );
