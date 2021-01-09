@@ -7,7 +7,6 @@
 
 import * as actionTypes from './actionTypes';
 import { ApiURL } from '../helpers/baseUrl';
-
 const axios = require('axios').default;
 
 // this is what our action should look like which dispatches the "payload" to reducer
@@ -706,3 +705,51 @@ export const addMyWishlist = (course) => ({
   type: actionTypes.ADD_MY_WISHLIST,
   payload: course
 });
+
+
+//------------------------- Admin Check --------------------
+export const checkAdmin = () => (dispatch) => {
+  dispatch(adminChecking(true));
+  return fetch(ApiURL + '/auth/adminCheck', {
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((isAdmin) => {
+      dispatch(setAdminCheckState(isAdmin.authenticated));
+    })
+    .catch((error) => dispatch(adminCheckFailed(error.message)));
+};
+
+export const adminChecking = () => ({
+  type: actionTypes.ADMIN_CHECKING,
+});
+export const adminCheckFailed = (error) => ({
+  type: actionTypes.ADMIN_CHECK_FAILED,
+  payload: error,
+});
+export const setAdminCheckState = (adminCheck) => {
+  return {
+    type: actionTypes.SET_ADMIN_CHECK_STATE,
+    payload: adminCheck,
+  };
+};

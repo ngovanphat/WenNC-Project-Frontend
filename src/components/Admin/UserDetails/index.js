@@ -9,16 +9,24 @@ import {
   makeStyles,
   Paper,
   Typography,
+  TextField,
+  Collapse,
+  Snackbar,
 } from '@material-ui/core';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import EditPanel from './EditPanel';
+import MuiAlert from '@material-ui/lab/Alert';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 // eslint-disable-next-line no-extend-native
 String.prototype.firstLetterCapitalize = function () {
-    return this.charAt(0)+ this.slice(1).toLowerCase();
-  }
+  return this.charAt(0) + this.slice(1).toLowerCase();
+};
 
 const styles = {
   root: {
@@ -49,16 +57,19 @@ const styles = {
     color: '#808080',
   },
   avatar: {
-    marginTop:"2%",
-    marginBottom:"2%",
+    marginTop: '2%',
+    marginBottom: '2%',
     minWidth: 150,
-    minHeight:150,
+    minHeight: 150,
   },
-  status:{
+  status: {
     display: 'flex',
     alignItems: 'center',
-    flexWrap: "wrap"
-  }
+    flexWrap: 'wrap',
+  },
+  edit: {
+    transitionDuration: '0.3s',
+  },
 };
 const userInfo = {
   'avatar':
@@ -78,9 +89,23 @@ const userInfo = {
 const useStyles = makeStyles(styles);
 export default function UserDetails() {
   const classes = useStyles();
-  
+  const [editing, setEditing] = useState(false);
+  const [save, setSave] = useState(['', null]);
   let { id } = useParams();
-  
+  const handleSavePassword = (error) => {
+    if (error!==null) {
+      setSave(['error', error]);
+    } else {
+      setSave(['success', 'Successfully Saved']);
+    }
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSave(['', null]);
+    setEditing(false);
+  };
   useEffect(() => {
     document.title = 'User Details';
   }, []);
@@ -91,7 +116,13 @@ export default function UserDetails() {
           User Details
         </Typography>
         <Grid container>
-          <Grid item xs={12} md={3} align="center" justify="center" alignItems="center">
+          <Grid
+            item
+            xs={12}
+            md={3}
+            align="center"
+            justify="center"
+            alignItems="center">
             <Avatar
               alt="Avatar"
               className={classes.avatar}
@@ -123,7 +154,7 @@ export default function UserDetails() {
             </div>
             <div>
               <Typography variant="h6" display="inline" gutterBottom>
-                Full Name : 
+                Full Name :
               </Typography>
               <Typography
                 variant="body1"
@@ -154,40 +185,82 @@ export default function UserDetails() {
                 {userInfo.email}
               </Typography>
             </div>
-            <Typography variant="h5" >
-                  Description
-                </Typography>
-            <Typography variant="body1" style={{marginBottom:"1%"}}>
-                {userInfo.description}
+            <Typography variant="h5">Description</Typography>
+            <Typography variant="body1" style={{ marginBottom: '1%' }}>
+              {userInfo.description}
             </Typography>
 
             <div className={classes.status}>
               <Typography variant="h6" display="inline" gutterBottom>
                 Status :
               </Typography>
-              <Typography
-                variant="body1"
-                display="inline">
-                {userInfo.banned?<CancelIcon style={{ color: colors.red[500] }}/>:<CheckCircleIcon  style={{ color: colors.green[500] }}/>}
+              <Typography variant="body1" display="inline">
+                {userInfo.banned ? (
+                  <CancelIcon style={{ color: colors.red[500] }} />
+                ) : (
+                  <CheckCircleIcon style={{ color: colors.green[500] }} />
+                )}
               </Typography>
             </div>
+            <Collapse in={editing}>
+              <EditPanel handleSave={handleSavePassword} status={userInfo.banned}></EditPanel>
+            </Collapse>
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} className={classes.actions} justify="flex-end">
-        <Button variant="contained" style={{backgroundColor: colors.lightGreen[600],borderColor: colors.lightGreen[600]}} className={classes.button}>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: colors.lightGreen[600],
+            borderColor: colors.lightGreen[600],
+          }}
+          className={classes.button}>
           Export to CSV
         </Button>
-        <Button variant="contained" style={{backgroundColor: colors.yellow[800],borderColor: colors.yellow[800],}} className={classes.button}>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: colors.yellow[800],
+            borderColor: colors.yellow[800],
+          }}
+          className={classes.button}>
           Ban User
         </Button>
-        <Button variant="contained" style={{backgroundColor: colors.green[500],borderColor: colors.green[500],}} className={classes.button}>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: colors.green[500],
+            borderColor: colors.green[500],
+          }}
+          className={classes.button}
+          onClick={() => setEditing(true)}>
           Update
         </Button>
-        <Button variant="contained" style={{backgroundColor: colors.red[500],borderColor: colors.red[500],}} className={classes.button}>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: colors.red[500],
+            borderColor: colors.red[500],
+          }}
+          className={classes.button}>
           Delete
         </Button>
       </Grid>
+      <div>
+        <Snackbar
+          open={save[0] === '' ? false : true}
+          autoHideDuration={3000}
+          onClose={handleClose}>
+          {save[0] === 'success' ? (
+            <Alert severity="success">
+              {save[1]}
+            </Alert>
+          ) :save[0] ==='error'? (
+            <Alert severity="error">{save[1]}</Alert>
+          ):null}
+        </Snackbar>
+      </div>
     </Grid>
   );
 }
