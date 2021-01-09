@@ -1,93 +1,99 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, fade } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Pagination from '@material-ui/lab/Pagination';
 import MyCourseCard from './MyCourseCard';
 import { NavLink } from 'react-router-dom';
+import { fetchMyCourses } from '../../redux/actions';
 
-const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    paddingTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(4),
-  },
-  showMore: {
-    textDecoration: 'none',
-    color: '#005580',
-    '&:hover': {
-      color: fade(theme.palette.info.light, 1),
-    }
-  }
-}));
+const mapStateToProps = state => {
+  return {
+    myCourses: state.myCourses
+  };
+};
 
-export default function MyCourseList(props) {
-  const classes = useStyles();
+const mapDispatchToProps = (dispatch) => ({
+  fetchMyCourses: () => { dispatch(fetchMyCourses()) },
+});
 
-  function Body() {
-    const len = props.courses.join_list.length;
-
-    if (len == 0) {
-      return <Grid container>
-        <Typography variant="h7" align="left" color="black">
-          You haven't joined any courses yet.
-          <NavLink to='/categories' style={{ textDecoration: 'none', marginLeft: 5 }} className={classes.showMore}>
-            Browse more courses now.
-          </NavLink>
-        </Typography>
-      </Grid>;
-    }
-    return <Grid container spacing={2}>
-      {props.courses.join_list.map((course) => (
-        <MyCourseCard key={course.title} course={course} />
-      ))}
-    </Grid>;
+class MyCourseList extends Component {
+  constructor(props) {
+    super(props);
   }
 
-  function Paging() {
-    const len = props.courses.join_list.length;
-    if (len == 0) {
-      return <Grid item xs={12}>
-      </Grid>;
-    }
-    return <Grid item xs={12}>
-      <Pagination count={props.courses.join_list.length} shape="rounded" size="large" />
-    </Grid>;
+  componentDidMount() {
+    this.props.fetchMyCourses();
   }
 
-  if (props.coursesLoading) {
-    return (
-      <Grid container>
-        <Grid item row xs={12}>
-          <Typography variant="h4">Loading....</Typography>
+  render() {
+    if (this.props.myCourses.isLoading) {
+      return (
+        <Grid container>
+          <Grid item row xs={12}>
+            <Typography variant="h4">Loading....</Typography>
+          </Grid>
         </Grid>
-      </Grid>
-    );
-  }
-  else if (props.coursesErrMess) {
-    return (
-      <Grid container>
-        <Grid item row xs={12}>
-          <Typography variant="h4">{props.coursesErrMess}</Typography>
+      )
+    }
+    else if (this.props.myCourses.errMess) {
+      return (
+        <Grid container>
+          <Grid item row xs={12}>
+            <Typography variant="h4">{this.props.myCourses.errMess}</Typography>
+          </Grid>
         </Grid>
-      </Grid>
-    );
-  }
-  else {
-    return (
-      <main>
-        <div className={classes.heroContent}>
+      );
+    }
+    else {
+      const len = this.props.myCourses.courses.join_list.length;
+      if (len == 0) {
+        return <main>
+          <div style={{ marginTop: 30 }}>
+            <Container maxWidth="md">
+              <Typography variant="h6" align="left" color="textSecondary">
+                My courses
+              </Typography>
+            </Container>
+          </div>
+          <Container style={{ paddingTop: 5, paddingBottom: 4 }} maxWidth="md">
+            <Grid container>
+              <Typography variant="h7" align="left" color="black">
+                You haven't joined any courses yet.
+                <NavLink to='/categories' style={{ textDecoration: 'none', marginLeft: 5, color: '#005580' }} >
+                  Browse more courses now.
+                </NavLink>
+              </Typography>
+            </Grid>
+          </Container>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+            style={{ minHeight: '5vh' }}
+          >
+            <Grid item xs={12}>
+            </Grid>
+          </Grid>
+        </main>
+      }
+      return <main>
+        <div style={{ marginTop: 30 }}>
           <Container maxWidth="md">
             <Typography variant="h6" align="left" color="textSecondary">
               My courses
-          </Typography>
+            </Typography>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Body></Body>
+        <Container style={{ paddingTop: 5, paddingBottom: 4 }} maxWidth="md">
+          <Grid container spacing={2}>
+            {this.props.myCourses.courses.join_list.map((course) => (
+              <MyCourseCard key={course.title} course={course} />
+            ))}
+          </Grid>
         </Container>
         <Grid
           container
@@ -97,9 +103,13 @@ export default function MyCourseList(props) {
           justify="center"
           style={{ minHeight: '5vh' }}
         >
-          <Paging />
+          <Grid item xs={12}>
+            <Pagination count={this.props.myCourses.courses.join_list.length} shape="rounded" size="large" />
+          </Grid>
         </Grid>
       </main>
-    );
+    }
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyCourseList);

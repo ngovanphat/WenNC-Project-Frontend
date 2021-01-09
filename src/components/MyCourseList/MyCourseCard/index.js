@@ -61,12 +61,11 @@ export default function MyCourseCard(props) {
 
   return (
     <Grid item xs={12}>
-      {/* <CardActionArea component="a" href="#"> */}
       <Card className={classes.card}>
         <div className={classes.cardDetails}>
           <CardContent>
             <Typography component="h2" variant="h5">
-              <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.title}>
+              <Link underline='none' style={{ color: '#005580' }} className={classes.title} component={RouterLink} to={path}>
                 <TitleStyled>
                   {course.title}
                 </TitleStyled>
@@ -78,7 +77,7 @@ export default function MyCourseCard(props) {
                   {course.leturer}
                 </Typography>
                 <Typography variant="subtitle2">
-                  <Link href="#" onClick={preventDefault} style={{ textDecoration: 'none' }} className={classes.category}>
+                  <Link component={RouterLink} to={`/categories/${course.category}`} style={{ textDecoration: 'none' }} className={classes.category}>
                     {course.category}
                   </Link>
                 </Typography>
@@ -95,7 +94,7 @@ export default function MyCourseCard(props) {
               </DescriptionStyled>
             </Typography>
             <Button variant="outlined" className={classes.resumeButton} style={{ marginTop: 10 }}>
-              <Link underline='none' style={{color: '#005580'}} component={RouterLink} to={path}>
+              <Link underline='none' style={{ color: '#005580' }} component={RouterLink} to={path}>
                 Resume course
               </Link>
             </Button>
@@ -105,7 +104,6 @@ export default function MyCourseCard(props) {
           <CardMedia className={classes.cardMedia} image={course.thumnail} />
         </Hidden>
       </Card>
-      {/* </CardActionArea> */}
     </Grid>
   );
 }

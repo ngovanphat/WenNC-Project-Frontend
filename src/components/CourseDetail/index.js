@@ -26,14 +26,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) },
-  joinCourse: () => { dispatch(joinCourse()) },
+  joinCourse: (input) => { dispatch(joinCourse(input)) },
 });
 
 class CourseDetail extends Component {
   constructor(props) {
     super(props);
-    this.props.userProfile.user===null??console.log(this.props.userProfile.user.user._id); 
-    console.log(this.props.match.params.id)
   }
 
   componentDidMount() {

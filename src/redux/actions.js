@@ -8,6 +8,8 @@
 import * as actionTypes from './actionTypes';
 import { ApiURL } from '../helpers/baseUrl';
 
+const axios = require('axios').default;
+
 // this is what our action should look like which dispatches the "payload" to reducer
 const setLoginState = (loginData) => {
   return {
@@ -133,7 +135,6 @@ export const fetchSingleCourse = (id) => (dispatch) => {
   return fetch(ApiURL + `/courses/${id}`)
     .then(response => {
       if (response.ok) {
-        console.log(response);
         return response;
       }
       else {
@@ -461,7 +462,7 @@ export const addAllComments = (comments) => ({
 
 const getLoginLocal = () => {
   const loginData = localStorage.getItem('loginData');
-  return loginData?JSON.parse(loginData).accessToken:null;
+  return loginData ? JSON.parse(loginData).accessToken : null;
 };
 
 export const fetchUserProfile = () => (dispatch) => {
@@ -522,6 +523,7 @@ export const fetchMyCourses = () => (dispatch) => {
   })
     .then(response => {
       if (response.ok) {
+        console.log(response)
         return response;
       }
       else {
@@ -543,18 +545,22 @@ export const fetchMyCourses = () => (dispatch) => {
 }
 
 export const joinCourse = (input) => {
+  const { userId, courseId } = input;
   return (dispatch) => {
-    return fetch(ApiURL + '/users/joinCourse', {
-      method: 'POST',
+    return axios({
+      method: 'post',
+      url: ApiURL + '/users/joinCourse',
       headers: {
         Accept: 'application/json',
         'x-access-token': getLoginLocal(),
       },
-      body: JSON.stringify(input),
+      data: {
+        userId: userId,
+        courseId: courseId
+      }
     })
       .then(response => {
-        if (response.ok) {
-          fetchMyCourses();
+        if (response.status == 200) {
           alert("Join course successfully");
         }
         else {
@@ -568,27 +574,7 @@ export const joinCourse = (input) => {
           throw errmess;
         }
       )
-      // .then(response => response.json())
-      // .then(courses => {
-      //   dispatch(addMyCourses(courses));
-      // })
       .catch(error => dispatch(myCoursesFailed(error.message)));
-    // .then((response) => response.json())
-    // .then((json) => {
-    //   if (json.authenticated === true) { // response success checking logic could differ
-    //     const data = { ...json, userId: email };
-    //     setLoginLocal(data); // storing in local storage for next launch
-    //     dispatch(setJoinCoursesState(data));
-    //     alert("Join course successfully");
-    //     return true;
-    //   } else {
-    //     alert('Join course failed');
-    //   }
-    // })
-    // .catch((err) => {
-    //   alert('Join course Failed Some error occured, please retry');
-    //   console.log(err);
-    // });
   };
 };
 
