@@ -28,7 +28,7 @@ function CourseList(props) {
   const handlePrice = () => {
     setState({ ...state, openPrice: !state.openPrice })
   }
-  
+
 
   if (props.isLoading) {
     return (
@@ -48,13 +48,12 @@ function CourseList(props) {
       </Grid>
     );
   }
-  else
-  {
+  else {
     const courseList = props.courses.docs
-    .filter(course => (course.points >= state.valueRating && course.points < state.valueRating +1))
-    .sort(function(a,b){
-      return state.desc === 1 ?  a.price - b.price : (b.price-a.price);
-    });
+      .filter(course => (course.points >= state.valueRating && course.points < state.valueRating + 1))
+      .sort(function (a, b) {
+        return state.desc === 1 ? a.price - b.price : (b.price - a.price);
+      });
     return (
       <Grid container>
         <Hidden only={['xs', 'sm']}>
@@ -132,7 +131,7 @@ function CourseList(props) {
             </ListItem>
             <Collapse in={state.openPrice} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-              <FormControl component="fieldset">
+                <FormControl component="fieldset">
                   <RadioGroup aria-label="rating" name="price" value={state.desc} onChange={handleChange}>
                     <FormControlLabel label={
                       <Container disableGutters style={{
@@ -177,20 +176,20 @@ function CourseList(props) {
               />
             )}
           </List>
-          {courseList.length !== 0 ? 
+          {courseList.length !== 0 ?
             <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
-             <Pagination page={1} count={Math.ceil(courseList.length/10)} />
-            </Grid> 
-            : 
-            <Grid style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <Pagination page={1} count={Math.ceil(courseList.length / 10)} />
+            </Grid>
+            :
+            <Grid style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               We do not have any course for your requirement
             </Grid>
           }
-          
+
         </Grid>
       </Grid>
     );
-  
+
   }
 }
 

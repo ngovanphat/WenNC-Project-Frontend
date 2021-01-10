@@ -22,7 +22,7 @@ class SingleCategory extends Component {
     console.log(this.props.match.params.categoryName);
     this.props.fetchSingleCategory(this.props.match.params.categoryName);
   }
-  
+
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.props.fetchSingleCategory(this.props.match.params.categoryName);

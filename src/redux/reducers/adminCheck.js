@@ -2,7 +2,7 @@ import * as actionTypes from '../actionTypes';
 const initialState = {
   isChecking: true,
   error: null,
-  check:false
+  check: false
 };
 
 export const adminCheck = (state = initialState, action) => {
@@ -19,14 +19,14 @@ export const adminCheck = (state = initialState, action) => {
         ...state,
         isChecking: true,
         error: null,
-        check:state.check
+        check: state.check
       };
     case actionTypes.ADMIN_CHECK_FAILED:
       return {
         ...state,
         isChecking: false,
         error: action.payload,
-        check:false
+        check: false
       };
     default:
       return state;

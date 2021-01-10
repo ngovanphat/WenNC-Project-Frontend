@@ -3,18 +3,18 @@ import { Button, Card, CardActions, CardContent, Grid, makeStyles, Typography } 
 import styled from "styled-components";
 
 const styles = {
-  root:{ 
-    height: '100%', 
-    width: '100%', 
-    overflow:'auto', 
-    marginRight:'10px', 
-    marginLeft:'10px',
-    padding:'1% 0 '
+  root: {
+    height: '100%',
+    width: '100%',
+    overflow: 'auto',
+    marginRight: '10px',
+    marginLeft: '10px',
+    padding: '1% 0 '
   },
   gridItem: {
     padding: "1% !important",
   },
-  gridContainer:{
+  gridContainer: {
     margin: "1% -1% !important"
   }
 };
@@ -26,7 +26,7 @@ const Dashboard = () => {
   }, []);
   return (
     <div className={classes.root}>
-      <Grid container  className={classes.gridContainer}>
+      <Grid container className={classes.gridContainer}>
         <Grid item xs={12} sm={6} md={3} className={classes.gridItem}>
           <Card>
             <CardContent>

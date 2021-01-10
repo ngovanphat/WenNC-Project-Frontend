@@ -56,8 +56,8 @@ const useStyles = makeStyles({
 export default function MyCourseCard(props) {
   const classes = useStyles();
   const { course } = props;
+  let date = new Date(course.last_updated);
   const path = "/courses/" + course._id;
-  const preventDefault = (event) => event.preventDefault();
 
   return (
     <Grid item xs={12}>
@@ -84,7 +84,7 @@ export default function MyCourseCard(props) {
               </Grid>
               <Grid item>
                 <Typography variant="subtitle2" color="textSecondary">
-                  Last accessed - {course.last_updated}
+                  Last accessed - {date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()}
                 </Typography>
               </Grid>
             </Grid>

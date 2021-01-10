@@ -92,7 +92,7 @@ export default function UpdateProfile(props) {
             <Divider />
           </List>
           <Grid item container direction="column" alignItems="flex-start" xs={12}>
-            <Typography className={classes.label} style={{marginBottom: 10}} color="textPrimary">
+            <Typography className={classes.label} style={{ marginBottom: 10 }} color="textPrimary">
               Profile photo
             </Typography>
           </Grid>

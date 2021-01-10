@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -31,8 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: '100%',
+    height: '45px',
     color: 'white',
     background: 'white',
+  },
+  inputTextFied: {
+    borderColor: 'white !important'
   },
   logInButton: {
     fontSize: 15,
@@ -64,10 +68,11 @@ const Header = (props) => {
   const [query, setQuery] = useState('');
   let history = useHistory();
   function TopRightContainer() {
+    console.log(props)
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn && props.user !== null) {
       return (
-        <Grid  lg={1} md={2} alignItems="center" justify="center">
+        <Grid lg={1} md={2} alignItems="center" justify="center">
           {props.isAdmin ? (
             <Grid item md={1}>
               <Hidden only={['sm', 'xs']}>
@@ -137,21 +142,21 @@ const Header = (props) => {
             <Hidden only={['sm', 'xs']}>
               <Autocomplete
                 freeSolo
-                disableClearable ={true}
+                disableClearable={true}
                 id="free-solo-2-demo"
                 options={props.allCategories.map((category) => category.title)}
                 value={query}
-                onChange={(e,inputValue) => setQuery(inputValue)}
+                onChange={(e, inputValue) => setQuery(inputValue)}
                 renderInput={(params) => {
                   return (
                     <TextField
                       {...params}
-                      label="Search"
                       margin="normal"
                       variant="outlined"
-                     
+                      className={classes.textField}
                       InputProps={{
                         ...params.InputProps,
+                        className: classes.inputTextFied,
                         type: 'search',
                         startAdornment: (
                           <IconButton onClick={() => handleSearch()}>

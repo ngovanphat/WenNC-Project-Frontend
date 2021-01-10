@@ -38,7 +38,7 @@ const Categories = () => {
   useEffect(() => {
     document.title = 'Categories';
   }, []);
-  
+
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
 
   const handleClickOpenDeleteDialog = () => {
@@ -96,24 +96,26 @@ const Categories = () => {
             icon: 'refresh',
             tooltip: 'Refresh Data',
             isFreeAction: true,
-            onClick: () => {} /* tableRef.current && tableRef.current.onQueryChange() */,
+            onClick: () => { } /* tableRef.current && tableRef.current.onQueryChange() */,
           },
           {
             icon: 'add',
             tooltip: 'Add new Category',
             isFreeAction: true,
-            onClick: () => {} ,
+            onClick: () => { },
           },
-          (rowData)=>{
-              return rowData.count>0?{icon: 'delete',
+          (rowData) => {
+            return rowData.count > 0 ? {
+              icon: 'delete',
               tooltip: 'Delete',
-              onClick: (event, rowData) => setOpenDeleteDialog(true)}:{
+              onClick: (event, rowData) => setOpenDeleteDialog(true)
+            } : {
                 icon: 'delete',
-                disabled:true,
+                disabled: true,
                 onClick: (event, rowData) => setOpenDeleteDialog(true)
               };
           },
-          
+
         ]}
       />
       <Dialog

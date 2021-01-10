@@ -67,7 +67,7 @@ const CarouselItem = (props) => {
   const classes = useStyles();
   const preventDefault = (event) => event.preventDefault();
   const path = "/courses/" + props.item._id;
-  
+
   return (
     <Paper className={classes.paper}>
       <Grid container>
