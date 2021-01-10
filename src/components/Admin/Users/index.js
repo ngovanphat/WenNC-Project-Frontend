@@ -6,12 +6,35 @@ import { green, red } from '@material-ui/core/colors';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../../helpers/colors';
+import {fetchAdminUsers } from '../../../redux/actions';
+import { connect } from 'react-redux';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
+const mapStateToProps=state =>{
+  return {
+    adminUsers:state.adminUsers
+  }
+}
+const mapDispatchToProps = (dispatch) => ({
+  fetchAdminUsers: () => { dispatch(fetchAdminUsers()) },
+});
 
+//if using search bar,onSearchChange use diffirent reducer(searchAdminUsers) with diffirent table 
+/* if(searchPhrase!== undefined && searchPhrase !== null){
+  //todo update api for search
+} */
+
+//export : 
+//call api to get all data
+//const data =[all data]
+//export in csv(another package)
+
+//sort:
+//update api
+//sort use another reducer
 const rows = [
   {
     'avatar':
@@ -46,12 +69,13 @@ const rows = [
   },
 ];
 
-export default function DataTable() {
+function DataTable(props) {
   const tableRef = React.createRef();
   const history = useHistory();
 
   useEffect(() => {
     document.title = 'Users';
+    fetchAdminUsers(props.adminUsers.page,props.adminUsers.perPage);
   }, []);
   return (
     <div style={{ height: '80%', width: '100%' }}>
@@ -92,13 +116,16 @@ export default function DataTable() {
                 ),
           },
         ]}
-        data={rows}
+        data={props.adminUsers.users}
         title="Users"
         tableRef={tableRef}
         options={{
           exportButton: true,
           sorting: true,
           actionsColumnIndex: -1,
+          initialPage:props.adminUsers.page,
+          pageSize:props.adminUsers.perPage,
+          exportAllData:true,
         }}
         actions={[
           {
@@ -119,3 +146,4 @@ export default function DataTable() {
     </div>
   );
 }
+export default connect(mapStateToProps, mapDispatchToProps)(DataTable);

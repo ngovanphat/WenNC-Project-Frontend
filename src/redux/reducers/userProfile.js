@@ -28,6 +28,8 @@ export const userProfile = (state = initialState, action) => {
         errMess: action.payload,
         user: null
       };
+    case actionTypes.RESET_USER_PROFILE:
+      return initialState
     default:
       return state;
   }

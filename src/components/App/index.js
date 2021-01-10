@@ -38,7 +38,6 @@ import Settings from '../Admin/Settings';
 import { fetchUserProfile, fetchAllCategories, checkAdmin } from '../../redux/actions';
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     loginReducer: state.loginReducer,
     userProfile: state.userProfile,
@@ -67,7 +66,7 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-
+  
   componentDidMount() {
     this.props.fetchUserProfile();
     this.props.fetchAllCategories();

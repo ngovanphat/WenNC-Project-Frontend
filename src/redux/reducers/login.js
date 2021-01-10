@@ -15,6 +15,8 @@ export const loginReducer = (state = initialState, action) => {
         ...action.payload, // this is what we expect to get back from API call and login page input
         isLoggedIn: true, // we set this as true on login
       };
+    case actionTypes.LOGOUT:
+      return initialState
     default:
       return state;
   }

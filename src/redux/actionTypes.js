@@ -7,6 +7,7 @@
 */
 
 export const SET_LOGIN_STATE = "SET_LOGIN_STATE";
+export const LOGOUT = "LOGOUT";
 
 //-------------Course-------------------
 
@@ -77,6 +78,7 @@ export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
 export const USER_PROFILE_LOADING = 'USER_PROFILE_LOADING';
 export const USER_PROFILE_FAIL = 'USER_PROFILE_FAIL';
 export const ADD_USER_PROFILE = 'ADD_USER_PROFILE';
+export const RESET_USER_PROFILE = 'RESET_USER_PROFILE';
 
 // ------------------------ My Courses --------------------
 
@@ -97,6 +99,14 @@ export const ADMIN_CHECK_FAILED = 'ADMIN_CHECK_FAILED';
 export const SET_ADMIN_CHECK_STATE = 'SET_ADMIN_CHECK_STATE';
 
 //------------------------- Admin Users --------------------
+export const SET_ADMIN_USERS_STATE='SET_ADMIN_USERS_STATE';
+export const ADMIN_USERS_LOADING='ADMIN_USERS_LOADING';
+export const ADMIN_USERS_FAIL='ADMIN_USERS_FAIL';
+export const ADD_NEW_USER='ADD_NEW_USER';
+export const ADMIN_USERS_CHANGE_PAGE='ADMIN_USERS_CHANGE_PAGE';
+export const ADMIN_USERS_CHANGE_PERPAGE='ADMIN_USERS_CHANGE_PERPAGE';
+export const ADMIN_USERS_CHANGE_SORT='ADMIN_USERS_CHANGE_PAGE';
+export const ADMIN_USERS_CHANGE_SEARCH='ADMIN_USERS_CHANGE_PAGE';
 
 //------------------------- Admin User Details --------------------
 
