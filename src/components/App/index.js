@@ -30,23 +30,19 @@ import AdminCategories from "../Admin/Categories";
 import UserDetails from "../Admin/UserDetails";
 import Settings from "../Admin/Settings";
 
-import { fetchUserProfile, fetchMyCourses, fetchMyWishlist, fetchAllCategories } from "../../redux/actions";
+import { fetchUserProfile, fetchAllCategories } from "../../redux/actions";
 
 const mapStateToProps = state => {
   return {
     loginReducer: state.loginReducer,
     userProfile: state.userProfile,
-    myCourses: state.myCourses,
-    myWishlist: state.myWishlist,
     allCategories: state.allCategories
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUserProfile: () => { dispatch(fetchUserProfile()) },
-  fetchMyCourses: () => { dispatch(fetchMyCourses()) },
-  fetchMyWishlist: () => { dispatch(fetchMyWishlist()) },
-  fetchAllCategories: () => {dispatch(fetchAllCategories())}
+  fetchAllCategories: () => {dispatch(fetchAllCategories()) }
 });
 
 class App extends Component {
@@ -56,8 +52,6 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchUserProfile();
-    this.props.fetchMyCourses();
-    this.props.fetchMyWishlist();
     this.props.fetchAllCategories();
   }
 
