@@ -9,7 +9,7 @@ import Container from "@material-ui/core/Container";
 import { NavLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
-import { login } from '../../redux/actions';
+import { login,checkAdmin } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +38,8 @@ function Login() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     const res = await dispatch(login({ 'email': email, 'password': password }));
-    if (res == true) history.push('/');
+    dispatch(checkAdmin());
+    if (res === true) history.push('/');
   };
 
   return (

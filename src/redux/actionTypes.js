@@ -90,3 +90,19 @@ export const ADD_MY_COURSES = 'ADD_MY_COURSES';
 export const MY_WISHLIST_LOADING = 'MY_WISHLIST_LOADING';
 export const MY_WISHLIST_FAIL = 'MY_WISHLIST_FAIL';
 export const ADD_MY_WISHLIST = 'ADD_MY_WISHLIST';
+
+//------------------------- Admin Check --------------------
+export const ADMIN_CHECKING = 'ADMIN_CHECKING';
+export const ADMIN_CHECK_FAILED = 'ADMIN_CHECK_FAILED';
+export const SET_ADMIN_CHECK_STATE = 'SET_ADMIN_CHECK_STATE';
+
+//------------------------- Admin Users --------------------
+
+//------------------------- Admin User Details --------------------
+
+
+//------------------------- Admin User Edit --------------------
+
+
+
+//------------------------- Admin  --------------------

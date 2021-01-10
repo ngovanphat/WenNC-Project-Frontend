@@ -19,8 +19,7 @@ import InputIcon from "@material-ui/icons/Input";
 import { Colors } from "../../../helpers/colors";
 const useStyles = makeStyles(() => ({
   root: {
-    background: Colors.primary,
-    position:"absolute"
+    background: Colors.primary
   },
   logo: {
     color: Colors.white,

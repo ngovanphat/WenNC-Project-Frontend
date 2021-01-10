@@ -7,16 +7,18 @@ import { withRouter } from 'react-router-dom';
 
 import UpdateIcon from '@material-ui/icons/Update';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { fetchSingleCourse, joinCourse, addToWishlist } from '../../redux/actions';
+import { fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
+    myWishlist: state.myWishlist,
     singleCourse: state.singleCourse,
     sameCourses: state.sameCourses,
     allComments: state.allComments,
@@ -25,10 +27,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  fetchMyWishlist: () => { dispatch(fetchMyWishlist()) },
   fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) },
   joinCourse: (input) => { dispatch(joinCourse(input)) },
   addToWishlist: (input) => { dispatch(addToWishlist(input)) },
-});    
+});
 
 class CourseDetail extends Component {
   constructor(props) {
@@ -36,6 +39,7 @@ class CourseDetail extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchMyWishlist();
     this.props.fetchSingleCourse(this.props.match.params.id);
   }
 
@@ -63,9 +67,31 @@ class CourseDetail extends Component {
     return sum;
   }
 
+  checkIsInWishlist() {
+    let favorite_list = this.props.myWishlist.courses.favorite_list;
+    for (let i = 0; i < favorite_list.length; i++) {
+      console.log(favorite_list[i]._id)
+      if (favorite_list[i]._id == this.props.match.params.id)
+        return true;
+    }
+    return false;
+  }
+
+  renderWishlistButton() {
+    let isFavorited = this.checkIsInWishlist();
+    if (isFavorited) {
+      return (
+        <Button variant="outlined" color="inherit" endIcon={<FavoriteIcon style={{ color: 'red' }} />} style={{ marginRight: 10 }}>Wishlist</Button>
+      )
+    }
+    return (
+      <Button onClick={(e) => this.handlePress(e)} variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
+    );
+  }
+
   render() {
     const course = this.props.singleCourse.course;
-    if (this.props.singleCourse.isLoading) {
+    if (this.props.singleCourse.isLoading || this.props.myWishlist.isLoading) {
       return (
         <Grid container alignItems="center">
           <Grid item row xs={12} >
@@ -74,7 +100,7 @@ class CourseDetail extends Component {
         </Grid>
       );
     }
-    else if (this.props.singleCourse.errMess) {
+    else if (this.props.singleCourse.errMess || this.props.myWishlist.errMess) {
       return (
         <Grid container alignItems="center">
           <Grid item row xs={12}>
@@ -134,7 +160,7 @@ class CourseDetail extends Component {
                   </Grid>
 
                   <Grid item container style={{ color: 'white', marginTop: 20, display: 'flex' }}>
-                    <Button onClick={(e) => this.handlePress(e)}  variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
+                    {this.renderWishlistButton()}
                   </Grid>
 
                 </List>
