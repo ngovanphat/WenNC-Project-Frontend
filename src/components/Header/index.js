@@ -31,8 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: '100%',
+    height: '45px',
     color: 'white',
     background: 'white',
+  },
+  inputTextFied: {
+    borderColor: 'white !important'
   },
   logInButton: {
     fontSize: 15,
@@ -62,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
   function TopRightContainer() {
+    console.log(props)
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn && props.user !== null) {
       return (
@@ -141,11 +146,12 @@ const Header = (props) => {
                   return (
                     <TextField
                       {...params}
-                      label="Search"
                       margin="normal"
                       variant="outlined"
+                      className={classes.textField}
                       InputProps={{
                         ...params.InputProps,
+                        className: classes.inputTextFied,
                         type: 'search',
                         startAdornment: (
                           <IconButton>

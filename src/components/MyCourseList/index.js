@@ -104,7 +104,7 @@ class MyCourseList extends Component {
           style={{ minHeight: '5vh' }}
         >
           <Grid item xs={12} style={{ paddingTop: 10 }}>
-            <Pagination count={this.props.myCourses.courses.join_list.length} shape="rounded" size="large" />
+            {/* <Pagination count={this.props.myCourses.courses.join_list.length} shape="rounded" size="large" /> */}
           </Grid>
         </Grid>
       </main>

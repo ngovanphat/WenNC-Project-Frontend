@@ -573,6 +573,7 @@ export const joinCourse = (input) => {
           throw errmess;
         }
       )
+      .then(_ => {dispatch(fetchMyCourses()); })
       .catch(error => dispatch(myCoursesFailed(error.message)));
   };
 };
@@ -642,6 +643,8 @@ export const addToWishlist = (input) => {
       .then(response => {
         if (response.status == 200) {
           alert("Add to wishlist successfully");
+          console.log(response);
+          return response;
         }
         else {
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
@@ -654,6 +657,7 @@ export const addToWishlist = (input) => {
           throw errmess;
         }
       )
+      .then(_ => {dispatch(fetchMyWishlist()); })
       .catch(error => dispatch(myWishlistFailed(error.message)));
   };
 };
@@ -688,6 +692,7 @@ export const removeFromWishlist = (input) => {
           throw errmess;
         }
       )
+      .then(_ => {dispatch(fetchMyWishlist()); })
       .catch(error => dispatch(myWishlistFailed(error.message)));
   };
 };

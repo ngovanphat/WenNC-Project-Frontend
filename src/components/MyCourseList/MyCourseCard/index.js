@@ -57,7 +57,6 @@ export default function MyCourseCard(props) {
   const classes = useStyles();
   const { course } = props;
   const path = "/courses/" + course._id;
-  const preventDefault = (event) => event.preventDefault();
 
   return (
     <Grid item xs={12}>

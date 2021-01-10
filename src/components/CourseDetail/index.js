@@ -4,6 +4,7 @@ import { Rating, Pagination } from '@material-ui/lab';
 import Image from 'material-ui-image';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import UpdateIcon from '@material-ui/icons/Update';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -14,11 +15,12 @@ import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist } from '../../redux/actions';
+import { fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
     myWishlist: state.myWishlist,
+    myCourses: state.myCourses,
     singleCourse: state.singleCourse,
     sameCourses: state.sameCourses,
     allComments: state.allComments,
@@ -28,6 +30,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchMyWishlist: () => { dispatch(fetchMyWishlist()) },
+  fetchMyCourses: () => { dispatch(fetchMyCourses()) },
   fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) },
   joinCourse: (input) => { dispatch(joinCourse(input)) },
   addToWishlist: (input) => { dispatch(addToWishlist(input)) },
@@ -40,6 +43,7 @@ class CourseDetail extends Component {
 
   componentDidMount() {
     this.props.fetchMyWishlist();
+    this.props.fetchMyCourses();
     this.props.fetchSingleCourse(this.props.match.params.id);
   }
 
@@ -59,6 +63,11 @@ class CourseDetail extends Component {
     await this.props.addToWishlist({ 'userId': this.props.userProfile.user.user._id, 'courseId': this.props.match.params.id });
   };
 
+  notifyLogin = async (e) => {
+    e.preventDefault();
+    alert("Please login!");
+  }
+
   countRatingStar(comments, value) {
     let sum = 0;
     comments.forEach(comment => {
@@ -68,30 +77,127 @@ class CourseDetail extends Component {
   }
 
   checkIsInWishlist() {
+    if (this.props.myWishlist.errMess) {
+      return -1;
+    }
     let favorite_list = this.props.myWishlist.courses.favorite_list;
     for (let i = 0; i < favorite_list.length; i++) {
-      console.log(favorite_list[i]._id)
       if (favorite_list[i]._id == this.props.match.params.id)
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
   }
 
   renderWishlistButton() {
     let isFavorited = this.checkIsInWishlist();
-    if (isFavorited) {
+    if (isFavorited == 1) {
       return (
         <Button variant="outlined" color="inherit" endIcon={<FavoriteIcon style={{ color: 'red' }} />} style={{ marginRight: 10 }}>Wishlist</Button>
       )
     }
+    else if (isFavorited == 0) {
+      return (
+        <Button onClick={(e) => this.handlePress(e)} variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
+      );
+    }
     return (
-      <Button onClick={(e) => this.handlePress(e)} variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
-    );
+      <Button onClick={(e) => this.notifyLogin(e)} variant="outlined" color="inherit" endIcon={<FavoriteBorderIcon />} style={{ marginRight: 10 }}>Wishlist</Button>
+    )
+  }
+
+  checkIsJoined() {
+    if (this.props.myCourses.errMess) {
+      return -1;
+    }
+    let join_list = this.props.myCourses.courses.join_list;
+    for (let i = 0; i < join_list.length; i++) {
+      if (join_list[i]._id == this.props.match.params.id)
+        return 1;
+    }
+    return 0;
+  }
+
+  renderJoinCourseMenu() {
+    const course = this.props.singleCourse.course;
+    let isJoined = this.checkIsJoined();
+    if (isJoined == 1) {
+      return (
+        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+          <Paper >
+            <Grid container style={{ padding: 10 }}>
+              <Grid container style={{
+                paddingTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'stretch'
+              }}>
+                <Typography variant="p" style={{ color: 'textSecondary', marginLeft: 10 }}>Browse recently launched courses and see what's new in your favorite subjects.</Typography>
+              </Grid>
+              <Button variant="outlined" fullWidth style={{ marginTop: 10, height: 50, fontWeight: 'bold', borderColor: "#005580", color: '#005580' }}>
+                <NavLink to='/categories' style={{ textDecoration: 'none', marginLeft: 5, color: '#005580' }} >
+                  Explore new courses
+                </NavLink>
+              </Button>
+            </Grid>
+          </Paper>
+        </Grid>
+      )
+    }
+    else if (isJoined == 0) {
+      return (
+        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+          <Paper >
+            <Grid container style={{ padding: 10 }}>
+              <Grid container style={{
+                paddingTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'stretch'
+              }}>
+                <Typography variant="h4" style={{ fontWeight: 'bold' }}>${course.price}</Typography>
+                <Typography variant="p" style={{ color: 'grey', marginLeft: 10, textDecoration: 'line-through' }}>${course.actualPrice}</Typography>
+                <Typography variant="h6" style={{ marginLeft: 10 }}>{100 - Math.ceil(course.price * 100 / course.actualPrice)}% off</Typography>
+              </Grid>
+              <Button onClick={(e) => this.handleClick(e)} variant="contained" fullWidth color="secondary" style={{ marginTop: 20, height: 50, fontWeight: 'bold' }}>
+                Join course
+              </Button>
+              <Button variant="outlined" fullWidth color="primary" style={{ marginTop: 5, height: 50, fontWeight: 'bold' }}>
+                Follow now
+            </Button>
+            </Grid>
+          </Paper>
+        </Grid>
+      );
+    }
+    return (
+      <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+        <Paper >
+          <Grid container style={{ padding: 10 }}>
+            <Grid container style={{
+              paddingTop: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'stretch'
+            }}>
+              <Typography variant="h4" style={{ fontWeight: 'bold' }}>${course.price}</Typography>
+              <Typography variant="p" style={{ color: 'grey', marginLeft: 10, textDecoration: 'line-through' }}>${course.actualPrice}</Typography>
+              <Typography variant="h6" style={{ marginLeft: 10 }}>{100 - Math.ceil(course.price * 100 / course.actualPrice)}% off</Typography>
+            </Grid>
+            <Button onClick={(e) => this.notifyLogin(e)} variant="contained" fullWidth color="secondary" style={{ marginTop: 20, height: 50, fontWeight: 'bold' }}>
+              Join course
+            </Button>
+            <Button variant="outlined" fullWidth color="primary" style={{ marginTop: 5, height: 50, fontWeight: 'bold' }}>
+              Follow now
+            </Button>
+          </Grid>
+        </Paper>
+      </Grid>
+    )
   }
 
   render() {
     const course = this.props.singleCourse.course;
-    if (this.props.singleCourse.isLoading || this.props.myWishlist.isLoading) {
+    if (this.props.singleCourse.isLoading || this.props.myWishlist.isLoading || this.props.myCourses.isLoading) {
       return (
         <Grid container alignItems="center">
           <Grid item row xs={12} >
@@ -100,7 +206,7 @@ class CourseDetail extends Component {
         </Grid>
       );
     }
-    else if (this.props.singleCourse.errMess || this.props.myWishlist.errMess) {
+    else if (this.props.singleCourse.errMess) {
       return (
         <Grid container alignItems="center">
           <Grid item row xs={12}>
@@ -349,7 +455,7 @@ class CourseDetail extends Component {
               </Grid>
 
             </Grid>
-            <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+            {/* <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
               <Paper >
                 <Grid container style={{ padding: 10 }}>
                   <Grid container style={{
@@ -370,7 +476,8 @@ class CourseDetail extends Component {
                   </Button>
                 </Grid>
               </Paper>
-            </Grid>
+            </Grid> */}
+            {this.renderJoinCourseMenu()}
             <Grid xs={1} />
           </Grid>
         </Grid>
