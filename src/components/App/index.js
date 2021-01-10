@@ -43,14 +43,14 @@ const mapStateToProps = (state) => {
     loginReducer: state.loginReducer,
     userProfile: state.userProfile,
     allCategories: state.allCategories,
-    adminCheck: state.adminCheck.check,
+    adminCheck: state.adminCheck.check
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUserProfile: () => { dispatch(fetchUserProfile()) },
   fetchAllCategories: () => { dispatch(fetchAllCategories()) },
-  checkAdmin: () => { dispatch(checkAdmin()) },
+  checkAdmin: () => { dispatch(checkAdmin()) }
 });
 
 function PrivateRoute({ children, isAuthenticated, ...rest }) {

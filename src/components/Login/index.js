@@ -39,7 +39,7 @@ function Login() {
     e.preventDefault();
     const res = await dispatch(login({ 'email': email, 'password': password }));
     dispatch(checkAdmin());
-    if (res == true) history.push('/');
+    if (res === true) history.push('/');
   };
 
   return (

@@ -253,10 +253,10 @@ export const addMostViewedCourses = (courses) => ({
 
 // ---------------------- All Courses -----------------------
 
-export const fetchAllCourses = () => (dispatch) => {
+export const fetchAllCourses = (page=1, pageCount=10) => (dispatch) => {
   dispatch(allCoursesLoading(true));
 
-  return fetch(ApiURL + '/courses/all')
+  return fetch(ApiURL + `/courses/all?page=${page}&size=${pageCount}`)
     .then(response => {
       if (response.ok) {
         console.log(response);
