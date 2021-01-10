@@ -55,10 +55,9 @@ export default function UserMenu(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
     <div>
-      <Avatar src={props.avatar} onClick={handleClick} className={classes.avatar}/>
+      <Avatar src={props.user.avatar} onClick={handleClick} className={classes.avatar}/>
       <StyledMenu
         anchorEl={anchorEl}
         keepMounted
@@ -86,7 +85,20 @@ export default function UserMenu(props) {
             <ListItemText primary="Wishlist" />
           </NavLink>
         </StyledMenuItem>
+        { props.user.role === "LECTURER" ?
+        <StyledMenuItem
+          onClick={handleClose}
+        >
+          <NavLink to="/addCourse" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
+            <ListItemText primary="Add Course" />
+          </NavLink>
+        </StyledMenuItem> : <div></div>
+        }
       </StyledMenu>
+      
+        <StyledMenuItem
+          onClick={handleClose}
+        ></StyledMenuItem>
     </div>
   );
 }

@@ -81,7 +81,7 @@ const Header = (props) => {
           ) : null}
           <Grid item md={4}>
             <Hidden only={['sm', 'xs']}>
-              <UserMenu avatar={props.user.user.avatar} />
+              <UserMenu  user={props.user.user}/>
             </Hidden>
           </Grid>
         </Grid>

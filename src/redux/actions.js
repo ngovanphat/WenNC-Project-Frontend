@@ -42,6 +42,7 @@ export const login = (loginInput) => {
           const data = { ...json, userId: email };
           setLoginLocal(data); // storing in local storage for next launch
           dispatch(setLoginState(data));
+          dispatch(fetchUserProfile());
           alert("Log in successfully");
           return true;
         } else {
@@ -155,6 +156,35 @@ export const fetchSingleCourse = (id) => (dispatch) => {
     })
     .catch(error => dispatch(singleCourseFailed(error.message)));
 }
+
+export const addCourse = (courseData) => {
+  console.log(courseData);
+  return (dispatch) => {  // don't forget to use dispatch here!
+    return fetch(ApiURL + '/courses/add', {
+      method: 'POST',
+      headers: {  // these could be different for your API call
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      body: JSON.stringify(courseData),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        /*if (json.authenticated === true) { // response success checking logic could differ
+          alert("Log in successfully");
+          return true;
+        } else {
+          alert('Login Failed Username or Password is incorrect');
+        }*/
+        console.log(json);
+      })
+      .catch((err) => {
+        alert('Login Failed Some error occured, please retry');
+        console.log(err);
+      });
+  };
+};
 
 export const singleCourseLoading = () => ({
   type: actionTypes.SINGLE_COURSE_LOADING
