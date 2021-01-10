@@ -68,7 +68,6 @@ const Header = (props) => {
   const [query, setQuery] = useState('');
   let history = useHistory();
   function TopRightContainer() {
-    console.log(props)
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn && props.user !== null) {
       return (
@@ -84,11 +83,14 @@ const Header = (props) => {
               </Hidden>
             </Grid>
           ) : null}
-          <Grid item md={4}>
+          
+          { props.user ? 
+            <Grid item md={4}>
             <Hidden only={['sm', 'xs']}>
               <UserMenu  user={props.user.user}/>
             </Hidden>
-          </Grid>
+          </Grid> : <div></div> 
+          }
         </Grid>
       );
     }
