@@ -9,7 +9,7 @@ import Container from "@material-ui/core/Container";
 import { NavLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
-import { login,checkAdmin } from '../../redux/actions';
+import { login, checkAdmin } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,7 +46,7 @@ function Login() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h4" style={{color: "#005580"}}>
+        <Typography component="h1" variant="h4" style={{ color: "#005580" }}>
           Log in
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +93,7 @@ function Login() {
             type="submit"
             fullWidth
             variant="contained"
-            style={{backgroundColor: '#005580', color: 'white'}}
+            style={{ backgroundColor: '#005580', color: 'white' }}
             className={classes.submit}
           >
             Login

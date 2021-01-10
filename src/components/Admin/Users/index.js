@@ -61,19 +61,21 @@ export default function DataTable() {
             field: '_id',
             title: 'ID',
             cellStyle: {
-              maxWidth: '10vh',whiteSpace: 'pre-wrap', overflowWrap: 'break-word'
+              maxWidth: '10vh', whiteSpace: 'pre-wrap', overflowWrap: 'break-word'
             },
             headerStyle: {
               maxWidth: '10vh',
             },
           },
-          { field: 'email', title: 'Email' ,
-          cellStyle: {
-            maxWidth: '10vh',whiteSpace: 'pre-wrap', overflowWrap: 'break-word'
+          {
+            field: 'email', title: 'Email',
+            cellStyle: {
+              maxWidth: '10vh', whiteSpace: 'pre-wrap', overflowWrap: 'break-word'
+            },
+            headerStyle: {
+              maxWidth: '10vh',
+            },
           },
-          headerStyle: {
-            maxWidth: '10vh',
-          },},
           { field: 'fullname', title: 'Fullname' },
           {
             field: 'role',
@@ -86,8 +88,8 @@ export default function DataTable() {
               rowData.banned ? (
                 <CancelIcon style={{ color: red[500] }} />
               ) : (
-                <CheckCircleIcon style={{ color: green[500] }} />
-              ),
+                  <CheckCircleIcon style={{ color: green[500] }} />
+                ),
           },
         ]}
         data={rows}
@@ -103,7 +105,7 @@ export default function DataTable() {
             icon: 'refresh',
             tooltip: 'Refresh Data',
             isFreeAction: true,
-            onClick: () => {} /* tableRef.current && tableRef.current.onQueryChange() */,
+            onClick: () => { } /* tableRef.current && tableRef.current.onQueryChange() */,
           },
           () => ({
             icon: () => <InfoOutlinedIcon style={{ color: Colors.primary }} />,

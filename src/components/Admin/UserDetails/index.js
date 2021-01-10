@@ -93,7 +93,7 @@ export default function UserDetails() {
   const [save, setSave] = useState(['', null]);
   let { id } = useParams();
   const handleSavePassword = (error) => {
-    if (error!==null) {
+    if (error !== null) {
       setSave(['error', error]);
     } else {
       setSave(['success', 'Successfully Saved']);
@@ -198,8 +198,8 @@ export default function UserDetails() {
                 {userInfo.banned ? (
                   <CancelIcon style={{ color: colors.red[500] }} />
                 ) : (
-                  <CheckCircleIcon style={{ color: colors.green[500] }} />
-                )}
+                    <CheckCircleIcon style={{ color: colors.green[500] }} />
+                  )}
               </Typography>
             </div>
             <Collapse in={editing}>
@@ -256,9 +256,9 @@ export default function UserDetails() {
             <Alert severity="success">
               {save[1]}
             </Alert>
-          ) :save[0] ==='error'? (
+          ) : save[0] === 'error' ? (
             <Alert severity="error">{save[1]}</Alert>
-          ):null}
+          ) : null}
         </Snackbar>
       </div>
     </Grid>

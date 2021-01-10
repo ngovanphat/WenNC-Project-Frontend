@@ -3,11 +3,9 @@ const initialState = {
   isLoading: true,
   errMess: null,
   courses: [],
-  sortColumn:'title',
-  page:1,
-  perRow:5,
-  
-
+  sortColumn: 'title',
+  page: 1,
+  perRow: 5,
 };
 
 export const adminCourses = (state = initialState, action) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -72,7 +72,7 @@ const Header = (props) => {
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn && props.user !== null) {
       return (
-        <Grid  lg={1} md={2} alignItems="center" justify="center">
+        <Grid lg={1} md={2} alignItems="center" justify="center">
           {props.isAdmin ? (
             <Grid item md={1}>
               <Hidden only={['sm', 'xs']}>
@@ -142,11 +142,11 @@ const Header = (props) => {
             <Hidden only={['sm', 'xs']}>
               <Autocomplete
                 freeSolo
-                disableClearable ={true}
+                disableClearable={true}
                 id="free-solo-2-demo"
                 options={props.allCategories.map((category) => category.title)}
                 value={query}
-                onChange={(e,inputValue) => setQuery(inputValue)}
+                onChange={(e, inputValue) => setQuery(inputValue)}
                 renderInput={(params) => {
                   return (
                     <TextField

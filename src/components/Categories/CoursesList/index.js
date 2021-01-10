@@ -25,7 +25,7 @@ function CourseList(props) {
   const handleRating = () => {
     setState({ ...state, openRating: !state.openRating })
   }
-  
+
   const handlePrice = () => {
     setState({ ...state, openPrice: !state.openPrice })
   }

@@ -15,7 +15,7 @@ import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses } from '../../redux/actions';
+import { fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses, removeFromWishlist } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
@@ -34,6 +34,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchSingleCourse: (id) => { dispatch(fetchSingleCourse(id)) },
   joinCourse: (input) => { dispatch(joinCourse(input)) },
   addToWishlist: (input) => { dispatch(addToWishlist(input)) },
+  removeFromWishlist: (input) => { dispatch(removeFromWishlist(input)) },
 });
 
 class CourseDetail extends Component {
@@ -61,6 +62,11 @@ class CourseDetail extends Component {
   handlePress = async (e) => {
     e.preventDefault();
     await this.props.addToWishlist({ 'userId': this.props.userProfile.user.user._id, 'courseId': this.props.match.params.id });
+  };
+
+  handleRemovePress = async (e) => {
+    e.preventDefault();
+    await this.props.removeFromWishlist({ 'userId': this.props.userProfile.user.user._id, 'courseId': this.props.match.params.id });
   };
 
   notifyLogin = async (e) => {
@@ -92,7 +98,7 @@ class CourseDetail extends Component {
     let isFavorited = this.checkIsInWishlist();
     if (isFavorited == 1) {
       return (
-        <Button variant="outlined" color="inherit" endIcon={<FavoriteIcon style={{ color: 'red' }} />} style={{ marginRight: 10 }}>Wishlist</Button>
+        <Button onClick={(e) => this.handleRemovePress(e)} variant="outlined" color="inherit" endIcon={<FavoriteIcon style={{ color: 'red' }} />} style={{ marginRight: 10 }}>Wishlist</Button>
       )
     }
     else if (isFavorited == 0) {
@@ -216,6 +222,7 @@ class CourseDetail extends Component {
       );
     }
     else {
+      let date = new Date(course.last_updated);
       return (
         <Grid container>
           <Grid container style={{ backgroundColor: '#1e1e1c' }}>
@@ -262,7 +269,7 @@ class CourseDetail extends Component {
                     marginTop: 5
                   }}>
                     <UpdateIcon style={{ marginRight: 10 }} />
-                    <Typography variant="caption" >Last updated {course.last_updated}</Typography>
+                    <Typography variant="caption" >Last updated {date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()}</Typography>
                   </Grid>
 
                   <Grid item container style={{ color: 'white', marginTop: 20, display: 'flex' }}>

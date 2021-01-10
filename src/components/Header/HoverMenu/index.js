@@ -83,18 +83,18 @@ export default function HoverMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {props.categories ? props.categories.map(category => 
-           <StyledMenuItem
-           onClick={handleClose}
+        {props.categories ? props.categories.map(category =>
+          <StyledMenuItem
+            onClick={handleClose}
           >
             <NavLink to={`/categories/${category.title}`} style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
               <ListItemText primary={category.title} />
             </NavLink>
-         </StyledMenuItem>
-         )
-          : 
-          <Grid 
-          style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          </StyledMenuItem>
+        )
+          :
+          <Grid
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Typography variant="p">Loading...</Typography>
           </Grid>
         }

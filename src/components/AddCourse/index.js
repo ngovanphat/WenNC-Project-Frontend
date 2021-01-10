@@ -127,7 +127,7 @@ class AddCourse extends Component {
               justifyContent: 'flex-end',
               marginTop: 40
             }}>
-              <Button style={{backgroundColor: '#005580', color: 'white' }} variant="contained">
+              <Button style={{ backgroundColor: '#005580', color: 'white' }} variant="contained">
                 Create
               </Button>
             </Grid>

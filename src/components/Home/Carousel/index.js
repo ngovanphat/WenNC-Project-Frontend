@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CarouselSlide = (props) => {
   const classes = useStyles();
-  
+
   if (props.coursesLoading) {
     return (
       <Carousel className={classes.carousel}>

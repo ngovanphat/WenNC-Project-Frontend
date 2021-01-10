@@ -253,7 +253,7 @@ export const addMostViewedCourses = (courses) => ({
 
 // ---------------------- All Courses -----------------------
 
-export const fetchAllCourses = (page=1, pageCount=10) => (dispatch) => {
+export const fetchAllCourses = (page = 1, pageCount = 10) => (dispatch) => {
   dispatch(allCoursesLoading(true));
 
   return fetch(ApiURL + `/courses/all?page=${page}&size=${pageCount}`)
@@ -573,7 +573,7 @@ export const joinCourse = (input) => {
           throw errmess;
         }
       )
-      .then(_ => {dispatch(fetchMyCourses()); })
+      .then(_ => { dispatch(fetchMyCourses()); })
       .catch(error => dispatch(myCoursesFailed(error.message)));
   };
 };
@@ -657,7 +657,7 @@ export const addToWishlist = (input) => {
           throw errmess;
         }
       )
-      .then(_ => {dispatch(fetchMyWishlist()); })
+      .then(_ => { dispatch(fetchMyWishlist()); })
       .catch(error => dispatch(myWishlistFailed(error.message)));
   };
 };
@@ -692,7 +692,7 @@ export const removeFromWishlist = (input) => {
           throw errmess;
         }
       )
-      .then(_ => {dispatch(fetchMyWishlist()); })
+      .then(_ => { dispatch(fetchMyWishlist()); })
       .catch(error => dispatch(myWishlistFailed(error.message)));
   };
 };
