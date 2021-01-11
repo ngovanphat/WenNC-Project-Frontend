@@ -35,9 +35,7 @@ function UsersTable(props) {
   //on users update
   useEffect(() => {
     /* console.log('New value', adminUsers.users)  */
-    console.log(tableRef);
      if(tableRef.current!==null){
-        console.log("tableref can now be used" );
         tableRef.current.onQueryChange();
     }  
     return () => {
@@ -51,26 +49,22 @@ function UsersTable(props) {
         {
           field: '_id',
           title: 'ID',
-          cellStyle: {
-            maxWidth: '10vh',
+          cellStyle: {/* 
             whiteSpace: 'pre-wrap',
-            overflowWrap: 'break-word',
+            overflowWrap: 'break-word' */
           },
           headerStyle: {
-            maxWidth: '10vh',
           },
           searchable: false,
         },
         {
           field: 'email',
           title: 'Email',
-          cellStyle: {
-            maxWidth: '10vh',
+          cellStyle: {/* 
             whiteSpace: 'pre-wrap',
-            overflowWrap: 'break-word',
+            overflowWrap: 'break-word', */
           },
           headerStyle: {
-            maxWidth: '10vh',
           },
         },
         { field: 'fullname', title: 'Fullname' },
@@ -106,7 +100,6 @@ function UsersTable(props) {
         exportButton: true,
         sorting: true,
         actionsColumnIndex: -1,
-        //initialPage: props.adminUsers.page - 1,
         pageSize: props.adminUsers.perPage,
         exportAllData: true,
       }}

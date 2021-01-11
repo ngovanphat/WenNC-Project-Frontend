@@ -36,7 +36,8 @@ function AdminUsers(props) {
   //component did mount
   useEffect(() => {
     document.title = 'Users';
-    props.fetchAdminUsers(1,props.adminUsers.perPage);
+    if(props.adminUsers.totalUsers<=0)
+      props.fetchAdminUsers(1,props.adminUsers.perPage);
   },[]);
 
 

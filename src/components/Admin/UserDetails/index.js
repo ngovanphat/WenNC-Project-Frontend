@@ -14,11 +14,12 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams, withRouter } from 'react-router-dom';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditPanel from './EditPanel';
 import MuiAlert from '@material-ui/lab/Alert';
+import { Skeleton } from '@material-ui/lab';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -71,26 +72,14 @@ const styles = {
     transitionDuration: '0.3s',
   },
 };
-const userInfo = {
-  'avatar':
-    'https://i.pinimg.com/originals/6c/ce/de/6ccede86e8a11d520f5e7a3386d46ff0.jpg',
-  'description': 'abc',
-  'banned': false,
-  'role': 'ADMIN',
-  'favorite_list': [],
-  'join_list': [],
-  'course_list': [],
-  '_id': '5fd1f1228a416421304cf7de',
-  'email': '123@gmail.com',
-  'fullname': 'abc',
-  'createdAt': '2020-12-10T09:57:54.770Z',
-};
 
 const useStyles = makeStyles(styles);
-export default function UserDetails() {
+const UserDetails = (props) => {
+  const history = useHistory();
   const classes = useStyles();
   const [editing, setEditing] = useState(false);
   const [save, setSave] = useState(['', null]);
+  const user = props.history.location.state.datas;
   let { id } = useParams();
   const handleSavePassword = (error) => {
     if (error !== null) {
@@ -108,6 +97,10 @@ export default function UserDetails() {
   };
   useEffect(() => {
     document.title = 'User Details';
+    console.log(props);
+    if (props.history.location.state) {
+      let data = props.history.location.state.datas;
+    }
   }, []);
   return (
     <Grid container className={classes.root}>
@@ -115,98 +108,106 @@ export default function UserDetails() {
         <Typography variant="h4" gutterBottom>
           User Details
         </Typography>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={3}
-            align="center"
-            justify="center"
-            alignItems="center">
-            <Avatar
-              alt="Avatar"
-              className={classes.avatar}
-              src={userInfo.avatar}
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Id :
-              </Typography>
-              <Typography
-                variant="body1"
-                className={classes.content}
-                display="inline">
-                {userInfo._id}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Join Date :
-              </Typography>
-              <Typography
-                variant="body1"
-                className={classes.content}
-                display="inline">
-                {new Date(userInfo.createdAt).toUTCString()}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Full Name :
-              </Typography>
-              <Typography
-                variant="body1"
-                className={classes.content}
-                display="inline">
-                {userInfo.fullname}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Role :
-              </Typography>
-              <Typography
-                variant="body1"
-                className={classes.content}
-                display="inline">
-                {userInfo.role.firstLetterCapitalize()}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Email :
-              </Typography>
-              <Typography
-                variant="body1"
-                className={classes.content}
-                display="inline">
-                {userInfo.email}
-              </Typography>
-            </div>
-            <Typography variant="h5">Description</Typography>
-            <Typography variant="body1" style={{ marginBottom: '1%' }}>
-              {userInfo.description}
-            </Typography>
 
-            <div className={classes.status}>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Status :
+        {user ? (
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              align="center"
+              justify="center"
+              alignItems="center">
+              <Avatar
+                alt="Avatar"
+                className={classes.avatar}
+                src={user.avatar}
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <div>
+                <Typography variant="h6" display="inline" gutterBottom>
+                  Id :
+                </Typography>
+                <Typography
+                  variant="body1"
+                  className={classes.content}
+                  display="inline">
+                  {user._id}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="h6" display="inline" gutterBottom>
+                  Join Date :
+                </Typography>
+                <Typography
+                  variant="body1"
+                  className={classes.content}
+                  display="inline">
+                  {new Date(user.createdAt).toUTCString()}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="h6" display="inline" gutterBottom>
+                  Full Name :
+                </Typography>
+                <Typography
+                  variant="body1"
+                  className={classes.content}
+                  display="inline">
+                  {user.fullname}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="h6" display="inline" gutterBottom>
+                  Role :
+                </Typography>
+                <Typography
+                  variant="body1"
+                  className={classes.content}
+                  display="inline">
+                  {user.role.firstLetterCapitalize()}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="h6" display="inline" gutterBottom>
+                  Email :
+                </Typography>
+                <Typography
+                  variant="body1"
+                  className={classes.content}
+                  display="inline">
+                  {user.email}
+                </Typography>
+              </div>
+
+              <Typography variant="h5">Description</Typography>
+              <Typography variant="body1" style={{ marginBottom: '1%' }}>
+                {user.description}
               </Typography>
-              <Typography variant="body1" display="inline">
-                {userInfo.banned ? (
-                  <CancelIcon style={{ color: colors.red[500] }} />
-                ) : (
+
+              <div className={classes.status}>
+                <Typography variant="h6" display="inline" gutterBottom>
+                  Status :
+                </Typography>
+                <Typography variant="body1" display="inline">
+                  {user.banned ? (
+                    <CancelIcon style={{ color: colors.red[500] }} />
+                  ) : (
                     <CheckCircleIcon style={{ color: colors.green[500] }} />
                   )}
-              </Typography>
-            </div>
-            <Collapse in={editing}>
-              <EditPanel handleSave={handleSavePassword} status={userInfo.banned}></EditPanel>
-            </Collapse>
+                </Typography>
+              </div>
+              <Collapse in={editing}>
+                <EditPanel
+                  handleSave={handleSavePassword}
+                  status={user.banned}></EditPanel>
+              </Collapse>
+            </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <Skeleton variant="rect"></Skeleton>
+        )}
       </Grid>
       <Grid item xs={12} className={classes.actions} justify="flex-end">
         <Button
@@ -253,9 +254,7 @@ export default function UserDetails() {
           autoHideDuration={3000}
           onClose={handleClose}>
           {save[0] === 'success' ? (
-            <Alert severity="success">
-              {save[1]}
-            </Alert>
+            <Alert severity="success">{save[1]}</Alert>
           ) : save[0] === 'error' ? (
             <Alert severity="error">{save[1]}</Alert>
           ) : null}
@@ -263,4 +262,5 @@ export default function UserDetails() {
       </div>
     </Grid>
   );
-}
+};
+export default withRouter(UserDetails);
