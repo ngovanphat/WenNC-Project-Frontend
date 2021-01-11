@@ -1,11 +1,11 @@
 import * as actionTypes from '../actionTypes';
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   error: null,
   users: [],
   sortColumn:'none',
   search:'',
-  page:1,
+  page:0,
   perPage:5,
   totalUsers:0,
 };
@@ -38,7 +38,8 @@ export const adminUsers = (state = initialState, action) => {
             ...state,
             isLoading:false,
             error:null,
-            users:[...state.users,action.payload]
+            users:state.users,
+            totalUsers:action.totalUsers,
         }
     case actionTypes.ADMIN_USERS_CHANGE_PERPAGE:
         return{
@@ -47,6 +48,21 @@ export const adminUsers = (state = initialState, action) => {
             error:null,
             perPage:action.payload,
         }
+    case actionTypes.ADMIN_USERS_FETCH_PAGE:
+      return{
+          ...state,
+          isLoading:false,
+          error:null,
+          users: [].concat(state.users,action.payload),
+          page:action.page,
+      }    
+    case actionTypes.ADMIN_USERS_CHANGE_PAGE:
+      return{
+          ...state,
+          isLoading:false,
+          error:null,
+          page:action.page,
+      }    
     default:
       return state;
   }

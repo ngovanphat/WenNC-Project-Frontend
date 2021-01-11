@@ -903,18 +903,14 @@ export const resetAdminCheck=()=>{
 }
 
 //------------------------- Admin Users --------------------
-export const fetchAdminUsers = (page = 1, pageSize = 5) => (dispatch) => {
+export const fetchAdminUsers = (page, pageSize) => async  (dispatch) => {
   dispatch(AdminUsersLoading(true));
-
-  return fetch(ApiURL + `/users/admin-manage/all`, {
+  console.log("fetching data... "+ page);
+  fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(page)}&pageCount=${encodeURIComponent(pageSize)}`, {
     headers: {
       // these could be different for your API call
       Accept: 'application/json',
       'x-access-token': getLoginLocal(),
-    },
-    params: {
-      page: page,
-      pageSize: pageSize,
     },
   })
     .then(
@@ -1005,6 +1001,44 @@ export const removeAdminUser = (id) => (dispatch) => {
     )
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
 };
+export const changeAdminUsersPage = (curPage,newPage,pageSize, existedInState) => (dispatch)=>{
+  dispatch(AdminUsersLoading(true));
+  console.log(' curpage ' +curPage+' newpage '+newPage+' existed'+existedInState);
+  if(curPage>=newPage||existedInState){
+    return dispatch(updateLocalAdminUsersPage(newPage));
+  }else{
+    return fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(newPage)}&pageCount=${encodeURIComponent(pageSize)}`, {
+      headers: {
+        // these could be different for your API call
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      }
+    })
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .then((response) => response.json())
+      .then((users) => {
+        console.log(users.page);
+        dispatch(fetchAdminUsersPage(users.docs,users.page));
+      })
+      .catch((error) => dispatch(AdminUsersFailed(error.message)));
+  }
+}
 
 export const AdminUsersLoading = () => ({
   type: actionTypes.ADMIN_USERS_LOADING,
@@ -1020,7 +1054,21 @@ export const setAdminUsers = (users) => ({
   page: users.page,
   totalUsers: users.totalDocs,
 });
-export const addNewUser = (user) => ({
+export const addNewUser = (user,total) => ({
   type: actionTypes.ADD_NEW_USER,
   payload: user,
+  totalUsers:total
 });
+const fetchAdminUsersPage = (user,page)=>({
+  type: actionTypes.ADMIN_USERS_FETCH_PAGE,
+  payload:user,
+  page:page,
+})
+export const updateLocalAdminUsersPage = (nextPage)=>({
+  type: actionTypes.ADMIN_USERS_CHANGE_PAGE,
+  page:nextPage
+})
+export const changeAdminUsersPerPage = (perPage)=>({
+type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
+  payload:perPage
+})
