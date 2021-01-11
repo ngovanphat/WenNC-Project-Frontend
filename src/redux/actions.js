@@ -494,6 +494,38 @@ export const addSingleCategory = (category) => ({
   payload: category,
 });
 
+// ---------------------Video -----------------------
+export const addVideo = (video) => (dispatch) => {
+  
+    return axios({
+      method: 'post',
+      url: ApiURL + '/videos/',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: video
+    })
+      .then(
+        (response) => {
+          if (response.status === 201) {
+            alert('create video successfully');
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch((error) => console.log(error));
+}
+
 // ------------------- Comment ------------------------
 
 export const fetchAllComments = (id) => (dispatch) => {

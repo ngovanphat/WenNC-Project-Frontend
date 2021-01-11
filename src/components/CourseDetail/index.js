@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Typography, List, Button, Paper, TextField, Avatar, LinearProgress } from '@material-ui/core';
+import { Grid, Typography, List, Button, Paper, TextField, Avatar, LinearProgress, Modal } from '@material-ui/core';
 import { Rating, Pagination } from '@material-ui/lab';
 import Image from 'material-ui-image';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { addFeedback ,fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses, removeFromWishlist } from '../../redux/actions';
+import { addFeedback, addVideo ,fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses, removeFromWishlist, fetchAllCourses } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
@@ -35,7 +35,8 @@ const mapDispatchToProps = (dispatch) => ({
   joinCourse: (input) => { dispatch(joinCourse(input)) },
   addToWishlist: (input) => { dispatch(addToWishlist(input)) },
   removeFromWishlist: (input) => { dispatch(removeFromWishlist(input)) },
-  addFeedback: (feedback) => { dispatch(addFeedback(feedback))}
+  addFeedback: (feedback) => { dispatch(addFeedback(feedback))},
+  addVideo: (video) => {dispatch(addVideo(video))},
 });
 
 class CourseDetail extends Component {
@@ -43,8 +44,25 @@ class CourseDetail extends Component {
     super(props);
     this.state ={
       rating: 5,
-      comment: ''
+      comment: '',
+      openModal: false,
+      videoUrl: '',
+      videoLength: '',
+      videoTitle: ''
     }
+  }
+
+  handleOpenModal() {
+    this.setState({
+      ...this.state,
+      openModal: true
+    })
+  }
+  handleCloseModal() {
+    this.setState({
+      ...this.state,
+      openModal: false
+    })
   }
 
   componentDidMount() {
@@ -206,6 +224,8 @@ class CourseDetail extends Component {
     )
   }
 
+
+
   render() {
     const course = this.props.singleCourse.course;
     if (this.props.singleCourse.isLoading || this.props.myWishlist.isLoading || this.props.myCourses.isLoading) {
@@ -307,7 +327,84 @@ class CourseDetail extends Component {
                   fontWeight: 'bold'
                 }}
               >Course content</Typography>
-              <Typography variant="caption" style={{ marginTop: 30, marginBottom: 5, color: 'grey' }}>{course.videos.length} videos</Typography>
+              <Grid container style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <Typography variant="caption" style={{ marginTop: 30, marginBottom: 5, color: 'grey' }}>{course.videos.length} videos</Typography>
+                {
+                  !this.props.userProfile.user ?  <div></div> : course.leturer._id === this.props.userProfile.user.user._id ? 
+                  <div>
+                  <Button  variant="outlined"  color="primary" onClick={() => {
+                      this.handleOpenModal();
+                      console.log(this.state.openModal)
+                  }}>
+                    Upload Video
+                  </Button> 
+                  <Modal
+                    open={this.state.openModal}
+                    onClose={() => this.handleCloseModal()}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+                    <Paper style={{width: 400, position: 'absolute', top: 250, left: 500, border: 'none'}}>
+                      <Grid style={{padding: 20}}>
+                        <Typography variant="h6">Video URL:</Typography>
+                        <Grid xs={10} style={{marginLeft: 20, display: 'flex', flexDirection: 'column'}}>
+                          <TextField
+                            id="filled-full-width"
+                            margin="normal"
+                            placeholder="Video title"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={this.state.videoTitle}
+                            onChange={(e) => this.setState({...this.state, videoTitle: e.target.value})}
+                          />
+                           <TextField
+                            id="filled-full-width"
+                            margin="normal"
+                            placeholder="Video URL"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={this.state.videoUrl}
+                            onChange={(e) => this.setState({...this.state, videoUrl: e.target.value})}
+                          />
+                          <TextField
+                            id="filled-full-width"
+                            margin="normal"
+                            placeholder="Video Length"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={this.state.videoLength}
+                            onChange={(e) => this.setState({...this.state, videoLength: e.target.value})}
+                          />
+                          <Grid container xs={12} style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end'
+                          }}>
+                            <Button style={{backgroundColor: '#005580', color: 'white' }} variant="contained" onClick={() => {
+                               this.props.addVideo({
+                                title: this.state.videoTitle,
+                                length:  this.state.videoLength,
+                                course: course._id,
+                                link: this.state.videoUrl
+                              })
+                              this.handleCloseModal();
+                            }}>
+                              Add
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      
+                      </Grid>
+                      
+                      </Paper>
+                  </Modal>
+                  </div>
+                  : 
+                  <div></div>
+                }
+              </Grid>
               <Paper style={{ color: 'white' }} variant="outlined">
                 <VideoList videos={course.videos} courseId={course._id} />
               </Paper>

@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   inputTextFied: {
+    border: 'none',
     borderColor: 'white !important'
   },
   logInButton: {
