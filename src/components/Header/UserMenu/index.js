@@ -57,11 +57,7 @@ export default function UserMenu(props) {
   };
   return (
     <div>
-<<<<<<< HEAD
       <Avatar src={props.user.avatar} onClick={handleClick} className={classes.avatar}/>
-=======
-      <Avatar src={props.avatar} onClick={handleClick} className={classes.avatar} />
->>>>>>> acf2e13fefa07793fe60a8872da65db5a0d8d0a8
       <StyledMenu
         anchorEl={anchorEl}
         keepMounted

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Typography, TextField, InputAdornment, MenuItem, Select, Input, Button } from '@material-ui/core';
-import { Editor } from "react-draft-wysiwyg";
+import SunEditor from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css'; 
 import {connect } from 'react-redux';
-
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ImageUpload from './ImageUpload';
 
 import { addCourse } from '../../redux/actions';
@@ -28,11 +27,18 @@ class AddCourse extends Component {
       price: 0,
       avatar: '',
       shortDescription: '',
-      description: ''
-    }
-    
+      description: '',
+      thumnail: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
   };
-
+  handleChange = (content) => {
+    
+    this.setState({
+      ...this.state,
+      description: content
+    });
+  };
 
   render() {
     return (
@@ -112,10 +118,32 @@ class AddCourse extends Component {
               marginTop: 40
             }}>
               <Grid xs={3}>
-                <Typography variant="h6" style={{ color: 'grey', fontWeight: 'bold' }}>Course's Avatar:</Typography>
+                <Typography variant="h6" style={{ color: 'grey', fontWeight: 'bold' }}>Course's Avatar Upload:</Typography>
               </Grid>
               <Grid xs={9} >
                 <ImageUpload cardName="Input Image" />
+              </Grid>
+            </Grid>
+            <Grid container xs={12} style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: 20
+            }}>
+              <Grid xs={3}>
+                <Typography variant="h6" style={{ color: 'grey', fontWeight: 'bold' }}>Online Image Url:</Typography>
+              </Grid>
+              <Grid xs={9} >
+                <TextField
+                  id="filled-full-width"
+                  style={{ marginTop: 8, marginBottom: 8, width: 350 }}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={this.state.thumnail}
+                  onChange={(e) => this.setState({...this.state, thumnail: e.target.value})}
+                />
               </Grid>
             </Grid>
             <Grid container xs={12} style={{
@@ -150,14 +178,7 @@ class AddCourse extends Component {
                 <Typography variant="h6" style={{ color: 'grey', fontWeight: 'bold' }}>Description: </Typography>
               </Grid>
               <Grid xs={9} maxWidth={500} maxHeigth={300}>
-                <Editor
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  editorStyle={{ maxHeight: 300, height: 300, backgroundColor: '#fff' }}
-                  editorState={this.state.description}
-                  onEditorStateChange={(editorState) => this.setState({...this.state, description: ''})}
-                />
+                <SunEditor onChange={this.handleChange} />
               </Grid>
             </Grid>
             <Grid container xs={12} style={{
@@ -167,7 +188,7 @@ class AddCourse extends Component {
             }}>
               <Button style={{backgroundColor: '#005580', color: 'white' }} variant="contained" onClick={() => {
                 this.props.addCourse({
-                  course: {...this.state, actualPrice: this.state.price,thumnail: 'https://img-a.udemycdn.com/course/240x135/625204_436a_3.jpg?ZYwrhKcAPP2L7bci3j4Gr-bcNPg90RLiZTSQzXa6TVG4RuKSM31MgU8rHkpde8Z56bXA7kGBw6UySf8SDUwmKhB61IvgYk7VkyA3VJjqTZD-D6mWA3emRK96scQIEos'},
+                  course: {...this.state, actualPrice: this.state.price},
                   userId: this.props.userProfile.user.user._id
                 })
               }}>

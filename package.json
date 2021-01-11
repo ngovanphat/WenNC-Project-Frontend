@@ -30,6 +30,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.1",
+    "suneditor-react": "^2.15.0",
     "video-react": "^0.14.1",
     "web-vitals": "^0.2.4"
   },
