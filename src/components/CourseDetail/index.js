@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Typography, List, Button, Paper, ListItem, Avatar, LinearProgress } from '@material-ui/core';
+import { Grid, Typography, List, Button, Paper, TextField, Avatar, LinearProgress } from '@material-ui/core';
 import { Rating, Pagination } from '@material-ui/lab';
 import Image from 'material-ui-image';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import VideoList from './VideoList';
 import CommentList from './CommentList';
 import SameCourseList from './SameCourseList';
 
-import { fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses, removeFromWishlist } from '../../redux/actions';
+import { addFeedback ,fetchSingleCourse, joinCourse, addToWishlist, fetchMyWishlist, fetchMyCourses, removeFromWishlist } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
@@ -35,11 +35,16 @@ const mapDispatchToProps = (dispatch) => ({
   joinCourse: (input) => { dispatch(joinCourse(input)) },
   addToWishlist: (input) => { dispatch(addToWishlist(input)) },
   removeFromWishlist: (input) => { dispatch(removeFromWishlist(input)) },
+  addFeedback: (feedback) => { dispatch(addFeedback(feedback))}
 });
 
 class CourseDetail extends Component {
   constructor(props) {
     super(props);
+    this.state ={
+      rating: 5,
+      comment: ''
+    }
   }
 
   componentDidMount() {
@@ -128,7 +133,7 @@ class CourseDetail extends Component {
     let isJoined = this.checkIsJoined();
     if (isJoined == 1) {
       return (
-        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 120, width: '100%' }}>
           <Paper >
             <Grid container style={{ padding: 10 }}>
               <Grid container style={{
@@ -151,7 +156,7 @@ class CourseDetail extends Component {
     }
     else if (isJoined == 0) {
       return (
-        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 120, width: '100%' }}>
           <Paper >
             <Grid container style={{ padding: 10 }}>
               <Grid container style={{
@@ -176,7 +181,7 @@ class CourseDetail extends Component {
       );
     }
     return (
-      <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 80, width: '100%' }}>
+      <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 120 }}>
         <Paper >
           <Grid container style={{ padding: 10 }}>
             <Grid container style={{
@@ -314,7 +319,10 @@ class CourseDetail extends Component {
                 }}
               >Description</Typography>
               <Typography variant="p" style={{ marginTop: 20 }}>
-                {course.description}
+                <Grid xs={6}>
+                  <td dangerouslySetInnerHTML={{__html: course.description}} />
+                </Grid>
+                
               </Typography>
 
               {/*------------------Lecturer---------------------*/}
@@ -440,9 +448,58 @@ class CourseDetail extends Component {
                   isLoading={this.props.allComments.isLoading}
                   errMess={this.props.allComments.errMess}
                 />
-                <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                
+                {
+                  this.props.userProfile.user ? 
+                  <Grid xs={12} style={{display: 'flex', flexDirection: 'row'}}>
+                  
+                    <Grid item xs={1}>
+                      <Avatar alt={this.props.userProfile.user.user.fullname} src={this.props.userProfile.user.user.avatar} style={{ width: 60, height: 60, marginRight: 10 }} />
+                    </Grid> 
+                    <Grid xs={10} style={{marginLeft: 20, display: 'flex', flexDirection: 'column'}}>
+                      <Rating value={this.state.rating} onChange={(e) => this.setState({...this.state, rating: e.target.value})}/>
+                      <TextField
+                        id="filled-full-width"
+                        margin="normal"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        value={this.state.comment}
+                        onChange={(e) => this.setState({...this.state, comment: e.target.value})}
+                      />
+                      <Grid container xs={12} style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end'
+                      }}>
+                        <Button style={{backgroundColor: '#005580', color: 'white' }} variant="contained" onClick={() => {
+                          
+                          if(this.checkIsJoined()){
+                            this.props.addFeedback({
+                              title: this.state.comment,
+                              rating:  this.state.rating,
+                              course: course._id,
+                              userId: this.props.userProfile.user.user._id
+                            })
+                          }
+                          else {
+                            alert("Join course to comment");
+                          }
+                        }}>
+                          Comment
+                        </Button>
+                      </Grid>
+                    </Grid>
+                    
+                   </Grid> : <div></div>
+                }
+                {
+                  (this.props.allComments.isLoading || this.props.allComments.errMess || this.props.allComments.comments.length === 0) ? 
+                  <div></div> :
+                  <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <Pagination count={this.props.allComments.totalPages} page={1} />
-                </Grid>
+                  </Grid>
+                }
+               
               </Grid>
               {/*------------------More Courses---------------------*/}
               <Typography

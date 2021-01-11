@@ -195,7 +195,6 @@ export const fetchSingleCourse = (id) => (dispatch) => {
 };
 
 export const addCourse = (courseData) => {
-  console.log(courseData);
   return (dispatch) => {  // don't forget to use dispatch here!
     return fetch(ApiURL + '/courses/add', {
       method: 'POST',
@@ -206,15 +205,16 @@ export const addCourse = (courseData) => {
       },
       body: JSON.stringify(courseData),
     })
-      .then((response) => response.json())
-      .then((json) => {
-        /*if (json.authenticated === true) { // response success checking logic could differ
-          alert("Log in successfully");
-          return true;
+      .then((response) => {
+        if (response.status === 200) {
+          alert('create feedback successfully');
         } else {
-          alert('Login Failed Username or Password is incorrect');
-        }*/
-        console.log(json);
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
       })
       .catch((err) => {
         alert('Login Failed Some error occured, please retry');
@@ -521,6 +521,38 @@ export const fetchAllComments = (id) => (dispatch) => {
     .then((comments) => dispatch(addAllComments(comments)))
     .catch((error) => dispatch(allCommentsFailed(error.message)));
 };
+
+export const addFeedback = (feedback) => (dispatch) => {
+  console.log(feedback)
+  
+    return axios({
+      method: 'post',
+      url: ApiURL + '/feedbacks/',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: feedback
+    })
+      .then(
+        (response) => {
+          if (response.status === 200) {
+            alert('create feedback successfully');
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch((error) => console.log(error));
+}
 
 export const allCommentsLoading = () => ({
   type: actionTypes.ALL_COMMENTS_LOADING,
