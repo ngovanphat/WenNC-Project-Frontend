@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAllCourses: () => { dispatch(fetchAllCourses()) },
+  fetchAllCourses: (page) => { dispatch(fetchAllCourses(page)) },
   fetchAllCategories: () => { dispatch(fetchAllCategories()) }
 });
 
@@ -53,6 +53,7 @@ class Categories extends Component {
             courses={this.props.allCourses.courses}
             isLoading={this.props.allCourses.isLoading}
             errMess={this.props.allCourses.errMess}
+            fetchAllCourses={this.props.fetchAllCourses}
           />
         </Grid>
       </Grid>

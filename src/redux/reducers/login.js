@@ -1,5 +1,9 @@
 import * as actionTypes from '../actionTypes';
 
+const getLoginData = () => {
+  const loginData = localStorage.getItem('loginData');
+  return loginData ? JSON.parse(loginData) : null;
+};
 const initialState = {
   isLoggedIn: false,
   userId: '',
@@ -7,7 +11,7 @@ const initialState = {
   refreshToken: ''
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = getLoginData() ? getLoginData() : initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_LOGIN_STATE:
       return {

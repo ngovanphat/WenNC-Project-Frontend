@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes';
 const initialState = {
-  isChecking: true,
+  isChecking: false,
   error: null,
   check: false
 };

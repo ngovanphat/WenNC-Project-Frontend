@@ -7,6 +7,13 @@ const initialState = {
 
 export const singleCourse = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.PUSH_VIDEO: 
+      let  newCourse = state.course;
+      newCourse.videos = state.course.videos.concat(action.payload);
+      return {
+        ...state, 
+        course: newCourse
+      };
     case actionTypes.ADD_SINGLE_COURSE:
       return {
         ...state,

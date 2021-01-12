@@ -54,6 +54,18 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.8),
     },
   },
+  adminPanelButton:{
+    marginLeft: "1vw",
+    width:"150px",
+    minWidth:"150px",
+    background: 'white',
+    color: '#005580',
+    fontWeight: 600,
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.8),
+    },
+  },
   avatar: {
     marginLeft: theme.spacing(35),
     cursor: 'pointer',
@@ -72,14 +84,14 @@ const Header = (props) => {
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn && props.user !== null) {
       return (
-        <Grid lg={1} md={2} alignItems="center" justify="center">
+        <Grid container lg={1} md={2} alignItems="center" justify="center">
           {props.isAdmin ? (
             <Grid item md={1}>
               <Hidden only={['sm', 'xs']}>
                 <NavLink
                   to="/admin"
                   style={{ textDecoration: 'none', color: '#00f' }}>
-                  <Button className={classes.signUpButton}>Admin Panel</Button>
+                  <Button className={classes.adminPanelButton}>Admin Panel</Button>
                 </NavLink>{' '}
               </Hidden>
             </Grid>
@@ -88,7 +100,7 @@ const Header = (props) => {
           { props.user ? 
             <Grid item md={4}>
             <Hidden only={['sm', 'xs']}>
-              <UserMenu  user={props.user.user}/>
+              <UserMenu  user={props.user.user} />
             </Hidden>
           </Grid> : <div></div> 
           }

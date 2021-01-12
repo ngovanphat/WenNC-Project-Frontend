@@ -1,10 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import {useDispatch } from 'react-redux';
 import { fade, withStyles, makeStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+
+import { logOut } from '../../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -46,6 +49,7 @@ const StyledMenuItem = withStyles((theme) => ({
 export default function UserMenu(props) {
   const classes = useStyles();
 
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -94,6 +98,16 @@ export default function UserMenu(props) {
           </NavLink>
         </StyledMenuItem> : <div></div>
         }
+        <StyledMenuItem
+          onClick={handleClose}
+        >
+          <NavLink to="/" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }} onClick={() => {
+              dispatch(logOut());
+            }}>
+            <ListItemText primary="Log out" />
+          </NavLink>
+        </StyledMenuItem>
+        
       </StyledMenu>
       
         <StyledMenuItem

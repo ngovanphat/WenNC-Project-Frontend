@@ -69,6 +69,8 @@ export const ADD_SINGLE_CATEGORY = 'ADD_SINGLE_CATEGORY';
 export const ALL_COMMENTS_LOADING = 'ALL_COMMENTS_LOADING';
 export const ALL_COMMENTS_FAIL = 'ALL_COMMENTS_FAIL';
 export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
+export const PUSH_COMMENT = 'PUSH_COMMENT';
+
 
 
 // ------------------- User ------------------------
@@ -87,6 +89,11 @@ export const MY_COURSES_FAIL = 'MY_COURSES_FAIL';
 export const ADD_MY_COURSES = 'ADD_MY_COURSES';
 // export const JOIN_COURSES = 'JOIN_COURSES';
 
+//--------------------------- video ---------------------
+export const PUSH_VIDEO = 'PUSH_VIDEO';
+
+
+
 // ------------------------ My Wishlist --------------------
 
 export const MY_WISHLIST_LOADING = 'MY_WISHLIST_LOADING';
@@ -103,10 +110,11 @@ export const SET_ADMIN_USERS_STATE='SET_ADMIN_USERS_STATE';
 export const ADMIN_USERS_LOADING='ADMIN_USERS_LOADING';
 export const ADMIN_USERS_FAIL='ADMIN_USERS_FAIL';
 export const ADD_NEW_USER='ADD_NEW_USER';
+export const ADMIN_USERS_FETCH_PAGE ='ADMIN_USERS_FETCH_PAGE';
 export const ADMIN_USERS_CHANGE_PAGE='ADMIN_USERS_CHANGE_PAGE';
 export const ADMIN_USERS_CHANGE_PERPAGE='ADMIN_USERS_CHANGE_PERPAGE';
-export const ADMIN_USERS_CHANGE_SORT='ADMIN_USERS_CHANGE_PAGE';
-export const ADMIN_USERS_CHANGE_SEARCH='ADMIN_USERS_CHANGE_PAGE';
+export const ADMIN_USERS_CHANGE_SORT='ADMIN_USERS_CHANGE_SORT';
+export const ADMIN_USERS_CHANGE_SEARCH='ADMIN_USERS_CHANGE_SEARCH';
 
 //------------------------- Admin User Details --------------------
 

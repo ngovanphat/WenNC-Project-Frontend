@@ -12,7 +12,7 @@ export const allCourses = (state = initialState, action) => {
         ...state,
         isLoading: false,
         errMess: null,
-        courses: action.payload.docs
+        courses: action.payload
       };
     case actionTypes.ALL_COURSES_LOADING:
       return {

@@ -35,7 +35,7 @@ import AdminCategories from '../Admin/Categories';
 import UserDetails from '../Admin/UserDetails';
 import Settings from '../Admin/Settings';
 
-import { fetchUserProfile, fetchAllCategories, checkAdmin } from '../../redux/actions';
+import {  fetchUserProfile, fetchAllCategories, checkAdmin } from '../../redux/actions';
 
 const mapStateToProps = (state) => {
   return {
