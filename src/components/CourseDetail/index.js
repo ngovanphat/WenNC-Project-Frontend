@@ -224,7 +224,7 @@ class CourseDetail extends Component {
     )
   }
 
-
+  
 
   render() {
     const course = this.props.singleCourse.course;
@@ -494,7 +494,7 @@ class CourseDetail extends Component {
                   }}>
                     <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 5) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={5} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 5) * 100 / this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{Math.ceil(this.countRatingStar(this.props.allComments.comments, 5) * 100 / this.props.allComments.totalDocs)}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
@@ -502,7 +502,7 @@ class CourseDetail extends Component {
                   }}>
                     <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 4) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={4} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 4) * 100 / this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{Math.ceil(this.countRatingStar(this.props.allComments.comments, 4) * 100 / this.props.allComments.totalDocs)}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
@@ -510,7 +510,7 @@ class CourseDetail extends Component {
                   }}>
                     <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 3) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={3} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 3) * 100 / this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{Math.ceil(this.countRatingStar(this.props.allComments.comments, 3) * 100 / this.props.allComments.totalDocs)}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
@@ -518,7 +518,7 @@ class CourseDetail extends Component {
                   }}>
                     <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 2) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={2} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 2) * 100 / this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{Math.ceil(this.countRatingStar(this.props.allComments.comments, 2) * 100 / this.props.allComments.totalDocs)}%</Typography>
                   </Grid>
                   <Grid item style={{
                     display: 'flex',
@@ -526,7 +526,7 @@ class CourseDetail extends Component {
                   }}>
                     <LinearProgress variant="buffer" value={this.countRatingStar(this.props.allComments.comments, 1) * 100 / this.props.allComments.totalDocs} style={{ height: 10, width: 450, marginRight: 10 }} />
                     <Rating value={1} readOnly size="small" />
-                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{this.countRatingStar(this.props.allComments.comments, 1) * 100 / this.props.allComments.totalDocs}%</Typography>
+                    <Typography color="primary" variant="caption" style={{ fontSize: 14, marginLeft: 10 }}>{Math.ceil(this.countRatingStar(this.props.allComments.comments, 1) * 100 / this.props.allComments.totalDocs)}%</Typography>
                   </Grid>
                 </Grid>
               </Grid>
