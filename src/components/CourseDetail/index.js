@@ -225,11 +225,6 @@ class CourseDetail extends Component {
     )
   }
 
-<<<<<<< HEAD
-=======
-  
-
->>>>>>> b8c0e852f5695c89eb564a668d5c989eeaafb8b4
   render() {
     const course = this.props.singleCourse.course;
     if (this.props.singleCourse.isLoading || this.props.myWishlist.isLoading || this.props.myCourses.isLoading) {

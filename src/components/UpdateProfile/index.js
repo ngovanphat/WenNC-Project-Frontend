@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import ImageUpload from '../AddCourse/ImageUpload';
 import { connect } from 'react-redux';
-import { updateUserProfile, fetchUserProfile } from '../../redux/actions';
+import { updateUserProfile, updateUserPassword, fetchUserProfile } from '../../redux/actions';
 
 const mapStateToProps = state => {
   return {
@@ -19,15 +19,19 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUserProfile: () => { dispatch(fetchUserProfile()) },
-  updateUserProfile: (input) => { dispatch(updateUserProfile(input)) }
+  updateUserProfile: (input) => { dispatch(updateUserProfile(input)) },
+  updateUserPassword: (input) => { dispatch(updateUserPassword(input)) }
 })
 
 class UpdateProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullname: 1,
-      email: 1
+      fullname: "",
+      email: "",
+      newPassword: "",
+      currentPassword: "",
+      retypePassword: ""
     }
   }
 
@@ -41,10 +45,26 @@ class UpdateProfile extends Component {
 
   handleAcountInfoClick = async (e) => {
     e.preventDefault();
-    if (this.state.email == "" || this.state.fullname == "")
-      alert("Please input valid value")
+    if (this.state.fullname == "" || !(/^[a-zA-Z ]*$/.test(this.state.fullname)))
+      alert("Please input valid full name")
+    else if (this.state.email == "" || !(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.state.email)))
+      alert("Please input valid email")
     else
       await this.props.updateUserProfile({ 'fullname': this.state.fullname, 'email': this.state.email });
+  }
+
+  handlePasswordClick = async (e) => {
+    e.preventDefault();
+    if (this.state.currentPassword == "")
+      alert("Please input valid current password")
+    else if (this.state.newPassword == "")
+      alert("Please input valid new password")
+    else if (this.state.retypePassword == "")
+      alert("Please input valid retype password")
+    else if (this.state.retypePassword.localeCompare(this.state.newPassword) !== 0)
+      alert("Please retype the same new password")
+    else
+      await this.props.updateUserPassword({ 'password': this.state.newPassword, 'currentPassword': this.state.currentPassword });
   }
 
   render() {
@@ -91,8 +111,9 @@ class UpdateProfile extends Component {
                 <Grid item xs={6}>
                   <TextField
                     label="Full name"
-                    name="fullname"
-                    defaultValue={this.props.userProfile.user.user.fullname}
+                    name="fullName"
+                    id="fullName"
+                    defaultValue={this.state.fullname}
                     variant="outlined"
                     fullWidth
                     onInput={(e) => this.setState({
@@ -105,9 +126,11 @@ class UpdateProfile extends Component {
                   <TextField
                     label="Email"
                     name="email"
-                    defaultValue={this.props.userProfile.user.user.email}
+                    id="email"
+                    defaultValue={this.state.email}
                     variant="outlined"
                     fullWidth
+                    
                     // error={!!errors.email}
                     // inputRef={register({
                     //   pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -117,7 +140,6 @@ class UpdateProfile extends Component {
                       email: e.target.value
                     })}
                   />
-                  {/* <Typography variant="caption" style={{ color: '#f00' }}>{errors.email && "Invalid email address"}</Typography> */}
                 </Grid>
               </Grid>
               <Grid item container direction="column" alignItems="flex-start" xs={12}>
@@ -189,25 +211,43 @@ class UpdateProfile extends Component {
                 <Grid item xs={4}>
                   <TextField
                     label="Current password"
+                    name="currentPassword"
+                    id="currentPassword"
                     type="password"
                     variant="outlined"
                     fullWidth
+                    onInput={(e) => this.setState({
+                      ...this.state,
+                      currentPassword: e.target.value
+                    })}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <TextField
                     label="New password"
+                    name="newPassword"
+                    id="newPassword"
                     type="password"
                     variant="outlined"
                     fullWidth
+                    onInput={(e) => this.setState({
+                      ...this.state,
+                      newPassword: e.target.value
+                    })}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <TextField
                     label="Retype password"
+                    name="retypePassword"
+                    id="retypePassword"
                     type="password"
                     variant="outlined"
                     fullWidth
+                    onInput={(e) => this.setState({
+                      ...this.state,
+                      retypePassword: e.target.value
+                    })}
                   />
                 </Grid>
               </Grid>
@@ -216,7 +256,7 @@ class UpdateProfile extends Component {
                   marginTop: 25,
                   borderColor: "#005580",
                   color: '#005580'
-                }}>
+                }} onClick={(e) => this.handlePasswordClick(e)}>
                   Change password
               </Button>
               </Grid>

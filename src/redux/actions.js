@@ -59,11 +59,11 @@ export const login = (loginInput) => {
           dispatch(fetchUserProfile());
           return true;
         } else {
-          alert('Login Failed Username or Password is incorrect');
+          alert('Login Failed! Username or Password is incorrect');
         }
       })
       .catch((err) => {
-        alert('Login Failed Some error occured, please retry');
+        alert('Login Failed! Some error occured, please retry');
         console.log(err);
       });
   };
@@ -707,6 +707,35 @@ export const updateUserProfile = (input) => {
         }
       )
       .catch((error) => dispatch(userProfileFailed(error.message)));
+  };
+};
+
+export const updateUserPassword = (input) => {
+  const { password, currentPassword } = input;
+  return (dispatch) => {
+    return axios({
+      method: 'patch',
+      url: ApiURL + '/users/me',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: {
+        password: password,
+        currentPassword: currentPassword,
+      },
+    })
+      .then(
+        (response) => {
+          if (response.status == 200) {
+            alert('Update profile successfully');
+          }
+          else {
+            alert(response.json().error)
+          }
+        },
+      )
+      .catch(() => alert("Current password is not correct"));
   };
 };
 
