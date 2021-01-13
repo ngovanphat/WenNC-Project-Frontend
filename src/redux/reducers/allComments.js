@@ -11,8 +11,9 @@ export const allComments = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PUSH_COMMENT:
       return {
-        ...state,
-        comments: state.comments.concat(action.payload)
+        ...state, 
+        comments: state.comments.concat(action.payload),
+        totalDocs: state.totalDocs + 1
       };
     case actionTypes.ADD_ALL_COMMENTS:
       return {
