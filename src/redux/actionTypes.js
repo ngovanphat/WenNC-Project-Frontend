@@ -71,8 +71,6 @@ export const ALL_COMMENTS_FAIL = 'ALL_COMMENTS_FAIL';
 export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
 export const PUSH_COMMENT = 'PUSH_COMMENT';
 
-
-
 // ------------------- User ------------------------
 
 // ------------------------ User Profile --------------------
@@ -87,9 +85,9 @@ export const RESET_USER_PROFILE = 'RESET_USER_PROFILE';
 export const MY_COURSES_LOADING = 'MY_COURSES_LOADING';
 export const MY_COURSES_FAIL = 'MY_COURSES_FAIL';
 export const ADD_MY_COURSES = 'ADD_MY_COURSES';
-// export const JOIN_COURSES = 'JOIN_COURSES';
 
 //--------------------------- video ---------------------
+
 export const PUSH_VIDEO = 'PUSH_VIDEO';
 
 

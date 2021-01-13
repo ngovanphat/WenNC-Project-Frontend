@@ -183,7 +183,7 @@ function CourseList(props) {
           </List>
           {courseList.length !== 0 ?
             <Grid container style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Pagination page={page} count={props.courses.totalPages} onChange={handlePagination}/>
+              <Pagination page={page} count={props.courses.totalPages} onChange={handlePagination} />
             </Grid>
             :
             <Grid style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

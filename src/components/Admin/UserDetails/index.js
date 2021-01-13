@@ -194,8 +194,8 @@ const UserDetails = (props) => {
                   {user.banned ? (
                     <CancelIcon style={{ color: colors.red[500] }} />
                   ) : (
-                    <CheckCircleIcon style={{ color: colors.green[500] }} />
-                  )}
+                      <CheckCircleIcon style={{ color: colors.green[500] }} />
+                    )}
                 </Typography>
               </div>
               <Collapse in={editing}>
@@ -206,8 +206,8 @@ const UserDetails = (props) => {
             </Grid>
           </Grid>
         ) : (
-          <Skeleton variant="rect"></Skeleton>
-        )}
+            <Skeleton variant="rect"></Skeleton>
+          )}
       </Grid>
       <Grid item xs={12} className={classes.actions} justify="flex-end">
         <Button

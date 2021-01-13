@@ -29,7 +29,6 @@ const setLoginLocal = async (loginData) => {
 const removeLoginLocal = async () => {
   try {
     await localStorage.removeItem('loginData');
-
     return null;
   } catch (err) {
     console.log(err);
@@ -54,7 +53,7 @@ export const login = (loginInput) => {
       .then((json) => {
         if (json.authenticated === true) {
           // response success checking logic could differ
-          const data = { ...json, isLoggedIn: true ,userId: email };
+          const data = { ...json, isLoggedIn: true, userId: email };
           setLoginLocal(data); // storing in local storage for next launch
           dispatch(setLoginState(data));
           dispatch(fetchUserProfile());
@@ -113,7 +112,8 @@ export const logOut = () => (dispatch) => {
   dispatch(resetUserProfile());
   alert('Log out successfully');
 };
-const setLogout= () => {
+
+const setLogout = () => {
   return {
     type: actionTypes.LOGOUT,
   };
@@ -496,36 +496,37 @@ export const addSingleCategory = (category) => ({
 });
 
 // ---------------------Video -----------------------
+
 export const addVideo = (video) => (dispatch) => {
-  
-    return axios({
-      method: 'post',
-      url: ApiURL + '/videos/',
-      headers: {
-        Accept: 'application/json',
-        'x-access-token': getLoginLocal(),
-      },
-      data: video
-    })
-      .then(
-        (response) => {
-          if (response.status === 201) {
-            alert('create video successfully');
-            dispatch(pushVideo(response.data));
-          } else {
-            var error = new Error(
-              'Error ' + response.status + ': ' + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
+
+  return axios({
+    method: 'post',
+    url: ApiURL + '/videos/',
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: video
+  })
+    .then(
+      (response) => {
+        if (response.status === 201) {
+          alert('create video successfully');
+          dispatch(pushVideo(response.data));
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
         }
-      )
-      .catch((error) => console.log(error));
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => console.log(error));
 }
 
 export const pushVideo = (video) => ({
@@ -563,35 +564,35 @@ export const fetchAllComments = (id) => (dispatch) => {
 
 export const addFeedback = (feedback) => (dispatch) => {
   console.log(feedback)
-  
-    return axios({
-      method: 'post',
-      url: ApiURL + '/feedbacks/',
-      headers: {
-        Accept: 'application/json',
-        'x-access-token': getLoginLocal(),
-      },
-      data: feedback
-    })
-      .then(
-        (response) => {
-          if (response.status === 200) {
-            alert('create feedback successfully');
-            dispatch(pushComment(response.data));
-          } else {
-            var error = new Error(
-              'Error ' + response.status + ': ' + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
+
+  return axios({
+    method: 'post',
+    url: ApiURL + '/feedbacks/',
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: feedback
+  })
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          alert('create feedback successfully');
+          dispatch(pushComment(response.data));
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
         }
-      )
-      .catch((error) => console.log(error));
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => console.log(error));
 }
 
 export const allCommentsLoading = () => ({
@@ -669,9 +670,45 @@ export const addUserProfile = (course) => ({
   payload: course,
 });
 
-export const resetUserProfile =()=>({
+export const resetUserProfile = () => ({
   type: actionTypes.RESET_USER_PROFILE,
 })
+
+export const updateUserProfile = (input) => {
+  const { fullname, email } = input;
+  return (dispatch) => {
+    return axios({
+      method: 'patch',
+      url: ApiURL + '/users/me',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: {
+        fullname: fullname,
+        email: email,
+      },
+    })
+      .then(
+        (response) => {
+          if (response.status == 200) {
+            alert('Update profile successfully');
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch((error) => dispatch(userProfileFailed(error.message)));
+  };
+};
 
 // ------------------- My Courses -------------------------
 
@@ -939,7 +976,7 @@ export const setAdminCheckState = (adminCheck) => {
     payload: adminCheck,
   };
 };
-export const resetAdminCheck=()=>{
+export const resetAdminCheck = () => {
   return {
     type: actionTypes.SET_ADMIN_CHECK_STATE,
     payload: false,
@@ -947,9 +984,9 @@ export const resetAdminCheck=()=>{
 }
 
 //------------------------- Admin Users --------------------
-export const fetchAdminUsers = (page, pageSize) => async  (dispatch) => {
+export const fetchAdminUsers = (page, pageSize) => async (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log("fetching data... "+ page);
+  console.log("fetching data... " + page);
   fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(page)}&pageCount=${encodeURIComponent(pageSize)}`, {
     headers: {
       // these could be different for your API call
@@ -1045,12 +1082,12 @@ export const removeAdminUser = (id) => (dispatch) => {
     )
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
 };
-export const changeAdminUsersPage = (curPage,newPage,pageSize, existedInState) => (dispatch)=>{
+export const changeAdminUsersPage = (curPage, newPage, pageSize, existedInState) => (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log(' curpage ' +curPage+' newpage '+newPage+' existed'+existedInState);
-  if(curPage>=newPage||existedInState){
+  console.log(' curpage ' + curPage + ' newpage ' + newPage + ' existed' + existedInState);
+  if (curPage >= newPage || existedInState) {
     return dispatch(updateLocalAdminUsersPage(newPage));
-  }else{
+  } else {
     return fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(newPage)}&pageCount=${encodeURIComponent(pageSize)}`, {
       headers: {
         // these could be different for your API call
@@ -1078,7 +1115,7 @@ export const changeAdminUsersPage = (curPage,newPage,pageSize, existedInState) =
       .then((response) => response.json())
       .then((users) => {
         console.log(users.page);
-        dispatch(fetchAdminUsersPage(users.docs,users.page));
+        dispatch(fetchAdminUsersPage(users.docs, users.page));
       })
       .catch((error) => dispatch(AdminUsersFailed(error.message)));
   }
@@ -1098,21 +1135,21 @@ export const setAdminUsers = (users) => ({
   page: users.page,
   totalUsers: users.totalDocs,
 });
-export const addNewUser = (user,total) => ({
+export const addNewUser = (user, total) => ({
   type: actionTypes.ADD_NEW_USER,
   payload: user,
-  totalUsers:total
+  totalUsers: total
 });
-const fetchAdminUsersPage = (user,page)=>({
+const fetchAdminUsersPage = (user, page) => ({
   type: actionTypes.ADMIN_USERS_FETCH_PAGE,
-  payload:user,
-  page:page,
+  payload: user,
+  page: page,
 })
-export const updateLocalAdminUsersPage = (nextPage)=>({
+export const updateLocalAdminUsersPage = (nextPage) => ({
   type: actionTypes.ADMIN_USERS_CHANGE_PAGE,
-  page:nextPage
+  page: nextPage
 })
-export const changeAdminUsersPerPage = (perPage)=>({
-type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
-  payload:perPage
+export const changeAdminUsersPerPage = (perPage) => ({
+  type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
+  payload: perPage
 })

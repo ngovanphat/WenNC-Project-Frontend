@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.8),
     },
   },
-  adminPanelButton:{
+  adminPanelButton: {
     marginLeft: "1vw",
-    width:"150px",
-    minWidth:"150px",
+    width: "150px",
+    minWidth: "150px",
     background: 'white',
     color: '#005580',
     fontWeight: 600,
@@ -96,13 +96,13 @@ const Header = (props) => {
               </Hidden>
             </Grid>
           ) : null}
-          
-          { props.user ? 
+
+          { props.user ?
             <Grid item md={4}>
-            <Hidden only={['sm', 'xs']}>
-              <UserMenu  user={props.user.user} />
-            </Hidden>
-          </Grid> : <div></div> 
+              <Hidden only={['sm', 'xs']}>
+                <UserMenu user={props.user.user} />
+              </Hidden>
+            </Grid> : <div></div>
           }
         </Grid>
       );

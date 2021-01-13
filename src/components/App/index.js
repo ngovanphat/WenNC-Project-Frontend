@@ -35,7 +35,7 @@ import AdminCategories from '../Admin/Categories';
 import UserDetails from '../Admin/UserDetails';
 import Settings from '../Admin/Settings';
 
-import {  fetchUserProfile, fetchAllCategories, checkAdmin } from '../../redux/actions';
+import { fetchUserProfile, fetchAllCategories, checkAdmin } from '../../redux/actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -66,7 +66,7 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   componentDidMount() {
     this.props.fetchUserProfile();
     this.props.fetchAllCategories();
@@ -159,7 +159,7 @@ class App extends Component {
                     )}
                   />
                   <Route exact path="/profile">
-                    <Profile user={this.props.userProfile.user} />
+                    <Profile />
                   </Route>
                   <Route exact path="/myCourses">
                     <MyCourseList />
@@ -168,7 +168,7 @@ class App extends Component {
                     <MyFavoriteList />
                   </Route>
                   <Route exact path="/profile/update">
-                    <UpdateProfile user={this.props.userProfile.user} />
+                    <UpdateProfile />
                   </Route>
                   <Route exact path="/addCourse">
                     <AddCourse />

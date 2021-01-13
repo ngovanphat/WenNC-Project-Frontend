@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { fetchAdminUsers,changeAdminUsersPage } from '../../../redux/actions';
+import { fetchAdminUsers, changeAdminUsersPage } from '../../../redux/actions';
 import { connect, useSelector } from 'react-redux';
 import UsersTable from './UsersTable';
 
@@ -8,14 +8,14 @@ String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-const mapStateToProps=state =>{
+const mapStateToProps = state => {
   return {
-    adminUsers:state.adminUsers
+    adminUsers: state.adminUsers
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  fetchAdminUsers: (page,pageSize) => { dispatch(fetchAdminUsers(page,pageSize))},
-  changeAdminUsersPage:(curPage,nextPage,perPage)=>{ dispatch(changeAdminUsersPage(curPage,nextPage,perPage))}
+  fetchAdminUsers: (page, pageSize) => { dispatch(fetchAdminUsers(page, pageSize)) },
+  changeAdminUsersPage: (curPage, nextPage, perPage) => { dispatch(changeAdminUsersPage(curPage, nextPage, perPage)) }
 });
 
 //if using search bar,onSearchChange use diffirent reducer(searchAdminUsers) with diffirent table 
@@ -36,9 +36,9 @@ function AdminUsers(props) {
   //component did mount
   useEffect(() => {
     document.title = 'Users';
-    if(props.adminUsers.totalUsers<=0)
-      props.fetchAdminUsers(1,props.adminUsers.perPage);
-  },[]);
+    if (props.adminUsers.totalUsers <= 0)
+      props.fetchAdminUsers(1, props.adminUsers.perPage);
+  }, []);
 
 
   return (
