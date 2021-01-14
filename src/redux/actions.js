@@ -207,8 +207,8 @@ export const addCourse = (courseData) => {
       body: JSON.stringify(courseData),
     })
       .then((response) => {
-        if (response.status === 200) {
-          alert('create feedback successfully');
+        if (response.status === 201) {
+          alert('Course uploaded successfully');
         } else {
           var error = new Error(
             'Error ' + response.status + ': ' + response.statusText
@@ -218,7 +218,7 @@ export const addCourse = (courseData) => {
         }
       })
       .catch((err) => {
-        alert('Login Failed Some error occured, please retry');
+        alert('Course uploaded Failed! Some error occured, please retry');
         console.log(err);
       });
   };
@@ -498,7 +498,6 @@ export const addSingleCategory = (category) => ({
 // ---------------------Video -----------------------
 
 export const addVideo = (video) => (dispatch) => {
-
   return axios({
     method: 'post',
     url: ApiURL + '/videos/',
@@ -511,7 +510,7 @@ export const addVideo = (video) => (dispatch) => {
     .then(
       (response) => {
         if (response.status === 201) {
-          alert('create video successfully');
+          alert('Create video successfully');
           dispatch(pushVideo(response.data));
         } else {
           var error = new Error(
@@ -577,7 +576,7 @@ export const addFeedback = (feedback) => (dispatch) => {
     .then(
       (response) => {
         if (response.status === 200) {
-          alert('create feedback successfully');
+          alert('Create feedback successfully');
           dispatch(pushComment(response.data));
         } else {
           var error = new Error(
@@ -675,6 +674,7 @@ export const resetUserProfile = () => ({
 })
 
 export const updateUserProfile = (input) => {
+  console.log(input)
   const { fullname, email } = input;
   return (dispatch) => {
     return axios({

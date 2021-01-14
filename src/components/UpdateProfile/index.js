@@ -45,7 +45,7 @@ class UpdateProfile extends Component {
 
   handleAcountInfoClick = async (e) => {
     e.preventDefault();
-    if (this.state.fullname == "" || !(/^[a-zA-Z ]*$/.test(this.state.fullname)))
+    if (this.state.fullname == "" || !(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/.test(this.state.fullname)))
       alert("Please input valid full name")
     else if (this.state.email == "" || !(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.state.email)))
       alert("Please input valid email")

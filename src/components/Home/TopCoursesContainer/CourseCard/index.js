@@ -22,7 +22,7 @@ const TitleStyled = styled.div`
 const useStyles = makeStyles({
   root: {
     maxWidth: 245,
-    minHeight: 300
+    minHeight: 340
   },
   category: {
     color: '#005580',
