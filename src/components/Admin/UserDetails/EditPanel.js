@@ -142,7 +142,7 @@ function EditPanel({ handleSave, status, role }) {
               </Select>
             </FormControl>
           ) : null}
-          {role!==null ? (
+          {/* {role!==null ? (
             <FormControl className={classes.formControl}>
               <InputLabel
                 shrink>
@@ -160,7 +160,7 @@ function EditPanel({ handleSave, status, role }) {
                 <MenuItem value={'ADMIN'}>Admin</MenuItem>
               </Select>
             </FormControl>
-          ) : null}
+          ) : null} */}
         </Grid>
         <Grid item xs={12} className={classes.actions} justify="flex-end">
           <Button

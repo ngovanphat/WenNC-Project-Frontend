@@ -108,9 +108,9 @@ const UserDetails = (props) => {
     }
   };
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    /* if (reason === 'clickaway') {
       return;
-    }
+    } */
     setSave(['', null]);
     setEditing(false);
   };
@@ -245,15 +245,6 @@ const UserDetails = (props) => {
           }}
           className={classes.button}>
           Export to CSV
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: colors.yellow[800],
-            borderColor: colors.yellow[800],
-          }}
-          className={classes.button}>
-          Ban User
         </Button>
         <Button
           variant="contained"

@@ -82,14 +82,14 @@ export const adminUsers = (state = initialState, action) => {
     case actionTypes.ADMIN_USERS_CHANGE_CHOSEN:
       return {
         ...state,
-        users:state.users.map((content, i) => i === state.chosenIndex+(state.page*state.perPage) ? action.user
+        users:state.users.map((content, i) => i === state.chosenIndex+((state.page-1)*state.perPage) ? action.user
         : content
         )
       }
     case actionTypes.ADMIN_USER_DELETE:
       return {
         ...state,
-        users:state.users.splice(state.chosenIndex+(state.page*state.perPage),1),
+        users:state.users.splice(state.chosenIndex+((state.page-1)*state.perPage),1),
         chosenIndex:-1
       }
     default:

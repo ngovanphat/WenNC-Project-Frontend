@@ -19,12 +19,11 @@ import SecurityIcon from "@material-ui/icons/Security";
 import SettingsIcon from "@material-ui/icons/Settings";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import CategoryIcon from '@material-ui/icons/Category';
+import { useDispatch, useSelector } from "react-redux";
 
-const user = {
-  avatar: "/public/logo192.png",
-  name: "Username",
+String.prototype.capitalizeFirst = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 };
-
 const items = [
   {
     href: "/admin/dashboard",
@@ -82,7 +81,9 @@ const useStyles = makeStyles(() => ({
 const SideNavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
-
+  const userProfile= useSelector(state=>state.userProfile);
+  const dispatch = useDispatch();
+  console.log(userProfile.user);
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
@@ -95,14 +96,14 @@ const SideNavBar = ({ onMobileClose, openMobile }) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          src={userProfile.user?userProfile.user.user.avatar:''}
           to="/admin/account"
         />
         <Typography className={classes.name} color="textPrimary" variant="h5">
-          {user.name}
+          {userProfile.user?userProfile.user.user.fullname:'Username'}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          {userProfile.user?userProfile.user.user.role.capitalizeFirst():'Admin'}
         </Typography>
       </Box>
       <Divider />

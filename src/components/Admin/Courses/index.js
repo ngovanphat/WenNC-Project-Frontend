@@ -1,85 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
-import { Chip } from '@material-ui/core';
+import { Button, Chip, colors, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TablePagination } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../../helpers/colors';
-
+import { fetchAllAdminCourses,changeAdminCoursesPage,changeAdminCoursesPerPage, onChooseAdminCourse, removeAdminCourse } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from '@material-ui/lab';
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
-const rows = [
-  {
-    "_id": "5fd326f8851a412c881d7906",
-    "points": 4.8,
-    "numberOfFeedback": 3,
-    "numberOfStudent": 1,
-    "thumnail": "https://img-a.udemycdn.com/course/240x135/1708340_7108_4.jpg?6SU20jCZLkR4SlfMFGkKgB0yNTrq1fx3QYAzjOeROmHgiku19tGzpZqEZ85CfaB3X2Q-g1KgUIFBMBUFxD7FKzCEh7VqBQ-kvMk4tpRAqTWtyDt8GvGqs82XplyZI59i",
-    "last_updated": 1607673590218,
-    "videos": [
-      "5ff3d8047f52572370b7cb5d",
-      "5ff3d86fd663fa3520c0279c",
-      "5ff4202042e9ec0024b2ede5"
-    ],
-    "title": "Flutter & Dart - The Complete Guide [2020 Edition]",
-    "category": "Mobile Development",
-    "leturer": {
-      "_id": "5fd23cc653f29b3850b48c57",
-      "avatar": "https://i.imgur.com/Xp51vdM.png",
-      "description": "",
-      "course_list": [
-        "5fd47265b531a72b30c59ca4",
-        "5fd3257dd530df1a6054ba25",
-        "5fd326f8851a412c881d7906",
-        "5fd32ba9851a412c881d7907",
-        "5fd32bf5851a412c881d7908",
-        "5fd32c43851a412c881d7909",
-        "5fd32c82851a412c881d790a",
-        "5fd32cf1851a412c881d790b",
-        "5fd32d43851a412c881d790c",
-        "5fd32d80851a412c881d790d",
-        "5fd32dc3851a412c881d790e",
-        "5fd32dc3851a412c881d790f",
-        "5fd32f17851a412c881d7910",
-        "5fd32f17851a412c881d7911",
-        "5fd32f17851a412c881d7912",
-        "5fd32f17851a412c881d7913",
-        "5fd32f17851a412c881d7914",
-        "5fd32f17851a412c881d7915",
-        "5fd32f17851a412c881d7916",
-        "5fd32f17851a412c881d7917",
-        "5fd32f17851a412c881d7918",
-        "5fd32f17851a412c881d7919",
-        "5fd70615157fa61072b2ca98",
-        "5fd7058071d6871ecc5922dd"
-      ],
-      "fullname": "Ngô Văn Phát"
-    },
-    "price": 11.99,
-    "actualPrice": 129.99,
-    "description": "The entire course was completely re-recorded and updated - it's totally up-to-date with the latest version of Flutter!",
-    "__v": 0,
-    "shortDecription": null,
-    "isDone": false
-  }
-];
 export default function CoursesTable() {
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
   const tableRef = React.createRef();
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
+  const adminCourses = useSelector(state => state.adminCourses);
+  const dispatch = useDispatch();
+  
+  var prevPage = adminCourses.page;
+  
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleDelete=()=>{
+    console.log(adminCourses.chosenIndex);
+    dispatch(removeAdminCourse(adminCourses.courses[adminCourses.chosenIndex]._id));
+    setOpen(false);
+  }
+  const handleClose = () => {
+    setOpen(false);
   };
   useEffect(() => {
     document.title = 'Courses';
+    if(adminCourses.totalCourses===0) dispatch(fetchAllAdminCourses());
   }, []);
+  useEffect(()=>{
+    tableRef.current.onQueryChange();
+  },[adminCourses.courses,adminCourses.page,adminCourses.perPage])
+
+
   return (
     <div style={{ height: '100%', width: '100%', overflow: 'auto', marginRight: '10px', marginLeft: '10px' }}>
       <MaterialTable
@@ -125,47 +87,110 @@ export default function CoursesTable() {
             render: rowData => rowData.isPublic?<CheckCircleIcon  style={{ color: green[500] }}/>:<CancelIcon style={{ color: red[500] }}/>
           }, */
         ]}
-        data={
-          /* (query) =>
+        isLoading={adminCourses.isLoading}
+        
+        data={query =>
           new Promise((resolve, reject) => {
-            let url = 'https://localhost:3001/api/v1/users/admin-manage/all';
-            url += 'per_page=' + query.pageSize;
-            url += '&page=' + (query.page + 1);
-            fetch(url)
-              .then((response) => response.json())
-              .then((result) => {
-                resolve({
-                  data: result.docs,
-                  page: result.page - 1,
-                  totalCount: result.totalDocs,
-                });
-              });
-          }) */
-          rows
-        }
+            const firstIndex = (adminCourses.page - 1) * adminCourses.perPage;
+            const lastIndex = adminCourses.page * adminCourses.perPage;
+            resolve({
+              data: adminCourses.courses.slice(firstIndex, lastIndex),
+              page: adminCourses.page-1,
+              totalCount: adminCourses.totalCourses,
+            });
+          })}
         title="Courses"
         tableRef={tableRef}
-
+        onChangePage={(page)=>{
+          dispatch(changeAdminCoursesPage(page+1));
+          //tableRef.current&&tableRef.current.onQueryChange(); 
+        }}
+        onChangeRowsPerPage={async (perPage) => { 
+          console.log(perPage);
+          dispatch(changeAdminCoursesPerPage(perPage)).then(
+            tableRef.current.onQueryChange()); 
+        }}
         options={{
           exportButton: true,
           sorting: true,
-          actionsColumnIndex: -1
+          actionsColumnIndex: -1,
+          pageSize: adminCourses.perPage
         }}
         actions={[
           {
             icon: 'refresh',
             tooltip: 'Refresh Data',
             isFreeAction: true,
-            onClick: () => { }
+            onClick: () => {dispatch(fetchAllAdminCourses()); }
           },
           () => ({
             icon: () => <InfoOutlinedIcon style={{ color: Colors.primary }} />,
             iconProps: { style: { color: '#005580' } },
             tooltip: 'Details',
-            onClick: (event, rowData) => history.push(`/admin/courses/${rowData._id}`, { datas: rowData })
-          })
+            onClick: (event, rowData) =>{
+              dispatch(onChooseAdminCourse(rowData.tableData.id));
+              history.push(`/admin/courses/${rowData._id}`, { datas: rowData })
+            }
+          }),
+          () => ({
+            icon: 'delete',
+            iconProps: { style: { color: colors.red } },
+            tooltip: 'Delete Course',
+            onClick: (event, rowData) =>{
+              console.log(rowData);
+              dispatch(onChooseAdminCourse(rowData.tableData.id));
+              setOpen(true);
+            },
+          }),
         ]}
+        /* 
+        components={{
+          Pagination: (componentProps) => <TablePagination
+            {...componentProps}
+            count={adminCourses.totalCourses}
+            page={adminCourses.page - 1}
+            rowsPerPage={adminCourses.perPage}
+            onChangePage={(evt, page) => {
+              const curPage = adminCourses.page;
+              const nxtPage = page + 1;
+              console.log("nxtPage"+nxtPage);
+              const firstIndexOfNext = (nxtPage - 1) * adminCourses.perPage;//split cal to be clearer
+              if (prevPage !== nxtPage) {//
+                prevPage = nxtPage;
+                console.log(adminCourses.courses[firstIndexOfNext]);
+                dispatch(changeAdminCoursesPage(page+1));
+                tableRef.current.onQueryChange();
+              }
+            }}
+            onChangeRowsPerPage={async (event) => { 
+              //reset all state,fetch again from page 1
+              dispatch(changeAdminCoursesPerPage(event.target.value)); 
+              tableRef.current.onQueryChange(); 
+            }}
+          />
+        }} */
       />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete Confirmation"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Course "{adminCourses.chosenIndex>-1?adminCourses.courses[adminCourses.chosenIndex].title:"Error"} will be deleted.Continue?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            No
+          </Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

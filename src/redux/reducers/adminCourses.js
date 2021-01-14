@@ -42,31 +42,23 @@ export const adminCourses = (state = initialState, action) => {
         courses: [].concat(state.courses, action.course),
         totalCourses: state.totalCourses+1,
       }
-    case actionTypes.ADMIN_COURSES_CHANGE_PERPAGE:
-      return {
-        ...state,
-        isLoading: false,
-        error: null,
-        perPage: action.payload,
-      }
-    case actionTypes.ADMIN_COURSES_FETCH_PAGE:
-      return {
-        ...state,
-        isLoading: false,
-        error: null,
-        courses: [].concat(state.courses, action.payload),
-        page: action.page,
-      }
     case actionTypes.ADMIN_COURSES_FETCH_ALL:{
       return {
         ...state,
         isLoading: false,
         error: null,
         courses: action.courses,
-        page: Math.ceil(action.totalCourses/state.perPage) ,
+        page: 1 ,
         totalCourses: action.totalCourses
       }
     }
+    case actionTypes.ADMIN_COURSES_CHANGE_PERPAGE:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        perPage: action.perPage,
+      }
     case actionTypes.ADMIN_COURSES_CHANGE_PAGE:
       return {
         ...state,
@@ -82,15 +74,21 @@ export const adminCourses = (state = initialState, action) => {
     case actionTypes.ADMIN_COURSES_CHANGE_CHOSEN:
       return {
         ...state,
-        courses:state.courses.map((content, i) => i === state.chosenIndex+(state.page*state.perPage) ? action.course
+        courses:state.courses.map((content, i) => i === state.chosenIndex+((state.page-1)*state.perPage) ? action.course
         : content
         )
       }
     case actionTypes.ADMIN_COURSE_DELETE:
+      console.log("state.chosenIndex+(state.page*state.perPage) "+ (state.chosenIndex+((state.page-1)*state.perPage)) );
+      const newList=state.courses.filter((function(value, index, arr){ 
+        return index!==state.chosenIndex+((state.page-1)*state.perPage);
+      }));
       return {
         ...state,
-        courses:state.courses.splice(state.chosenIndex+(state.page*state.perPage),1),
-        chosenIndex:-1
+        courses:newList,
+        chosenIndex:-1,
+        totalCourses:state.totalCourses-1,
+        page:1
       }
     default:
       return state;

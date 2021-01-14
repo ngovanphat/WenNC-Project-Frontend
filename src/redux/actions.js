@@ -674,7 +674,7 @@ export const resetUserProfile = () => ({
 });
 
 export const updateUserProfile = (input) => {
-  console.log(input)
+  console.log(input);
   const { fullname, email } = input;
   return (dispatch) => {
     return axios({
@@ -1049,20 +1049,15 @@ export const fetchAdminUsers = (page, pageSize) => async (dispatch) => {
     })
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
 };
-export const fetchAllAdminUsers = (pageSize) => async (dispatch) => {
+export const fetchAllAdminUsers = () => async (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log('fetching all data... ' );
-  fetch(
-    ApiURL +
-      `/users/admin-manage/all?page=1&pageCount=${encodeURIComponent(pageSize)}`,
-    {
-      headers: {
-        // these could be different for your API call
-        Accept: 'application/json',
-        'x-access-token': getLoginLocal(),
-      },
-    }
-  )
+  console.log('fetching all data... ');
+  fetch(ApiURL + `/users/admin-manage/all`, {
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
     .then(
       (response) => {
         if (response.ok) {
@@ -1082,45 +1077,13 @@ export const fetchAllAdminUsers = (pageSize) => async (dispatch) => {
     )
     .then((response) => response.json())
     .then((users) => {
-      fetch(
-        ApiURL +
-          `/users/admin-manage/all?pageCount=${encodeURIComponent(users.totalDocs)}`,
-        {
-          headers: {
-            Accept: 'application/json',
-            'x-access-token': getLoginLocal(),
-          },
-        }
-      )
-        .then(
-          (response) => {
-            if (response.ok) {
-              return response;
-            } else {
-              var error = new Error(
-                'Error ' + response.status + ': ' + response.statusText
-              );
-              error.response = response;
-              throw error;
-            }
-          },
-          (error) => {
-            var errmess = new Error(error.message);
-            throw errmess;
-          }
-        )
-        .then((response) => response.json())
-        .then((users) => {
-          dispatch(setAllAdminUsers(users));
-        })
-        .catch((error) => dispatch(AdminUsersFailed(error.message)));
+      dispatch(setAllAdminUsers(users));
     })
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
-  
 };
 export const addAdminUsers = (input) => {
   return (dispatch) => {
-    return fetch(ApiURL + '/users/admin-manage',{
+    return fetch(ApiURL + '/users/admin-manage', {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -1133,28 +1096,28 @@ export const addAdminUsers = (input) => {
         fullname: input.fullname,
         ...(input.role !== null ? { role: input.role } : {}),
       }),
-    }
-      
-       )
-       .then(response =>
-        response.json().then(json => ({
+    })
+      .then((response) =>
+        response.json().then((json) => ({
           status: response.status,
-          json
-        })
-      ))
+          json,
+        }))
+      )
       .then(
         // Both fetching and parsing succeeded!
         ({ status, json }) => {
-        if (status === 201) {
-          // response success checking logic could differ
-          alert('Add User Successfully');
-          return true;
-        } else {
-          alert("Error"+json.error);
-          throw new Error(json.error);
+          if (status === 201) {
+            // response success checking logic could differ
+            alert('Add User Successfully');
+            return true;
+          } else {
+            alert('Error' + json.error);
+            throw new Error(json.error);
+          }
         }
-      })
-      .catch((err) => {dispatch(AdminUsersFailed(err.message))
+      )
+      .catch((err) => {
+        dispatch(AdminUsersFailed(err.message));
         console.log(err);
         return false;
       });
@@ -1173,7 +1136,7 @@ export const removeAdminUser = (id) => (dispatch) => {
     .then(
       (response) => {
         if (response.status === 200) {
-          alert('Remove from wishlist successfully');
+          alert('Remove user successfully');
         } else {
           var error = new Error(
             'Error ' + response.status + ': ' + response.statusText
@@ -1202,10 +1165,10 @@ export const changeAdminUsersPage = (
   if (curPage >= newPage || existedInState) {
     return dispatch(updateLocalAdminUsersPage(newPage));
   } else {
-    if(newPage-curPage>1)
-     {
-       return await dispatch(fetchAllAdminUsers(pageSize));
-     }return fetch(
+    if (newPage - curPage > 1) {
+      return await dispatch(fetchAllAdminUsers());
+    }
+    return fetch(
       ApiURL +
         `/users/admin-manage/all?page=${encodeURIComponent(
           newPage
@@ -1258,10 +1221,10 @@ export const setAdminUsers = (users) => ({
   totalUsers: users.totalDocs,
 });
 
-const setAllAdminUsers= (users) => ({
+const setAllAdminUsers = (users) => ({
   type: actionTypes.ADMIN_USERS_FETCH_ALL,
-  users: users.docs,
-  totalUsers: users.totalDocs,
+  users: users,
+  totalUsers: users.length,
 });
 export const addNewUser = (user) => ({
   type: actionTypes.ADD_NEW_USER,
@@ -1296,6 +1259,8 @@ export const AdminUserDetailsChange = (currentUser, changedFields) => (
   dispatch
 ) => {
   dispatch(AdminUserDetailsLoading(true));
+  console.log("changedFields"+changedFields);
+  console.log(currentUser);
   return axios({
     method: 'patch',
     url: ApiURL + '/users/admin-manage/' + currentUser._id,
@@ -1307,8 +1272,8 @@ export const AdminUserDetailsChange = (currentUser, changedFields) => (
       ...(changedFields.banned !== null
         ? { banned: changedFields.banned }
         : {}),
-      ...(changedFields.role ? { role: changedFields.role } : {}),
-      ...(changedFields.password ? { password: changedFields.password } : {}),
+      ...(changedFields.role!== null ? { role: changedFields.role } : {}),
+      ...(changedFields.password!== null ? { password: changedFields.password } : {}),
     },
   })
     .then(
@@ -1349,3 +1314,147 @@ export const AdminUserDetailsLocalUpdate = (currentUser, changedFields) => (
     user: updatedUser,
   });
 };
+
+//---------------------Admin Courses--------------------------------------
+export const fetchAllAdminCourses = () => async (dispatch) => {
+  dispatch(AdminCoursesLoading(true));
+  console.log('fetching all data... ');
+  fetch(ApiURL + `/courses/admin-manage/all`, {
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((courses) => {
+      console.log(courses.length);
+      dispatch(setAllAdminCourses(courses));
+    })
+    .catch((error) => dispatch(AdminCoursesFailed(error.message)));
+};
+
+export const addAdminCourses = (input) => {
+  return (dispatch) => {
+    return fetch(ApiURL + '/courses/add', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      body: JSON.stringify({
+        email: input.email,
+        password: input.password,
+        fullname: input.fullname,
+        ...(input.role !== null ? { role: input.role } : {}),
+      }),
+    })
+      .then((response) =>
+        response.json().then((json) => ({
+          status: response.status,
+          json,
+        }))
+      )
+      .then(
+        // Both fetching and parsing succeeded!
+        ({ status, json }) => {
+          if (status === 201) {
+            // response success checking logic could differ
+            alert('Add Course Successfully');
+            return true;
+          } else {
+            alert('Error' + json.error);
+            throw new Error(json.error);
+          }
+        }
+      )
+      .catch((err) => {
+        dispatch(AdminCoursesFailed(err.message));
+        console.log(err);
+        return false;
+      });
+  };
+};
+
+export const removeAdminCourse = (id) => (dispatch) => {
+  return axios({
+    method: 'delete',
+    url: ApiURL + '/courses/' + id,
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch(removeLocalAdminCourse());
+          alert('Remove Course successfully');
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => dispatch(AdminCoursesFailed(error.message)));
+};
+const setAllAdminCourses = (courses) => ({
+  type: actionTypes.ADMIN_COURSES_FETCH_ALL,
+  courses: courses,
+  totalCourses: courses.length,
+});
+const removeLocalAdminCourse=()=>({
+  type: actionTypes.ADMIN_COURSE_DELETE,
+})
+export const AdminCoursesLoading = () => ({
+  type: actionTypes.ADMIN_COURSES_LOADING,
+});
+
+export const AdminCoursesFailed = (errmess) => ({
+  type: actionTypes.ADMIN_COURSES_FAIL,
+  payload: errmess,
+});
+export const addNewCourse = (course) => ({
+  type: actionTypes.ADD_NEW_COURSE,
+  course: course,
+});
+export const onChooseAdminCourse = (index) => ({
+  type: actionTypes.ADMIN_COURSES_ON_CHOOSE,
+  index: index,
+});
+export const updateLocalAdminCoursesPage = (nextPage) => ({
+  type: actionTypes.ADMIN_COURSES_CHANGE_PAGE,
+  page: nextPage,
+});
+export const changeAdminCoursesPerPage = (perPage) => async (dispatch)=>dispatch({
+  type: actionTypes.ADMIN_COURSES_CHANGE_PERPAGE,
+  perPage: perPage,
+});
+export const changeAdminCoursesPage = (newPage) => ({
+  type: actionTypes.ADMIN_COURSES_CHANGE_PAGE,
+  page: newPage,
+});

@@ -105,7 +105,7 @@ const Categories = () => {
             onClick: () => { },
           },
           (rowData) => {
-            return rowData.count > 0 ? {
+            return rowData.count === 0 ? {
               icon: 'delete',
               tooltip: 'Delete',
               onClick: (event, rowData) => setOpenDeleteDialog(true)
