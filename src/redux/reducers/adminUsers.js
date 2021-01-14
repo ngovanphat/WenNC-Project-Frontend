@@ -39,8 +39,8 @@ export const adminUsers = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: null,
-        users: state.users,
-        totalUsers: action.totalUsers,
+        users: [].concat(state.users, action.user),
+        totalUsers: state.totalUsers+1,
       }
     case actionTypes.ADMIN_USERS_CHANGE_PERPAGE:
       return {
@@ -57,6 +57,16 @@ export const adminUsers = (state = initialState, action) => {
         users: [].concat(state.users, action.payload),
         page: action.page,
       }
+    case actionTypes.ADMIN_USERS_FETCH_ALL:{
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        users: action.users,
+        page: Math.ceil(action.totalUsers/state.perPage) ,
+        totalUsers: action.totalUsers
+      }
+    }
     case actionTypes.ADMIN_USERS_CHANGE_PAGE:
       return {
         ...state,

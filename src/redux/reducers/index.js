@@ -21,5 +21,7 @@ import { myWishlist } from './myWishlist';
 import { adminCheck } from './adminCheck';
 import { adminUsers } from './adminUsers';
 import { adminUserDetails } from './adminUserDetails';
+import { adminCourses } from './adminCourses';
+import { adminCourseDetails } from './adminCourseDetails';
 
-export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, singleCourse, sameCourses, hotCategories, allCategories, singleCategory, allComments, userProfile, myCourses, myWishlist, adminCheck, adminUsers, adminUserDetails });
+export default combineReducers({ loginReducer, newestCourses, mostViewedCourses, allCourses, singleCourse, sameCourses, hotCategories, allCategories, singleCategory, allComments, userProfile, myCourses, myWishlist, adminCheck, adminUsers, adminUserDetails, adminCourses, adminCourseDetails });

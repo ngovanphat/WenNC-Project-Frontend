@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchAdminUsers, changeAdminUsersPage } from '../../../redux/actions';
 import { connect, useSelector } from 'react-redux';
 import UsersTable from './UsersTable';
+import { Drawer } from '@material-ui/core';
+import addUser from './AddUser';
+import AddUser from './AddUser';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
@@ -33,6 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
 //sort use another reducer
 
 function AdminUsers(props) {
+  const [isAddingUser,setIsAddingUser] = useState(false);
   //component did mount
   useEffect(() => {
     document.title = 'Users';
@@ -40,10 +44,9 @@ function AdminUsers(props) {
       props.fetchAdminUsers(1, props.adminUsers.perPage);
   }, []);
 
-
   return (
     <div style={{ height: '80%', width: '100%' }}>
-      <UsersTable adminUsers={props.adminUsers} ></UsersTable>
+      <UsersTable ></UsersTable>
     </div>
   );
 }

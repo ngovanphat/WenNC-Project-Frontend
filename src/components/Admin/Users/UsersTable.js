@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MaterialTable from 'material-table';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -9,7 +9,8 @@ import { fetchAdminUsers, changeAdminUsersPage, changeAdminUsersPerPage, onChoos
 import { connect, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../../helpers/colors';
-import { TablePagination } from '@material-ui/core';
+import { colors, Drawer, TablePagination } from '@material-ui/core';
+import AddUser from './AddUser';
 
 /* const mapStateToProps = (state) => {
   return {
@@ -38,6 +39,8 @@ const mapDispatchToProps = (dispatch) => ({
 function UsersTable(props) {
   const tableRef = React.useRef();
   const history = useHistory();
+  const [isAddingUser,setIsAddingUser] = useState(false);
+
   var prevPage = props.adminUsers.page;
   //on users update
   useEffect(() => {
@@ -50,7 +53,17 @@ function UsersTable(props) {
        console.log('Prev value', adminUsers.users)  */
     };
   }, [props.adminUsers.isLoading]);
+
+  
+  const handleDrawerClose=(isSuccess)=>{
+    setIsAddingUser(false);
+    if(isSuccess){
+      tableRef.current.onQueryChange();
+    }
+  }
+
   return (
+    <div>
     <MaterialTable
       columns={[
         {
@@ -116,7 +129,6 @@ function UsersTable(props) {
           tooltip: 'Refresh Data',
           isFreeAction: true,
           onClick: () => {
-            console.log('refreshing...');
             tableRef.current.onQueryChange()
           }
         },
@@ -130,6 +142,21 @@ function UsersTable(props) {
             history.push(`/admin/users/${rowData._id}`, { datas: rowData })
           },
         }),
+        () => ({
+          icon: 'delete',
+          iconProps: { style: { color: colors.red } },
+          tooltip: 'Details',
+          onClick: (event, rowData) =>{
+            console.log(rowData);
+            //props.onChooseAdminUser(rowData.tableData.id);
+          },
+        }),
+        {
+          icon: 'add',
+          tooltip: 'Add User',
+          isFreeAction: true,
+          onClick: (event) => setIsAddingUser(true)
+        }
       ]}
       isLoading={props.adminUsers.isLoading}
       components={{
@@ -141,23 +168,31 @@ function UsersTable(props) {
           onChangePage={(evt, page) => {
             const curPage = props.adminUsers.page;
             const nxtPage = page + 1;
-            const firstIndexOfNext = (nxtPage - 1) * props.adminUsers.perPage;//to be clearer
-            if (prevPage !== nxtPage) {
+            console.log("nxtPage"+nxtPage);
+            const firstIndexOfNext = (nxtPage - 1) * props.adminUsers.perPage;//split cal to be clearer
+            if (prevPage !== nxtPage) {//
               prevPage = nxtPage;
               console.log(props.adminUsers.users[firstIndexOfNext]);
               props.changeAdminUsersPage(curPage, nxtPage, props.adminUsers.perPage, typeof props.adminUsers.users[firstIndexOfNext] !== 'undefined');
               tableRef.current.onQueryChange();
             }
           }}
-          onChangeRowsPerPage={(event) => { 
+          onChangeRowsPerPage={async (event) => { 
             //reset all state,fetch again from page 1
-            props.changeAdminUsersPerPage(event.target.value); 
+            await props.changeAdminUsersPerPage(event.target.value); 
+            await props.fetchAdminUsers(1, event.target.value);
             tableRef.current.onQueryChange(); 
           }}
         />
       }}
     />
+      <Drawer anchor='right' open={isAddingUser} 
+        onEscapeKeyDown={handleDrawerClose}
+        onBackdropClick={handleDrawerClose}>
+      <AddUser handleFinishAddUser={handleDrawerClose}/>
+      </Drawer>
+    </div>
   );
 }
 
-export default connect(null, mapDispatchToProps)(UsersTable);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersTable);

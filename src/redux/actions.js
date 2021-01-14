@@ -106,7 +106,7 @@ export const signup = (signupInput) => {
 };
 
 export const logOut = () => (dispatch) => {
-  removeLoginLocal()
+  removeLoginLocal();
   dispatch(setLogout());
   dispatch(resetUserProfile());
 };
@@ -115,7 +115,7 @@ const setLogout = () => {
   return {
     type: actionTypes.LOGOUT,
   };
-}
+};
 // ----------------- Course -----------------------
 
 // ------------------- New Courses ---------------------------
@@ -194,10 +194,12 @@ export const fetchSingleCourse = (id) => (dispatch) => {
 };
 
 export const addCourse = (courseData) => {
-  return (dispatch) => {  // don't forget to use dispatch here!
+  return (dispatch) => {
+    // don't forget to use dispatch here!
     return fetch(ApiURL + '/courses/add', {
       method: 'POST',
-      headers: {  // these could be different for your API call
+      headers: {
+        // these could be different for your API call
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'x-access-token': getLoginLocal(),
@@ -503,7 +505,7 @@ export const addVideo = (video) => (dispatch) => {
       Accept: 'application/json',
       'x-access-token': getLoginLocal(),
     },
-    data: video
+    data: video,
   })
     .then(
       (response) => {
@@ -524,11 +526,11 @@ export const addVideo = (video) => (dispatch) => {
       }
     )
     .catch((error) => console.log(error));
-}
+};
 
 export const pushVideo = (video) => ({
   type: actionTypes.PUSH_VIDEO,
-  payload: video
+  payload: video,
 });
 
 // ------------------- Comment ------------------------
@@ -560,7 +562,7 @@ export const fetchAllComments = (id) => (dispatch) => {
 };
 
 export const addFeedback = (feedback) => (dispatch) => {
-  console.log(feedback)
+  console.log(feedback);
 
   return axios({
     method: 'post',
@@ -569,7 +571,7 @@ export const addFeedback = (feedback) => (dispatch) => {
       Accept: 'application/json',
       'x-access-token': getLoginLocal(),
     },
-    data: feedback
+    data: feedback,
   })
     .then(
       (response) => {
@@ -590,7 +592,7 @@ export const addFeedback = (feedback) => (dispatch) => {
       }
     )
     .catch((error) => console.log(error));
-}
+};
 
 export const allCommentsLoading = () => ({
   type: actionTypes.ALL_COMMENTS_LOADING,
@@ -608,8 +610,8 @@ export const addAllComments = (comments) => ({
 
 export const pushComment = (comment) => ({
   type: actionTypes.PUSH_COMMENT,
-  payload: comment
-})
+  payload: comment,
+});
 //-------------- User --------------------------
 
 // ------------------- User Profile -------------------------
@@ -669,7 +671,7 @@ export const addUserProfile = (course) => ({
 
 export const resetUserProfile = () => ({
   type: actionTypes.RESET_USER_PROFILE,
-})
+});
 
 export const updateUserProfile = (input) => {
   console.log(input)
@@ -723,17 +725,14 @@ export const updateUserPassword = (input) => {
         currentPassword: currentPassword,
       },
     })
-      .then(
-        (response) => {
-          if (response.status == 200) {
-            alert('Update profile successfully');
-          }
-          else {
-            alert(response.json().error)
-          }
-        },
-      )
-      .catch(() => alert("Current password is not correct"));
+      .then((response) => {
+        if (response.status == 200) {
+          alert('Update profile successfully');
+        } else {
+          alert(response.json().error);
+        }
+      })
+      .catch(() => alert('Current password is not correct'));
   };
 };
 
@@ -1007,20 +1006,26 @@ export const resetAdminCheck = () => {
   return {
     type: actionTypes.SET_ADMIN_CHECK_STATE,
     payload: false,
-  }
-}
+  };
+};
 
 //------------------------- Admin Users --------------------
 export const fetchAdminUsers = (page, pageSize) => async (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log("fetching data... " + page);
-  fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(page)}&pageCount=${encodeURIComponent(pageSize)}`, {
-    headers: {
-      // these could be different for your API call
-      Accept: 'application/json',
-      'x-access-token': getLoginLocal(),
-    },
-  })
+  console.log('fetching data... ' + page);
+  fetch(
+    ApiURL +
+      `/users/admin-manage/all?page=${encodeURIComponent(
+        page
+      )}&pageCount=${encodeURIComponent(pageSize)}`,
+    {
+      headers: {
+        // these could be different for your API call
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+    }
+  )
     .then(
       (response) => {
         if (response.ok) {
@@ -1044,40 +1049,115 @@ export const fetchAdminUsers = (page, pageSize) => async (dispatch) => {
     })
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
 };
-
-export const addAdminUsers = (input) => {
-  const { userId, courseId } = input;
-  return (dispatch) => {
-    return axios({
-      method: 'post',
-      url: ApiURL + '/users/admin-manage',
+export const fetchAllAdminUsers = (pageSize) => async (dispatch) => {
+  dispatch(AdminUsersLoading(true));
+  console.log('fetching all data... ' );
+  fetch(
+    ApiURL +
+      `/users/admin-manage/all?page=1&pageCount=${encodeURIComponent(pageSize)}`,
+    {
       headers: {
+        // these could be different for your API call
         Accept: 'application/json',
         'x-access-token': getLoginLocal(),
       },
-      data: {
-        userId: userId,
-        courseId: courseId,
+    }
+  )
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
       },
-    })
-      .then(
-        (response) => {
-          if (response.status === 200) {
-            alert('Add to wishlist successfully');
-          } else {
-            var error = new Error(
-              'Error ' + response.status + ': ' + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((users) => {
+      fetch(
+        ApiURL +
+          `/users/admin-manage/all?pageCount=${encodeURIComponent(users.totalDocs)}`,
+        {
+          headers: {
+            Accept: 'application/json',
+            'x-access-token': getLoginLocal(),
+          },
         }
       )
-      .catch((error) => dispatch(AdminUsersFailed(error.message)));
+        .then(
+          (response) => {
+            if (response.ok) {
+              return response;
+            } else {
+              var error = new Error(
+                'Error ' + response.status + ': ' + response.statusText
+              );
+              error.response = response;
+              throw error;
+            }
+          },
+          (error) => {
+            var errmess = new Error(error.message);
+            throw errmess;
+          }
+        )
+        .then((response) => response.json())
+        .then((users) => {
+          dispatch(setAllAdminUsers(users));
+        })
+        .catch((error) => dispatch(AdminUsersFailed(error.message)));
+    })
+    .catch((error) => dispatch(AdminUsersFailed(error.message)));
+  
+};
+export const addAdminUsers = (input) => {
+  return (dispatch) => {
+    return fetch(ApiURL + '/users/admin-manage',{
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      body: JSON.stringify({
+        email: input.email,
+        password: input.password,
+        fullname: input.fullname,
+        ...(input.role !== null ? { role: input.role } : {}),
+      }),
+    }
+      
+       )
+       .then(response =>
+        response.json().then(json => ({
+          status: response.status,
+          json
+        })
+      ))
+      .then(
+        // Both fetching and parsing succeeded!
+        ({ status, json }) => {
+        if (status === 201) {
+          // response success checking logic could differ
+          alert('Add User Successfully');
+          return true;
+        } else {
+          alert("Error"+json.error);
+          throw new Error(json.error);
+        }
+      })
+      .catch((err) => {dispatch(AdminUsersFailed(err.message))
+        console.log(err);
+        return false;
+      });
   };
 };
 
@@ -1109,19 +1189,34 @@ export const removeAdminUser = (id) => (dispatch) => {
     )
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
 };
-export const changeAdminUsersPage = (curPage, newPage, pageSize, existedInState) => (dispatch) => {
+export const changeAdminUsersPage = (
+  curPage,
+  newPage,
+  pageSize,
+  existedInState
+) => async (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log(' curpage ' + curPage + ' newpage ' + newPage + ' existed' + existedInState);
+  console.log(
+    ' curpage ' + curPage + ' newpage ' + newPage + ' existed' + existedInState
+  );
   if (curPage >= newPage || existedInState) {
     return dispatch(updateLocalAdminUsersPage(newPage));
   } else {
-    return fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(newPage)}&pageCount=${encodeURIComponent(pageSize)}`, {
-      headers: {
-        // these could be different for your API call
-        Accept: 'application/json',
-        'x-access-token': getLoginLocal(),
+    if(newPage-curPage>1)
+     {
+       return await dispatch(fetchAllAdminUsers(pageSize));
+     }return fetch(
+      ApiURL +
+        `/users/admin-manage/all?page=${encodeURIComponent(
+          newPage
+        )}&pageCount=${encodeURIComponent(pageSize)}`,
+      {
+        headers: {
+          Accept: 'application/json',
+          'x-access-token': getLoginLocal(),
+        },
       }
-    })
+    )
       .then(
         (response) => {
           if (response.ok) {
@@ -1146,7 +1241,7 @@ export const changeAdminUsersPage = (curPage, newPage, pageSize, existedInState)
       })
       .catch((error) => dispatch(AdminUsersFailed(error.message)));
   }
-}
+};
 
 export const AdminUsersLoading = () => ({
   type: actionTypes.ADMIN_USERS_LOADING,
@@ -1162,80 +1257,95 @@ export const setAdminUsers = (users) => ({
   page: users.page,
   totalUsers: users.totalDocs,
 });
-export const addNewUser = (user, total) => ({
+
+const setAllAdminUsers= (users) => ({
+  type: actionTypes.ADMIN_USERS_FETCH_ALL,
+  users: users.docs,
+  totalUsers: users.totalDocs,
+});
+export const addNewUser = (user) => ({
   type: actionTypes.ADD_NEW_USER,
-  payload: user,
-  totalUsers: total
+  user: user,
 });
 const fetchAdminUsersPage = (user, page) => ({
   type: actionTypes.ADMIN_USERS_FETCH_PAGE,
   payload: user,
   page: page,
-})
+});
 export const updateLocalAdminUsersPage = (nextPage) => ({
   type: actionTypes.ADMIN_USERS_CHANGE_PAGE,
-  page: nextPage
-})
+  page: nextPage,
+});
 export const changeAdminUsersPerPage = (perPage) => ({
   type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
-  payload: perPage
-})
-export const onChooseAdminUser =(index)=>({
+  payload: perPage,
+});
+export const onChooseAdminUser = (index) => ({
   type: actionTypes.ADMIN_USERS_ON_CHOOSE,
-  index:index
-})
+  index: index,
+});
 //---------Admin User Details---------------------------------
 const AdminUserDetailsLoading = () => ({
   type: actionTypes.ADMIN_USER_DETAILS_LOADING,
 });
 export const AdminUserDetailsError = (error) => ({
   type: actionTypes.ADMIN_USER_DETAILS_ERROR,
-  error:error
+  error: error,
 });
-export const AdminUserDetailsChange = (currentUser,changedFields) =>(dispatch) => {
-    dispatch(AdminUserDetailsLoading(true));
-    return axios({
-      method: 'patch',
-      url: ApiURL + '/users/admin-manage/'+currentUser._id,
-      headers: {
-        Accept: 'application/json',
-        'x-access-token': null//getLoginLocal(),
-      },
-      data: {
-        ...(changedFields.banned!==null ? { banned: changedFields.banned } : {}),
-        ...(changedFields.role ? { role: changedFields.role } : {}),
-        ...(changedFields.password ? { password: changedFields.password } : {}),
-      },
-    })
-      .then(
-        (response) => {
-          if (response.status === 200) {
-              dispatch(AdminUserDetailsLocalUpdate(currentUser,changedFields));
-              dispatch({
-                type: actionTypes.RESET_ADMIN_USER_DETAILS,
-              });
-          } else {
-            var error = new Error(
-              'Error ' + response.status + ': ' + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
-        }
-      )
-      .catch((error) => dispatch(AdminUserDetailsError(error)));
-};
-export const AdminUserDetailsLocalUpdate= (currentUser,changedFields) =>(dispatch)=>{
-  let updatedUser=currentUser;
-  if(changedFields.banned!==null) { updatedUser.banned= changedFields.banned };
-  if(changedFields.role) { updatedUser.role= changedFields.role };
-  if(changedFields.password)  updatedUser.password= changedFields.password;
-  dispatch({
-    type:actionTypes.ADMIN_USERS_CHANGE_CHOSEN,
-    user:updatedUser,
+export const AdminUserDetailsChange = (currentUser, changedFields) => (
+  dispatch
+) => {
+  dispatch(AdminUserDetailsLoading(true));
+  return axios({
+    method: 'patch',
+    url: ApiURL + '/users/admin-manage/' + currentUser._id,
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: {
+      ...(changedFields.banned !== null
+        ? { banned: changedFields.banned }
+        : {}),
+      ...(changedFields.role ? { role: changedFields.role } : {}),
+      ...(changedFields.password ? { password: changedFields.password } : {}),
+    },
   })
-}
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch(AdminUserDetailsLocalUpdate(currentUser, changedFields));
+          dispatch({
+            type: actionTypes.RESET_ADMIN_USER_DETAILS,
+          });
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => dispatch(AdminUserDetailsError(error)));
+};
+export const AdminUserDetailsLocalUpdate = (currentUser, changedFields) => (
+  dispatch
+) => {
+  let updatedUser = currentUser;
+  if (changedFields.banned !== null) {
+    updatedUser.banned = changedFields.banned;
+  }
+  if (changedFields.role) {
+    updatedUser.role = changedFields.role;
+  }
+  if (changedFields.password) updatedUser.password = changedFields.password;
+  dispatch({
+    type: actionTypes.ADMIN_USERS_CHANGE_CHOSEN,
+    user: updatedUser,
+  });
+};
