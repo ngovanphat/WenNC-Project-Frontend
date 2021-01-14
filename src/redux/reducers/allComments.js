@@ -9,7 +9,7 @@ const initialState = {
 
 export const allComments = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.PUSH_COMMENT: 
+    case actionTypes.PUSH_COMMENT:
       return {
         ...state, 
         comments: state.comments.concat(action.payload),

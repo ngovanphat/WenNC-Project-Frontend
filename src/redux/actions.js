@@ -7,6 +7,7 @@
 
 import * as actionTypes from './actionTypes';
 import { ApiURL } from '../helpers/baseUrl';
+import UserDetails from '../components/Admin/UserDetails';
 const axios = require('axios').default;
 
 // this is what our action should look like which dispatches the "payload" to reducer
@@ -29,7 +30,6 @@ const setLoginLocal = async (loginData) => {
 const removeLoginLocal = async () => {
   try {
     await localStorage.removeItem('loginData');
-
     return null;
   } catch (err) {
     console.log(err);
@@ -54,17 +54,17 @@ export const login = (loginInput) => {
       .then((json) => {
         if (json.authenticated === true) {
           // response success checking logic could differ
-          const data = { ...json, isLoggedIn: true ,userId: email };
+          const data = { ...json, isLoggedIn: true, userId: email };
           setLoginLocal(data); // storing in local storage for next launch
           dispatch(setLoginState(data));
           dispatch(fetchUserProfile());
           return true;
         } else {
-          alert('Login Failed Username or Password is incorrect');
+          alert('Login Failed! Username or Password is incorrect');
         }
       })
       .catch((err) => {
-        alert('Login Failed Some error occured, please retry');
+        alert('Login Failed! Some error occured, please retry');
         console.log(err);
       });
   };
@@ -106,14 +106,12 @@ export const signup = (signupInput) => {
 };
 
 export const logOut = () => (dispatch) => {
-  console.log("calling logout");
   removeLoginLocal()
-  console.log("logging out");
   dispatch(setLogout());
   dispatch(resetUserProfile());
-  alert('Log out successfully');
 };
-const setLogout= () => {
+
+const setLogout = () => {
   return {
     type: actionTypes.LOGOUT,
   };
@@ -207,8 +205,8 @@ export const addCourse = (courseData) => {
       body: JSON.stringify(courseData),
     })
       .then((response) => {
-        if (response.status === 200) {
-          alert('create feedback successfully');
+        if (response.status === 201) {
+          alert('Course uploaded successfully');
         } else {
           var error = new Error(
             'Error ' + response.status + ': ' + response.statusText
@@ -218,7 +216,7 @@ export const addCourse = (courseData) => {
         }
       })
       .catch((err) => {
-        alert('Login Failed Some error occured, please retry');
+        alert('Course uploaded Failed! Some error occured, please retry');
         console.log(err);
       });
   };
@@ -496,36 +494,36 @@ export const addSingleCategory = (category) => ({
 });
 
 // ---------------------Video -----------------------
+
 export const addVideo = (video) => (dispatch) => {
-  
-    return axios({
-      method: 'post',
-      url: ApiURL + '/videos/',
-      headers: {
-        Accept: 'application/json',
-        'x-access-token': getLoginLocal(),
-      },
-      data: video
-    })
-      .then(
-        (response) => {
-          if (response.status === 201) {
-            alert('create video successfully');
-            dispatch(pushVideo(response.data));
-          } else {
-            var error = new Error(
-              'Error ' + response.status + ': ' + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
+  return axios({
+    method: 'post',
+    url: ApiURL + '/videos/',
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: video
+  })
+    .then(
+      (response) => {
+        if (response.status === 201) {
+          alert('Create video successfully');
+          dispatch(pushVideo(response.data));
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
         }
-      )
-      .catch((error) => console.log(error));
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => console.log(error));
 }
 
 export const pushVideo = (video) => ({
@@ -563,35 +561,35 @@ export const fetchAllComments = (id) => (dispatch) => {
 
 export const addFeedback = (feedback) => (dispatch) => {
   console.log(feedback)
-  
-    return axios({
-      method: 'post',
-      url: ApiURL + '/feedbacks/',
-      headers: {
-        Accept: 'application/json',
-        'x-access-token': getLoginLocal(),
-      },
-      data: feedback
-    })
-      .then(
-        (response) => {
-          if (response.status === 200) {
-            alert('create feedback successfully');
-            dispatch(pushComment(response.data));
-          } else {
-            var error = new Error(
-              'Error ' + response.status + ': ' + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
+
+  return axios({
+    method: 'post',
+    url: ApiURL + '/feedbacks/',
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: feedback
+  })
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          alert('Create feedback successfully');
+          dispatch(pushComment(response.data));
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
         }
-      )
-      .catch((error) => console.log(error));
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => console.log(error));
 }
 
 export const allCommentsLoading = () => ({
@@ -669,9 +667,75 @@ export const addUserProfile = (course) => ({
   payload: course,
 });
 
-export const resetUserProfile =()=>({
+export const resetUserProfile = () => ({
   type: actionTypes.RESET_USER_PROFILE,
 })
+
+export const updateUserProfile = (input) => {
+  console.log(input)
+  const { fullname, email } = input;
+  return (dispatch) => {
+    return axios({
+      method: 'patch',
+      url: ApiURL + '/users/me',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: {
+        fullname: fullname,
+        email: email,
+      },
+    })
+      .then(
+        (response) => {
+          if (response.status == 200) {
+            alert('Update profile successfully');
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch((error) => dispatch(userProfileFailed(error.message)));
+  };
+};
+
+export const updateUserPassword = (input) => {
+  const { password, currentPassword } = input;
+  return (dispatch) => {
+    return axios({
+      method: 'patch',
+      url: ApiURL + '/users/me',
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      data: {
+        password: password,
+        currentPassword: currentPassword,
+      },
+    })
+      .then(
+        (response) => {
+          if (response.status == 200) {
+            alert('Update profile successfully');
+          }
+          else {
+            alert(response.json().error)
+          }
+        },
+      )
+      .catch(() => alert("Current password is not correct"));
+  };
+};
 
 // ------------------- My Courses -------------------------
 
@@ -939,7 +1003,7 @@ export const setAdminCheckState = (adminCheck) => {
     payload: adminCheck,
   };
 };
-export const resetAdminCheck=()=>{
+export const resetAdminCheck = () => {
   return {
     type: actionTypes.SET_ADMIN_CHECK_STATE,
     payload: false,
@@ -947,9 +1011,9 @@ export const resetAdminCheck=()=>{
 }
 
 //------------------------- Admin Users --------------------
-export const fetchAdminUsers = (page, pageSize) => async  (dispatch) => {
+export const fetchAdminUsers = (page, pageSize) => async (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log("fetching data... "+ page);
+  console.log("fetching data... " + page);
   fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(page)}&pageCount=${encodeURIComponent(pageSize)}`, {
     headers: {
       // these could be different for your API call
@@ -1045,12 +1109,12 @@ export const removeAdminUser = (id) => (dispatch) => {
     )
     .catch((error) => dispatch(AdminUsersFailed(error.message)));
 };
-export const changeAdminUsersPage = (curPage,newPage,pageSize, existedInState) => (dispatch)=>{
+export const changeAdminUsersPage = (curPage, newPage, pageSize, existedInState) => (dispatch) => {
   dispatch(AdminUsersLoading(true));
-  console.log(' curpage ' +curPage+' newpage '+newPage+' existed'+existedInState);
-  if(curPage>=newPage||existedInState){
+  console.log(' curpage ' + curPage + ' newpage ' + newPage + ' existed' + existedInState);
+  if (curPage >= newPage || existedInState) {
     return dispatch(updateLocalAdminUsersPage(newPage));
-  }else{
+  } else {
     return fetch(ApiURL + `/users/admin-manage/all?page=${encodeURIComponent(newPage)}&pageCount=${encodeURIComponent(pageSize)}`, {
       headers: {
         // these could be different for your API call
@@ -1078,7 +1142,7 @@ export const changeAdminUsersPage = (curPage,newPage,pageSize, existedInState) =
       .then((response) => response.json())
       .then((users) => {
         console.log(users.page);
-        dispatch(fetchAdminUsersPage(users.docs,users.page));
+        dispatch(fetchAdminUsersPage(users.docs, users.page));
       })
       .catch((error) => dispatch(AdminUsersFailed(error.message)));
   }
@@ -1098,21 +1162,80 @@ export const setAdminUsers = (users) => ({
   page: users.page,
   totalUsers: users.totalDocs,
 });
-export const addNewUser = (user,total) => ({
+export const addNewUser = (user, total) => ({
   type: actionTypes.ADD_NEW_USER,
   payload: user,
-  totalUsers:total
+  totalUsers: total
 });
-const fetchAdminUsersPage = (user,page)=>({
+const fetchAdminUsersPage = (user, page) => ({
   type: actionTypes.ADMIN_USERS_FETCH_PAGE,
-  payload:user,
-  page:page,
+  payload: user,
+  page: page,
 })
-export const updateLocalAdminUsersPage = (nextPage)=>({
+export const updateLocalAdminUsersPage = (nextPage) => ({
   type: actionTypes.ADMIN_USERS_CHANGE_PAGE,
-  page:nextPage
+  page: nextPage
 })
-export const changeAdminUsersPerPage = (perPage)=>({
-type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
-  payload:perPage
+export const changeAdminUsersPerPage = (perPage) => ({
+  type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
+  payload: perPage
 })
+export const onChooseAdminUser =(index)=>({
+  type: actionTypes.ADMIN_USERS_ON_CHOOSE,
+  index:index
+})
+//---------Admin User Details---------------------------------
+const AdminUserDetailsLoading = () => ({
+  type: actionTypes.ADMIN_USER_DETAILS_LOADING,
+});
+export const AdminUserDetailsError = (error) => ({
+  type: actionTypes.ADMIN_USER_DETAILS_ERROR,
+  error:error
+});
+export const AdminUserDetailsChange = (currentUser,changedFields) =>(dispatch) => {
+    dispatch(AdminUserDetailsLoading(true));
+    return axios({
+      method: 'patch',
+      url: ApiURL + '/users/admin-manage/'+currentUser._id,
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': null//getLoginLocal(),
+      },
+      data: {
+        ...(changedFields.banned!==null ? { banned: changedFields.banned } : {}),
+        ...(changedFields.role ? { role: changedFields.role } : {}),
+        ...(changedFields.password ? { password: changedFields.password } : {}),
+      },
+    })
+      .then(
+        (response) => {
+          if (response.status === 200) {
+              dispatch(AdminUserDetailsLocalUpdate(currentUser,changedFields));
+              dispatch({
+                type: actionTypes.RESET_ADMIN_USER_DETAILS,
+              });
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch((error) => dispatch(AdminUserDetailsError(error)));
+};
+export const AdminUserDetailsLocalUpdate= (currentUser,changedFields) =>(dispatch)=>{
+  let updatedUser=currentUser;
+  if(changedFields.banned!==null) { updatedUser.banned= changedFields.banned };
+  if(changedFields.role) { updatedUser.role= changedFields.role };
+  if(changedFields.password)  updatedUser.password= changedFields.password;
+  dispatch({
+    type:actionTypes.ADMIN_USERS_CHANGE_CHOSEN,
+    user:updatedUser,
+  })
+}

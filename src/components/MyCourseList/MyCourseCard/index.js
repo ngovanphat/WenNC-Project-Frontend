@@ -74,7 +74,8 @@ export default function MyCourseCard(props) {
             <Grid container direction="row" style={{ marginTop: 10 }}>
               <Grid item container>
                 <Typography variant="subtitle2" color="textSecondary" style={{ flexGrow: 1 }}>
-                  {course.leturer}
+                  {/* {course.leturer} */}
+                  Ngô Văn Phát
                 </Typography>
                 <Typography variant="subtitle2">
                   <Link component={RouterLink} to={`/categories/${course.category}`} style={{ textDecoration: 'none' }} className={classes.category}>

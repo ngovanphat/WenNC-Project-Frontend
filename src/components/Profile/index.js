@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,86 +10,116 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import { fetchUserProfile } from '../../redux/actions';
 
-const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    backgroundColor: "white",
-    padding: theme.spacing(4, 4),
-    marginTop: 40,
-    marginBottom: 30,
-    height: '50vh'
-  },
-  title: {
-    fontFamily: "Arial",
-    fontSize: 22,
-    fontWeight: 550,
-    marginBottom: 10
-  },
-  avatar: {
-    marginTop: 10,
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-  },
-  showMore: {
-    textDecoration: 'none',
-    color: '#005580',
-    '&:hover': {
-      color: fade(theme.palette.info.light, 1),
-    }
-  },
-  button: {
-    marginTop: 30,
-    borderColor: "#005580",
-    color: '#005580'
-  },
-  list: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
-export default function Profile(props) {
-  const classes = useStyles();
-
-  return (
-    <main>
-      <Container maxWidth="sm" className={classes.heroContent}>
-        <Typography className={classes.title} align="start" color="textPrimary">
-          Profile
-        </Typography>
-        <Grid container direction="row">
-          <Grid item container direction="column" alignItems="center" justify="center" xs={6}>
-            <Grid item>
-              <Avatar src={props.user.user.avatar} className={classes.avatar} />
-            </Grid>
-          </Grid>
-          <Grid item container direction="column" xs={6}>
-            <List className={classes.list}>
-              <Divider />
-              <ListItem>
-                <ListItemText primary="Full name" secondary={props.user.user.fullname} />
-              </ListItem>
-              <Divider />
-              <ListItem>
-                <ListItemText primary="Email" secondary={props.user.user.email} />
-              </ListItem>
-              <Divider />
-              <ListItem>
-                <ListItemText primary="Member since" secondary={props.user.user.createdAt} />
-              </ListItem>
-              <Divider />
-            </List>
-          </Grid>
-        </Grid>
-        <Grid item container direction="column" alignItems="center" justify="center" xs={12}>
-          <Button variant="outlined" align="center" className={classes.button}>
-            <NavLink to="/profile/update" style={{ textDecoration: 'none', color: "#005580" }}>
-              Update your profile
-            </NavLink>
-          </Button>
-        </Grid>
-      </Container>
-    </main>
-  );
+const mapStateToProps = state => {
+  return {
+    userProfile: state.userProfile,
+  }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchUserProfile: () => { dispatch(fetchUserProfile()) }
+})
+
+class Profile extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.fetchUserProfile();
+  }
+
+  render() {
+    if (this.props.userProfile.isLoading) {
+      return (
+        <Grid container alignItems="center">
+          <Grid item row xs={12} >
+            <Typography variant="h4">Loading....</Typography>
+          </Grid>
+        </Grid>
+      );
+    }
+    else if (this.props.userProfile.errMess) {
+      return (
+        <Grid container alignItems="center">
+          <Grid item row xs={12}>
+            <Typography variant="h4">{this.props.singleCourse.errMess}</Typography>
+          </Grid>
+        </Grid>
+      );
+    }
+    else {
+      let date = new Date(this.props.userProfile.user.user.createdAt);
+      const theme = createMuiTheme();
+
+      return (
+        <main>
+          <Container maxWidth="sm" style={{
+            backgroundColor: "white",
+            padding: theme.spacing(4, 4),
+            marginTop: 40,
+            marginBottom: 30,
+            height: '50vh'
+          }}>
+            <Typography style={{
+              fontFamily: "Arial",
+              fontSize: 22,
+              fontWeight: 550,
+              marginBottom: 10
+            }} align="start" color="textPrimary">
+              Profile
+          </Typography>
+            <Grid container direction="row">
+              <Grid item container direction="column" alignItems="center" justify="center" xs={6}>
+                <Grid item>
+                  <Avatar src={this.props.userProfile.user.user.avatar} style={{
+                    marginTop: 10,
+                    width: theme.spacing(20),
+                    height: theme.spacing(20),
+                  }} />
+                </Grid>
+              </Grid>
+              <Grid item container direction="column" xs={6}>
+                <List style={{
+                  width: '100%',
+                  maxWidth: 360,
+                  backgroundColor: theme.palette.background.paper,
+                }}>
+                  <Divider />
+                  <ListItem>
+                    <ListItemText primary="Full name" secondary={this.props.userProfile.user.user.fullname} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem>
+                    <ListItemText primary="Email" secondary={this.props.userProfile.user.user.email} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem>
+                    <ListItemText primary="Member since" secondary={date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()} />
+                  </ListItem>
+                  <Divider />
+                </List>
+              </Grid>
+            </Grid>
+            <Grid item container direction="column" alignItems="center" justify="center" xs={12}>
+              <Button variant="outlined" align="center" style={{
+                marginTop: 30,
+                borderColor: "#005580",
+                color: '#005580'
+              }}>
+                <NavLink to="/profile/update" style={{ textDecoration: 'none', color: "#005580" }}>
+                  Update your profile
+              </NavLink>
+              </Button>
+            </Grid>
+          </Container>
+        </main>
+      );
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

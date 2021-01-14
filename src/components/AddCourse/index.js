@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { Grid, Typography, TextField, InputAdornment, MenuItem, Select, Input, Button } from '@material-ui/core';
 import SunEditor from 'suneditor-react';
-import 'suneditor/dist/css/suneditor.min.css'; 
-import {connect } from 'react-redux';
+import 'suneditor/dist/css/suneditor.min.css';
+import { connect } from 'react-redux';
 import ImageUpload from './ImageUpload';
 
 import { addCourse } from '../../redux/actions';
 
-
 const mapStateToProps = state => {
   return {
-      userProfile: state.userProfile
+    userProfile: state.userProfile
   };
 };
+
 const mapDispatchToProps = (dispatch) => ({
-  addCourse: (courseData) => {dispatch(addCourse(courseData))}
+  addCourse: (courseData) => { dispatch(addCourse(courseData)) }
 });
 
 class AddCourse extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -32,8 +31,8 @@ class AddCourse extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
   };
+
   handleChange = (content) => {
-    
     this.setState({
       ...this.state,
       description: content
@@ -67,7 +66,7 @@ class AddCourse extends Component {
                     shrink: true,
                   }}
                   value={this.state.title}
-                  onChange={(e) => this.setState({...this.state, title: e.target.value})}
+                  onChange={(e) => this.setState({ ...this.state, title: e.target.value })}
                 />
               </Grid>
             </Grid>
@@ -86,7 +85,7 @@ class AddCourse extends Component {
                   id="demo-simple-select"
                   style={{ width: 200 }}
                   value={this.state.category}
-                  onChange={(e) => this.setState({...this.state, category: e.target.value})}
+                  onChange={(e) => this.setState({ ...this.state, category: e.target.value })}
                 >
                   <MenuItem value={"Web Development"}>Web Development</MenuItem>
                   <MenuItem value={"Mobile Development"}>Mobile Development</MenuItem>
@@ -107,7 +106,7 @@ class AddCourse extends Component {
                   id="standard-adornment-amount"
                   endAdornment={<InputAdornment position="end">$</InputAdornment>}
                   value={this.state.price}
-                  onChange={(e) => this.setState({...this.state, price: +e.target.value})}
+                  onChange={(e) => this.setState({ ...this.state, price: +e.target.value })}
                 />
               </Grid>
             </Grid>
@@ -142,7 +141,7 @@ class AddCourse extends Component {
                     shrink: true,
                   }}
                   value={this.state.thumnail}
-                  onChange={(e) => this.setState({...this.state, thumnail: e.target.value})}
+                  onChange={(e) => this.setState({ ...this.state, thumnail: e.target.value })}
                 />
               </Grid>
             </Grid>
@@ -164,7 +163,7 @@ class AddCourse extends Component {
                     shrink: true,
                   }}
                   value={this.state.shortDescription}
-                  onChange={(e) => this.setState({...this.state, shortDescription: e.target.value})}
+                  onChange={(e) => this.setState({ ...this.state, shortDescription: e.target.value })}
                 />
               </Grid>
             </Grid>
@@ -186,9 +185,9 @@ class AddCourse extends Component {
               justifyContent: 'flex-end',
               marginTop: 40
             }}>
-              <Button style={{backgroundColor: '#005580', color: 'white' }} variant="contained" onClick={() => {
+              <Button style={{ backgroundColor: '#005580', color: 'white' }} variant="contained" onClick={() => {
                 this.props.addCourse({
-                  course: {...this.state, actualPrice: this.state.price},
+                  course: { ...this.state, actualPrice: this.state.price },
                   userId: this.props.userProfile.user.user._id
                 })
               }}>
@@ -203,4 +202,4 @@ class AddCourse extends Component {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddCourse);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCourse);

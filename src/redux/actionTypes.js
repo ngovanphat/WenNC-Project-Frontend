@@ -71,8 +71,6 @@ export const ALL_COMMENTS_FAIL = 'ALL_COMMENTS_FAIL';
 export const ADD_ALL_COMMENTS = 'ADD_ALL_COMMENTS';
 export const PUSH_COMMENT = 'PUSH_COMMENT';
 
-
-
 // ------------------- User ------------------------
 
 // ------------------------ User Profile --------------------
@@ -87,9 +85,9 @@ export const RESET_USER_PROFILE = 'RESET_USER_PROFILE';
 export const MY_COURSES_LOADING = 'MY_COURSES_LOADING';
 export const MY_COURSES_FAIL = 'MY_COURSES_FAIL';
 export const ADD_MY_COURSES = 'ADD_MY_COURSES';
-// export const JOIN_COURSES = 'JOIN_COURSES';
 
 //--------------------------- video ---------------------
+
 export const PUSH_VIDEO = 'PUSH_VIDEO';
 
 
@@ -115,9 +113,16 @@ export const ADMIN_USERS_CHANGE_PAGE='ADMIN_USERS_CHANGE_PAGE';
 export const ADMIN_USERS_CHANGE_PERPAGE='ADMIN_USERS_CHANGE_PERPAGE';
 export const ADMIN_USERS_CHANGE_SORT='ADMIN_USERS_CHANGE_SORT';
 export const ADMIN_USERS_CHANGE_SEARCH='ADMIN_USERS_CHANGE_SEARCH';
+export const ADMIN_USERS_ON_CHOOSE='ADMIN_USERS_ON_CHOOSE';
+export const ADMIN_USERS_CHANGE_CHOSEN='ADMIN_USERS_CHANGE_CHOSEN';
 
 //------------------------- Admin User Details --------------------
-
+export const SET_ADMIN_USER_DETAILS='SET_ADMIN_USER_DETAILS';
+export const ADMIN_USER_DETAILS_LOADING='ADMIN_USER_DETAILS_LOADING';
+export const ADMIN_USER_DETAILS_ERROR='ADMIN_USER_DETAILS_ERROR';
+export const ADMIN_USER_DETAILS_UPDATE='ADMIN_USER_DETAILS_UPDATE';
+export const ADMIN_USER_DELETE='ADMIN_USER_DELETE';
+export const RESET_ADMIN_USER_DETAILS='RESET_ADMIN_USER_DETAILS';
 
 //------------------------- Admin User Edit --------------------
 

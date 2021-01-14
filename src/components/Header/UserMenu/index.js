@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {useDispatch } from 'react-redux';
-import { fade, withStyles, makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -61,7 +61,7 @@ export default function UserMenu(props) {
   };
   return (
     <div>
-      <Avatar src={props.user.avatar} onClick={handleClick} className={classes.avatar}/>
+      <Avatar src={props.user.avatar} onClick={handleClick} className={classes.avatar} />
       <StyledMenu
         anchorEl={anchorEl}
         keepMounted
@@ -89,30 +89,30 @@ export default function UserMenu(props) {
             <ListItemText primary="Wishlist" />
           </NavLink>
         </StyledMenuItem>
-        { props.user.role === "LECTURER" ?
-        <StyledMenuItem
-          onClick={handleClose}
-        >
-          <NavLink to="/addCourse" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
-            <ListItemText primary="Add Course" />
-          </NavLink>
-        </StyledMenuItem> : <div></div>
+        {props.user.role === "LECTURER" ?
+          <StyledMenuItem
+            onClick={handleClose}
+          >
+            <NavLink to="/addCourse" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
+              <ListItemText primary="Add Course" />
+            </NavLink>
+          </StyledMenuItem> : <div></div>
         }
         <StyledMenuItem
           onClick={handleClose}
         >
           <NavLink to="/" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }} onClick={() => {
-              dispatch(logOut());
-            }}>
+            dispatch(logOut());
+          }}>
             <ListItemText primary="Log out" />
           </NavLink>
         </StyledMenuItem>
-        
+
       </StyledMenu>
-      
-        <StyledMenuItem
-          onClick={handleClose}
-        ></StyledMenuItem>
+
+      <StyledMenuItem
+        onClick={handleClose}
+      ></StyledMenuItem>
     </div>
   );
 }
