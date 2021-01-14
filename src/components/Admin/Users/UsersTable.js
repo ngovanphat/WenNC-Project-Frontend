@@ -5,7 +5,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { green, red } from '@material-ui/core/colors';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { fetchAdminUsers, changeAdminUsersPage, changeAdminUsersPerPage } from '../../../redux/actions';
+import { fetchAdminUsers, changeAdminUsersPage, changeAdminUsersPerPage, onChooseAdminUser } from '../../../redux/actions';
 import { connect, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../../helpers/colors';
@@ -16,7 +16,11 @@ import { TablePagination } from '@material-ui/core';
     adminUsers: state.adminUsers,
   };
 }; */
-
+const mapStateToProps = state => {
+  return {
+    adminUsers: state.adminUsers
+  }
+}
 const mapDispatchToProps = (dispatch) => ({
   fetchAdminUsers: (page, pageSize) => {
     dispatch(fetchAdminUsers(page, pageSize));
@@ -26,6 +30,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeAdminUsersPerPage: (perPage) => {
     dispatch(changeAdminUsersPerPage(perPage));
+  },
+  onChooseAdminUser:(index)=>{
+    dispatch(onChooseAdminUser(index));
   }
 });
 function UsersTable(props) {
@@ -117,8 +124,11 @@ function UsersTable(props) {
           icon: () => <InfoOutlinedIcon style={{ color: Colors.primary }} />,
           iconProps: { style: { color: '#005580' } },
           tooltip: 'Details',
-          onClick: (event, rowData) =>
-            history.push(`/admin/users/${rowData._id}`, { datas: rowData }),
+          onClick: (event, rowData) =>{
+            console.log(rowData);
+            props.onChooseAdminUser(rowData.tableData.id);
+            history.push(`/admin/users/${rowData._id}`, { datas: rowData })
+          },
         }),
       ]}
       isLoading={props.adminUsers.isLoading}
@@ -139,7 +149,11 @@ function UsersTable(props) {
               tableRef.current.onQueryChange();
             }
           }}
-          onChangeRowsPerPage={(event) => { props.changeAdminUsersPerPage(event.target.value); tableRef.current.onQueryChange(); }}
+          onChangeRowsPerPage={(event) => { 
+            //reset all state,fetch again from page 1
+            props.changeAdminUsersPerPage(event.target.value); 
+            tableRef.current.onQueryChange(); 
+          }}
         />
       }}
     />

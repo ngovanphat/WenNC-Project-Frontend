@@ -69,6 +69,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchUserProfile();
+    this.props.checkAdmin();
     this.props.fetchAllCategories();
   }
 

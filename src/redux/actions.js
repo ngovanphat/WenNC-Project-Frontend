@@ -7,6 +7,7 @@
 
 import * as actionTypes from './actionTypes';
 import { ApiURL } from '../helpers/baseUrl';
+import UserDetails from '../components/Admin/UserDetails';
 const axios = require('axios').default;
 
 // this is what our action should look like which dispatches the "payload" to reducer
@@ -105,12 +106,9 @@ export const signup = (signupInput) => {
 };
 
 export const logOut = () => (dispatch) => {
-  console.log("calling logout");
   removeLoginLocal()
-  console.log("logging out");
   dispatch(setLogout());
   dispatch(resetUserProfile());
-  alert('Log out successfully');
 };
 
 const setLogout = () => {
@@ -1182,3 +1180,62 @@ export const changeAdminUsersPerPage = (perPage) => ({
   type: actionTypes.ADMIN_USERS_CHANGE_PERPAGE,
   payload: perPage
 })
+export const onChooseAdminUser =(index)=>({
+  type: actionTypes.ADMIN_USERS_ON_CHOOSE,
+  index:index
+})
+//---------Admin User Details---------------------------------
+const AdminUserDetailsLoading = () => ({
+  type: actionTypes.ADMIN_USER_DETAILS_LOADING,
+});
+export const AdminUserDetailsError = (error) => ({
+  type: actionTypes.ADMIN_USER_DETAILS_ERROR,
+  error:error
+});
+export const AdminUserDetailsChange = (currentUser,changedFields) =>(dispatch) => {
+    dispatch(AdminUserDetailsLoading(true));
+    return axios({
+      method: 'patch',
+      url: ApiURL + '/users/admin-manage/'+currentUser._id,
+      headers: {
+        Accept: 'application/json',
+        'x-access-token': null//getLoginLocal(),
+      },
+      data: {
+        ...(changedFields.banned!==null ? { banned: changedFields.banned } : {}),
+        ...(changedFields.role ? { role: changedFields.role } : {}),
+        ...(changedFields.password ? { password: changedFields.password } : {}),
+      },
+    })
+      .then(
+        (response) => {
+          if (response.status === 200) {
+              dispatch(AdminUserDetailsLocalUpdate(currentUser,changedFields));
+              dispatch({
+                type: actionTypes.RESET_ADMIN_USER_DETAILS,
+              });
+          } else {
+            var error = new Error(
+              'Error ' + response.status + ': ' + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .catch((error) => dispatch(AdminUserDetailsError(error)));
+};
+export const AdminUserDetailsLocalUpdate= (currentUser,changedFields) =>(dispatch)=>{
+  let updatedUser=currentUser;
+  if(changedFields.banned!==null) { updatedUser.banned= changedFields.banned };
+  if(changedFields.role) { updatedUser.role= changedFields.role };
+  if(changedFields.password)  updatedUser.password= changedFields.password;
+  dispatch({
+    type:actionTypes.ADMIN_USERS_CHANGE_CHOSEN,
+    user:updatedUser,
+  })
+}
