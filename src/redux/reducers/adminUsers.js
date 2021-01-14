@@ -8,6 +8,7 @@ const initialState = {
   page: 0,
   perPage: 5,
   totalUsers: 0,
+  chosenIndex:-1,
 };
 
 export const adminUsers = (state = initialState, action) => {
@@ -62,6 +63,24 @@ export const adminUsers = (state = initialState, action) => {
         isLoading: false,
         error: null,
         page: action.page,
+      }
+    case actionTypes.ADMIN_USERS_ON_CHOOSE:
+      return {
+        ...state,
+        chosenIndex:action.index,
+      }
+    case actionTypes.ADMIN_USERS_CHANGE_CHOSEN:
+      return {
+        ...state,
+        users:state.users.map((content, i) => i === state.chosenIndex+(state.page*state.perPage) ? action.user
+        : content
+        )
+      }
+    case actionTypes.ADMIN_USER_DELETE:
+      return {
+        ...state,
+        users:state.users.splice(state.chosenIndex+(state.page*state.perPage),1),
+        chosenIndex:-1
       }
     default:
       return state;

@@ -21,48 +21,63 @@ const styles = {
     display: 'flex',
   },
   formControl: {
-    margin: "1%",
+    margin: '1%',
     minWidth: 120,
   },
 };
-
-const useStyles = makeStyles(styles);
-function EditPanel({ handleSave, status }) {
-  const [isBanned, setisBanned] = useState(status);
-  const [error, setError] = useState([null, null]);//[errorType,errorMsg]
-  const [passwords, setPasswords] = useState(['', '']);//[pass,reEnterPass]
-  const handleCheckPassword = async () => {
-    if (passwords[0] === passwords[1] && error[0] !== 'input') {
-      handleSave(error[1]);
-    } else {
-
-      //call api here
-
-      //error happened
-      if (false) {
-        await setError(['data', 'abc']);
-        handleSave(error[1]);
-      }
+function isObjectEmpty(obj) {
+  for(var prop in obj) {
+    if(obj.hasOwnProperty(prop)) {
+      return false;
     }
-    setError([null, null]);
-    setPasswords(['', '']);
   }
+
+  return JSON.stringify(obj) === JSON.stringify({});
+}
+const useStyles = makeStyles(styles);
+function EditPanel({ handleSave, status, role }) {
+  const [isBanned, setisBanned] = useState(status);
+  const [newRole, setRole] = useState(role);
+  const [error, setError] = useState([null, null]); //[errorType,errorMsg]
+  const [passwords, setPasswords] = useState(['', '']); //[pass,reEnterPass]
+  const handleCheckNewInfo = async () => {
+    if (error[0] !== 'input') {
+      let changedFields={};
+      console.log('status'+status+" isBanned "+isBanned);
+      if (passwords[0] === passwords[1] &&passwords[0].length>=8) changedFields.password = passwords[0];
+      if (status !== isBanned && status !== null)
+        changedFields.banned = isBanned;
+      if (newRole !== role && role !== null) changedFields.role = newRole;
+      if(isObjectEmpty(changedFields)) return;
+      handleSave(error[1], changedFields);
+        
+      if(isObjectEmpty(changedFields)&&passwords[0].length<8)
+        return setError(['input', 'New Password must have more than 8 characters']);
+      setError([null, null]);
+      setPasswords(['', '']);
+      
+    }
+  };
   const handleReenter = (event) => {
     if (event.target.value !== passwords[0]) {
       setError(['input', 'Not match with new password']);
+    } else if (event.target.value.length < 8) {
+      setError(['input', 'New Password must have more than 8 characters']);
     } else {
       setError([null, null]);
     }
     setPasswords([passwords[0], event.target.value]);
-  }
+  };
   const handleInput = (event) => {
     if (event.target.value !== passwords[1]) {
       setError(['input', 'Not match with new password']);
+    } else if (event.target.value.length < 8) {
+      setError(['input', 'New Password must have more than 8 characters']);
     } else {
       setError([null, null]);
     }
-    setPasswords([event.target.value, passwords[1]])
-  }
+    setPasswords([event.target.value, passwords[1]]);
+  };
   const classes = useStyles();
   return (
     <Paper variant="outlined" className={classes.root}>
@@ -83,7 +98,10 @@ function EditPanel({ handleSave, status }) {
             id="password"
             autoComplete="new-password"
             value={passwords[0]}
-            onChange={(event) => { handleInput(event) }}
+            onChange={(event) => {
+              handleInput(event);
+            }}
+            inputProps={{ maxLength: 20 }}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -99,33 +117,57 @@ function EditPanel({ handleSave, status }) {
             id="rePassword"
             autoComplete="new-password"
             value={passwords[1]}
-            onChange={(event) => { handleReenter(event) }}
+            onChange={(event) => {
+              handleReenter(event);
+            }}
+            inputProps={{ maxLength: 20 }}
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink id="demo-simple-select-placeholder-label-label">
-              Status
-        </InputLabel>
-            <Select
-              labelId="demo-simple-select-placeholder-label-label"
-              id="demo-simple-select-placeholder-label"
-              value={isBanned}
-              onChange={(event) => { setisBanned(event.target.value) }}
-              displayEmpty
-              className={classes.selectEmpty}
-            >
-              <MenuItem value={true}>Banned</MenuItem>
-              <MenuItem value={false}>Not Banned</MenuItem>
-            </Select>
-          </FormControl>
+          {status!==null ? (
+            <FormControl className={classes.formControl}>
+              <InputLabel
+                shrink>
+                Status
+              </InputLabel>
+              <Select
+                value={isBanned}
+                onChange={(event) => {
+                  setisBanned(event.target.value);
+                }}
+                displayEmpty
+                className={classes.selectEmpty}>
+                <MenuItem value={true}>Banned</MenuItem>
+                <MenuItem value={false}>Not Banned</MenuItem>
+              </Select>
+            </FormControl>
+          ) : null}
+          {role!==null ? (
+            <FormControl className={classes.formControl}>
+              <InputLabel
+                shrink>
+                Role
+              </InputLabel>
+              <Select
+                value={newRole}
+                onChange={(event) => {
+                  setRole(event.target.value);
+                }}
+                displayEmpty
+                className={classes.selectEmpty}>
+                <MenuItem value={'STUDENT'}>Student</MenuItem>
+                <MenuItem value={'LECTURER'}>Lecturer</MenuItem>
+                <MenuItem value={'ADMIN'}>Admin</MenuItem>
+              </Select>
+            </FormControl>
+          ) : null}
         </Grid>
         <Grid item xs={12} className={classes.actions} justify="flex-end">
           <Button
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={handleCheckPassword}>
+            onClick={handleCheckNewInfo}>
             Save
           </Button>
         </Grid>

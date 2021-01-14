@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Avatar,
   Button,
@@ -14,13 +14,14 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import { useHistory, useParams, withRouter } from 'react-router-dom';
+import { Redirect, useHistory, useParams, withRouter } from 'react-router-dom';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditPanel from './EditPanel';
 import MuiAlert from '@material-ui/lab/Alert';
 import { Skeleton } from '@material-ui/lab';
-
+import { AdminUserDetailsChange,AdminUserDetailsLocalUpdate }from '../../../redux/actions';
+import { connect } from 'react-redux';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -29,12 +30,27 @@ String.prototype.firstLetterCapitalize = function () {
   return this.charAt(0) + this.slice(1).toLowerCase();
 };
 
+const mapStateToProps = state => {
+  return {
+    userProfile: state.userProfile,
+    adminUserDetails:state.adminUserDetails
+  }
+}
+const mapDispatchToProps = (dispatch) => ({
+  AdminUserDetailsChange: (currentUser,changedFields)=>{
+    dispatch(AdminUserDetailsChange(currentUser,changedFields));
+  },
+  AdminUserDetailsLocalUpdate:(currentUser,changedFields) =>{
+    dispatch(AdminUserDetailsLocalUpdate(currentUser,changedFields));
+  }
+})
+
 const styles = {
   root: {
     height: '100%',
     width: '100%',
     overflow: 'auto',
-    minHeight: '70vh',
+    minHeight: '80vh',
     padding: '0 1% 1% 1%  !important',
   },
   gridItem: {
@@ -42,6 +58,7 @@ const styles = {
   },
   mainInfoDetails: {
     minHeight: '70vh',
+    paddingBottom:"5%"
   },
   actions: {
     display: 'flex',
@@ -79,13 +96,15 @@ const UserDetails = (props) => {
   const classes = useStyles();
   const [editing, setEditing] = useState(false);
   const [save, setSave] = useState(['', null]);
+  const noticeRef = useRef(false);
   const user = props.history.location.state.datas;
   let { id } = useParams();
-  const handleSavePassword = (error) => {
+  const handleSaveInfo = async (error,changedFields) => {
     if (error !== null) {
       setSave(['error', error]);
     } else {
-      setSave(['success', 'Successfully Saved']);
+      await props.AdminUserDetailsChange(user,changedFields);
+      //props.AdminUserDetailsLocalUpdate(user,changedFields);
     }
   };
   const handleClose = (event, reason) => {
@@ -97,11 +116,17 @@ const UserDetails = (props) => {
   };
   useEffect(() => {
     document.title = 'User Details';
-    console.log(props);
-    if (props.history.location.state) {
-      let data = props.history.location.state.datas;
-    }
   }, []);
+  useEffect(() => {
+    if(noticeRef){
+      
+      if(props.adminUserDetails.errMess===''  && props.adminUserDetails.isLoading!==true){
+        setSave(['success', 'Successfully Saved']);      noticeRef.current=false;
+
+      }else if(props.adminUserDetails.isLoading!==true)  {setSave(['error', props.adminUserDetails.errMess]);      noticeRef.current=false;
+    }
+    }else noticeRef.current=true;
+  }, [props.adminUserDetails.errMess])
   return (
     <Grid container className={classes.root}>
       <Grid item xs={12} className={classes.mainInfoDetails}>
@@ -181,8 +206,8 @@ const UserDetails = (props) => {
                 </Typography>
               </div>
 
-              <Typography variant="h5">Description</Typography>
-              <Typography variant="body1" style={{ marginBottom: '1%' }}>
+              <Typography variant="h6">Description:</Typography>
+              <Typography variant="body1" style={{ marginBottom: '1%',minHeight:"5%" }}>
                 {user.description}
               </Typography>
 
@@ -198,11 +223,13 @@ const UserDetails = (props) => {
                     )}
                 </Typography>
               </div>
-              <Collapse in={editing}>
+              {props.userProfile.user!==null?<Collapse in={editing} className={classes.edit}>
                 <EditPanel
-                  handleSave={handleSavePassword}
-                  status={user.banned}></EditPanel>
-              </Collapse>
+                  handleSave={handleSaveInfo}
+                  status={user._id!==props.userProfile.user.user._id?user.banned:null}
+                  role = {user._id!==props.userProfile.user.user._id?user.role:null}
+                  ></EditPanel>
+              </Collapse>:<Redirect to='/'/>}
             </Grid>
           </Grid>
         ) : (
@@ -251,7 +278,7 @@ const UserDetails = (props) => {
       <div>
         <Snackbar
           open={save[0] === '' ? false : true}
-          autoHideDuration={3000}
+          autoHideDuration={2000}
           onClose={handleClose}>
           {save[0] === 'success' ? (
             <Alert severity="success">{save[1]}</Alert>
@@ -263,4 +290,4 @@ const UserDetails = (props) => {
     </Grid>
   );
 };
-export default withRouter(UserDetails);
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(UserDetails));
