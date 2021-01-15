@@ -7,9 +7,9 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import ImageUpload from '../AddCourse/ImageUpload';
+import ImageUpload from '../../AddCourse/ImageUpload';
 import { connect } from 'react-redux';
-import { updateUserProfile, updateUserPassword, fetchUserProfile } from '../../redux/actions';
+import { updateUserProfile, updateUserPassword, fetchUserProfile } from '../../../redux/actions';
 
 const mapStateToProps = state => {
   return {
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateUserPassword: (input) => { dispatch(updateUserPassword(input)) }
 })
 
-class UpdateProfile extends Component {
+class EditAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,7 +66,7 @@ class UpdateProfile extends Component {
       await this.props.updateUserPassword({ 'password': this.state.newPassword, 'currentPassword': this.state.currentPassword });
   }
 
-  render() {/* 
+  render() {
     if (this.props.userProfile.isLoading) {
       return (
         <Grid container alignItems="center">
@@ -85,11 +85,11 @@ class UpdateProfile extends Component {
         </Grid>
       );
     }
-    else { */
+    else {
       const theme = createMuiTheme();
 
       return (
-        <main>
+        <div>
           <Container maxWidth="md" style={{
             backgroundColor: "white",
             padding: theme.spacing(4, 4),
@@ -103,7 +103,7 @@ class UpdateProfile extends Component {
               fontWeight: 550,
               marginBottom: 20
             }} align="start" color="textPrimary">
-              Account Settings
+              Update Account
           </Typography>
             <Grid container direction="column" alignItems="center" justify="center" xs={12}>
               <Grid item container direction="row" spacing={3}>
@@ -261,10 +261,10 @@ class UpdateProfile extends Component {
               </Grid>
             </Grid>
           </Container>
-        </main >
+        </div >
       );
     }
   }
-//}
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EditAccount);

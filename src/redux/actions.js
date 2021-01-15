@@ -1458,3 +1458,276 @@ export const changeAdminCoursesPage = (newPage) => ({
   type: actionTypes.ADMIN_COURSES_CHANGE_PAGE,
   page: newPage,
 });
+export const onSearchTermChangeAdminCourses=(searchText)=>({
+  
+  type: actionTypes.ADMIN_COURSES_CHANGE_SEARCH,
+  search: searchText,
+})
+//---------------Admin Course Details------------------------------------------
+
+export const setAdminCourseDetails = (course) => ({
+  type: actionTypes.SET_ADMIN_COURSE_DETAILS,
+  course: course,
+});
+const AdminCourseDetailsLoading = () => ({
+  type: actionTypes.ADMIN_COURSE_DETAILS_LOADING,
+});
+export const AdminCourseDetailsError = (error) => ({
+  type: actionTypes.ADMIN_COURSE_DETAILS_ERROR,
+  error: error,
+});
+export const AdminCourseDetailsChange = (currentCourse, changedFields) => (
+  dispatch
+) => {
+  dispatch(AdminCourseDetailsLoading(true));
+  console.log("changedFields"+changedFields);
+  console.log(currentCourse);
+  return axios({
+    method: 'patch',
+    url: ApiURL + '/courses/' + currentCourse._id,
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: {
+      ...(changedFields.actualPrice !== null
+        ? { actualPrice: changedFields.actualPrice }
+        : {}),
+      ...(changedFields.price!== null ? { price: changedFields.price } : {}),
+    },
+  })
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch(AdminCourseDetailsLocalUpdate(currentCourse, changedFields));
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => dispatch(AdminCourseDetailsError(error)));
+};
+export const AdminCourseDetailsLocalUpdate = (currentCourse, changedFields) => (
+  dispatch
+) => {
+  let updatedCourse = currentCourse;
+  if (changedFields.price !== undefined) {
+    updatedCourse.price = changedFields.price;
+  }
+  if (changedFields.actualPrice!== undefined) {
+    updatedCourse.actualPrice = changedFields.actualPrice;
+  }
+  //if (changedFields.password) updatedCourse.password = changedFields.password;
+  dispatch({
+    type: actionTypes.ADMIN_COURSES_CHANGE_CHOSEN,
+    course: updatedCourse,
+  });
+};
+
+//---------------------Admin Categories--------------------------------------
+export const fetchAllAdminCategories = () => async (dispatch) => {
+  dispatch(AdminCategoriesLoading(true));
+  console.log('fetching all data... ');
+  fetch(ApiURL + `/categories`, {
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((categories) => {
+      console.log(categories.length);
+      dispatch(setAllAdminCategories(categories));
+    })
+    .catch((error) => dispatch(AdminCategoriesFailed(error.message)));
+};
+
+export const addAdminCategory = (input) => {
+  return (dispatch) => {
+    return fetch(ApiURL + '/categories', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': getLoginLocal(),
+      },
+      body: JSON.stringify({
+        title: input.title
+      }),
+    })
+      .then((response) =>
+        response.json().then((json) => ({
+          status: response.status,
+          json,
+        }))
+      )
+      .then(
+        // Both fetching and parsing succeeded!
+        ({ status, json }) => {
+          if (status === 201) {
+            // response success checking logic could differ
+            alert('Add Category Successfully');
+            return true;
+          } else {
+            alert('Error' + json.error);
+            throw new Error(json.error);
+          }
+        }
+      )
+      .catch((err) => {
+        dispatch(AdminCategoriesFailed(err.message));
+        console.log(err);
+        return false;
+      });
+  };
+};
+
+export const removeAdminCategory = (id) => (dispatch) => {
+  return axios({
+    method: 'delete',
+    url: ApiURL + '/categories/' + id,
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+  })
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch(removeLocalAdminCategory());
+          alert('Remove Category successfully');
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => dispatch(AdminCategoriesFailed(error.message)));
+};
+const setAllAdminCategories = (categories) => ({
+  type: actionTypes.ADMIN_CATEGORIES_FETCH_ALL,
+  categories: categories,
+  totalCategories: categories.length,
+});
+const removeLocalAdminCategory=()=>({
+  type: actionTypes.ADMIN_CATEGORY_DELETE,
+})
+export const AdminCategoriesLoading = () => ({
+  type: actionTypes.ADMIN_CATEGORIES_LOADING,
+});
+
+export const AdminCategoriesFailed = (errmess) => ({
+  type: actionTypes.ADMIN_CATEGORIES_FAIL,
+  payload: errmess,
+});
+export const addNewCategory = (category) => ({
+  type: actionTypes.ADD_NEW_CATEGORY,
+  category: category,
+});
+export const onChooseAdminCategory = (index) => ({
+  type: actionTypes.ADMIN_CATEGORIES_ON_CHOOSE,
+  index: index,
+});
+export const updateLocalAdminCategorysPage = (nextPage) => ({
+  type: actionTypes.ADMIN_CATEGORIES_CHANGE_PAGE,
+  page: nextPage,
+});
+export const changeAdminCategoriesPerPage = (perPage) => async (dispatch)=>dispatch({
+  type: actionTypes.ADMIN_CATEGORIES_CHANGE_PERPAGE,
+  perPage: perPage,
+});
+export const changeAdminCategoriesPage = (newPage) => ({
+  type: actionTypes.ADMIN_CATEGORIES_CHANGE_PAGE,
+  page: newPage,
+});
+
+
+export const setAdminCategoryDetails = (category) => ({
+  type: actionTypes.SET_ADMIN_CATEGORY_DETAILS,
+  category: category,
+});
+const AdminCategoryDetailsLoading = () => ({
+  type: actionTypes.ADMIN_CATEGORY_DETAILS_LOADING,
+});
+export const AdminCategoryDetailsError = (error) => ({
+  type: actionTypes.ADMIN_CATEGORY_DETAILS_ERROR,
+  error: error,
+});
+export const AdminCategoryDetailsChange = (currentCategory, changedFields) => (
+  dispatch
+) => {
+  dispatch(AdminCategoryDetailsLoading(true));
+  console.log("changedFields"+changedFields);
+  console.log(currentCategory);
+  return axios({
+    method: 'patch',
+    url: ApiURL + '/categories/' + currentCategory.title,
+    headers: {
+      Accept: 'application/json',
+      'x-access-token': getLoginLocal(),
+    },
+    data: {
+      title:changedFields.title
+    },
+  })
+    .then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch(AdminCategoryDetailsLocalUpdate(currentCategory, changedFields));
+        } else {
+          var error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .catch((error) => dispatch(AdminCategoryDetailsError(error)));
+};
+export const AdminCategoryDetailsLocalUpdate = (currentCategory, changedFields) => (
+  dispatch
+) => {
+  let updatedCategory = currentCategory;
+  updatedCategory.title = changedFields.title;
+  dispatch({
+    type: actionTypes.ADMIN_CATEGORIES_CHANGE_CHOSEN,
+    category: updatedCategory,
+  });
+};

@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionTypes';
 const initialState = {
-  isLoading: true,
-  errMess: '',
+  isLoading: false,
+  errMess: null,
   course: null
 };
 
@@ -12,20 +12,19 @@ export const adminCourseDetails = (state = initialState, action) => {
         ...state,
         isLoading: false,
         errMess: null,
-        course: action.payload
+        course: action.course
       };
     case actionTypes.ADMIN_COURSE_DETAILS_LOADING:
       return {
         ...state,
         isLoading: true,
-        course: null
+        errMess: null,
       };
     case actionTypes.ADMIN_COURSE_DETAILS_ERROR:
       return {
         ...state,
         isLoading: false,
         errMess: action.error.message,
-        course: null
       };
     case actionTypes.RESET_ADMIN_COURSE_DETAILS:
       return initialState

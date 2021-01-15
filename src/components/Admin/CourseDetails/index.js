@@ -1,238 +1,355 @@
-import React, { useEffect } from "react";
-import { Avatar, Button, Chip, colors, Divider, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
-import styled from "styled-components";
-import { useHistory, useParams } from "react-router-dom";
-import VideoList from "./VideoList"
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Avatar,
+  Button,
+  Chip,
+  colors,
+  Divider,
+  FormControl,
+  Grid,
+  InputAdornment,
+  InputLabel,
+  makeStyles,
+  OutlinedInput,
+  Paper,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@material-ui/core';
+import styled from 'styled-components';
+import { useHistory, useParams, withRouter } from 'react-router-dom';
+import VideoList from './VideoList';
 import { Link } from 'react-router-dom';
+import NumberFormatCustom from './NumberFormatCustom';
+import {
+  AdminCourseDetailsChange,
+  setAdminCourseDetails,
+} from '../../../redux/actions';
+import { Alert, Skeleton } from '@material-ui/lab';
+import { useDispatch, useSelector } from 'react-redux';
+
+function isObjectEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      return false;
+    }
+  }
+
+  return JSON.stringify(obj) === JSON.stringify({});
+}
 
 const styles = {
   root: {
     height: '100%',
     width: '100%',
     overflow: 'auto',
-    backgroundColor: "#fafafa"
+    backgroundColor: '#fafafa',
   },
   gridItem: {
-    padding: "0 1% 1% 1%  !important",
+    padding: '0 1% 1% 1%  !important',
   },
   mainInfo: {
-    minHeight: "70vh",
-    padding: "1%"
+    minHeight: '70%',
+    padding: '1%',
   },
   mainInfoDetails: {
-    minHeight: "70vh"
+    minHeight: '70vh',
   },
   actions: {
-    display: "flex"
+    display: 'flex',
   },
   button: {
-    margin: "1%"
+    margin: '1%',
   },
   sideInfo: {
-    minHeight: "35vh",
-    padding: "1% 2%"
+    minHeight: '35vh',
+    padding: '1% 2%',
   },
   lecturerInfo: {
-    minHeight: "30vh",
-    padding: "1%"
+    minHeight: '30vh',
+    padding: '1%',
   },
   italicText: {
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   content: {
-    paddingLeft: "1%"
+    paddingLeft: '1%',
   },
   price: {
     textDecorationLine: 'line-through',
-    paddingLeft: "1%",
-    color: "#808080"
+    paddingLeft: '1%',
+    color: '#808080',
   },
   avatar: {
-    width: "15%",
-    height: "15%"
-  }
-};
-const courseInfo = {
-  "_id": "5fd326f8851a412c881d7906",
-  "points": 4.8,
-  "numberOfFeedback": null,
-  "numberOfStudent": 3,
-  "thumnail": "https://img-a.udemycdn.com/course/240x135/1708340_7108_4.jpg?6SU20jCZLkR4SlfMFGkKgB0yNTrq1fx3QYAzjOeROmHgiku19tGzpZqEZ85CfaB3X2Q-g1KgUIFBMBUFxD7FKzCEh7VqBQ-kvMk4tpRAqTWtyDt8GvGqs82XplyZI59i",
-  "last_updated": 1607673590218,
-  "videos": [
-    {
-      "_id": "5ff3d8047f52572370b7cb5d",
-      "title": "Course Introduction",
-      "length": "3:20",
-      "link": "https://www.youtube.com/watch?v=lEHM9HZf0IA",
-      "course": "5fd326f8851a412c881d7906",
-      "createdAt": "2021-01-05T03:07:48.212Z",
-      "updatedAt": "2021-01-05T03:07:48.212Z",
-      "__v": 0
-    },
-    {
-      "_id": "5ff3d86fd663fa3520c0279c",
-      "title": "Course Overview",
-      "length": "3:20",
-      "link": "https://www.youtube.com/watch?v=lEHM9HZf0IA",
-      "course": "5fd326f8851a412c881d7906",
-      "createdAt": "2021-01-05T03:09:35.614Z",
-      "updatedAt": "2021-01-05T03:09:35.614Z",
-      "__v": 0
-    },
-    {
-      "_id": "5ff4202042e9ec0024b2ede5",
-      "title": "How to get help",
-      "length": "4:20",
-      "link": "https://www.youtube.com/watch?v=9BKGNJyrB5o",
-      "course": "5fd326f8851a412c881d7906",
-      "createdAt": "2021-01-05T08:15:28.789Z",
-      "updatedAt": "2021-01-05T08:15:28.789Z",
-      "__v": 0
-    }
-  ],
-  "title": "Flutter & Dart - The Complete Guide [2020 Edition]",
-  "category": "Mobile Development",
-  "leturer": {
-    "_id": "5fd23cc653f29b3850b48c57",
-    "avatar": "https://i.imgur.com/Xp51vdM.png",
-    "description": "",
-    "course_list": [
-      "5fd47265b531a72b30c59ca4",
-      "5fd3257dd530df1a6054ba25",
-      "5fd326f8851a412c881d7906",
-      "5fd32ba9851a412c881d7907",
-      "5fd32bf5851a412c881d7908",
-      "5fd32c43851a412c881d7909",
-      "5fd32c82851a412c881d790a",
-      "5fd32cf1851a412c881d790b",
-      "5fd32d43851a412c881d790c",
-      "5fd32d80851a412c881d790d",
-      "5fd32dc3851a412c881d790e",
-      "5fd32dc3851a412c881d790f",
-      "5fd32f17851a412c881d7910",
-      "5fd32f17851a412c881d7911",
-      "5fd32f17851a412c881d7912",
-      "5fd32f17851a412c881d7913",
-      "5fd32f17851a412c881d7914",
-      "5fd32f17851a412c881d7915",
-      "5fd32f17851a412c881d7916",
-      "5fd32f17851a412c881d7917",
-      "5fd32f17851a412c881d7918",
-      "5fd32f17851a412c881d7919",
-      "5fd70615157fa61072b2ca98",
-      "5fd7058071d6871ecc5922dd"
-    ],
-    "fullname": "Ngô Văn Phát"
+    width: '15%',
+    height: '15%',
   },
-  "price": 11.99,
-  "actualPrice": 129.99,
-  "description": "The entire course was completely re-recorded and updated - it's totally up-to-date with the latest version of Flutter!",
-  "__v": 0,
-  "shortDecription": null,
-  "isDone": false
-}
-
+  input: {
+    margin: '3%',
+  },
+};
 const useStyles = makeStyles(styles);
-export default function CourseDetails() {
+const CourseDetails = (props) => {
   const classes = useStyles();
   let { id } = useParams();
   const history = useHistory();
-
+  console.log(props.history.location.state.datas)
+  const adminCourseDetails = useSelector((state) => state.adminCourseDetails);
+  const dispatch = useDispatch();
+  const [error, setError] = useState([null, null]);
+  const [values, setValues] = React.useState({
+    //discounted price
+    price: adminCourseDetails.course.price,
+    //crossed out price
+    actualPrice: adminCourseDetails.course.actualPrice,
+  });
   useEffect(() => {
-    document.title = "Course Details"
+    document.title = 'Course Details';
+    dispatch(setAdminCourseDetails(props.history.location.state.datas));
   }, []);
+  useEffect(() => {
+    if (adminCourseDetails.errMess !== null) {
+      setError(['error', 'Internal Error']);
+    }
+  }, [adminCourseDetails.errMess]);
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const handleSubmit = (event) => {
+    let changedFields = {};
+    if (values.price > values.actualPrice) {
+      return setError([
+        'error',
+        'Discounted Price must be higher than Original Price',
+      ]);
+    }
+    if (values.price !== adminCourseDetails.course.price) {
+      changedFields.price = values.price;
+    }
+    if (values.actualPrice !== adminCourseDetails.course.actualPrice) {
+      changedFields.actualPrice = values.actualPrice;
+    }
+    if (isObjectEmpty(changedFields)) return;
+    dispatch(AdminCourseDetailsChange(adminCourseDetails.course, changedFields));
+    /* if(adminCourseDetails.errMess===null)
+      setError(['success','Updated Successfully']);
+    else setError(['error','Internal Error']); */
+  };
+  const handleClose = (event, reason) => {
+    /* if (reason === 'clickaway') {
+      return;
+    } */
+    setError([null, null]);
+  };
   return (
-    <Grid container className={classes.root}>
-      <Grid container xs={12} md={8} className={classes.gridContainer}>
-        <Grid item xs={12} className={classes.gridItem}>
-          <Paper className={classes.mainInfo}>
-            <Grid container direction="row-reverse">
-              <Grid item xs={12} className={classes.mainInfoDetails}>
-                <Typography variant="h4" gutterBottom>
-                  {courseInfo.title}
-                </Typography>
+    <div>{console.log("adminCourseDetails",adminCourseDetails)}
+      {adminCourseDetails !== null &&adminCourseDetails.course!==null ? (
+        <Grid container className={classes.root}>
+          <Grid container xs={12} md={8} className={classes.gridContainer}>
+            <Grid item xs={12} className={classes.gridItem}>
+              <Paper className={classes.mainInfo}>
+                <Grid container direction="row-reverse">
+                  <Grid item xs={12} className={classes.mainInfoDetails}>
+                    <Typography variant="h4" gutterBottom>
+                      {adminCourseDetails.course.title}
+                    </Typography>
 
-                <Divider />
-                <Typography variant="subtitle1" className={classes.italicText} gutterBottom>
-                  Last updated: {new Date(courseInfo.last_updated).toTimeString()} by {courseInfo.leturer.fullname}
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                  Id: {id}
-                </Typography>
-                <Typography variant="h5" paragraph="true" >
-                  Description
+                    <Divider />
+                    <Typography
+                      variant="subtitle1"
+                      className={classes.italicText}
+                      gutterBottom>
+                      Last updated:{' '}
+                      {new Date(adminCourseDetails.course.last_updated).toTimeString()} by{' '}
+                      {adminCourseDetails.course.leturer.fullname}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Id: {id}
+                    </Typography>
+                    <Typography variant="h5" paragraph="true">
+                      Description
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {adminCourseDetails.course.description}
+                    </Typography>
+                    <Typography variant="h5" gutterBottom>
+                      Videos
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      <VideoList
+                        videos={adminCourseDetails.course.videos}
+                        courseId={adminCourseDetails.course._id}
+                      />
+                    </Typography>
+
+                    <Typography variant="h5" gutterBottom>
+                      Edit Course
+                    </Typography>
+                    <Grid item xs={11} md={5}>
+                      <TextField
+                        variant="outlined"
+                        className={classes.input}
+                        label="Original Price"
+                        value={values.actualPrice}
+                        onChange={handleChange}
+                        name="actualPrice"
+                        id="formatted-numberformat-input"
+                        InputProps={{
+                          inputComponent: NumberFormatCustom,
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={11} md={5}>
+                      <TextField
+                        variant="outlined"
+                        className={classes.input}
+                        label="Discounted Price"
+                        value={values.price}
+                        onChange={handleChange}
+                        name="price"
+                        id="formatted-numberformat-input"
+                        InputProps={{
+                          inputComponent: NumberFormatCustom,
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={5}
+                    className={classes.actions}
+                    justify="flex-end">
+                    <Button
+                      variant="contained"
+                      style={{
+                        backgroundColor: colors.lightGreen[600],
+                        borderColor: colors.lightGreen[600],
+                      }}
+                      className={classes.button}
+                      onClick={() => {
+                        history.push(`/courses/${adminCourseDetails.course._id}`);
+                      }}>
+                      User View
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      onClick={handleSubmit}>
+                      Update
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            sm={12}
+            md={4}
+            xs={4}
+            className={classes.gridContainer}>
+            <Grid item xs={12} className={classes.gridItem}>
+              <Paper className={classes.sideInfo}>
+                <Typography variant="h6" gutterBottom>
+                  Category
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  {courseInfo.description}
+                  <Chip label={adminCourseDetails.course.category}></Chip>
                 </Typography>
-                <Typography variant="h5" gutterBottom>
-                  Videos
+                <Typography variant="h6" gutterBottom>
+                  Score
                 </Typography>
-                <Typography variant="body1" gutterBottom>
-                  <VideoList videos={courseInfo.videos} courseId={courseInfo._id} />
+                <Typography
+                  variant="body1"
+                  className={classes.content}
+                  gutterBottom>
+                  {adminCourseDetails.course.points} / 5
                 </Typography>
-              </Grid>
-              <Grid item xs={5} className={classes.actions} justify="flex-end">
-                <Button variant="contained" color="primary" className={classes.button} onClick={() => { history.push(`/courses/${courseInfo._id}`) }}>User View</Button>
-                <Button variant="contained" color="primary" className={classes.button}>Update</Button>
-              </Grid>
+                <div>
+                  <Typography variant="h6" display="inline" gutterBottom>
+                    Number of Feedbacks :
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.content}
+                    display="inline">
+                    {adminCourseDetails.course.numberOfFeedback}
+                  </Typography>
+                </div>
+                <div>
+                  <Typography variant="h6" display="inline" gutterBottom>
+                    Number of Students :
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.content}
+                    display="inline">
+                    {adminCourseDetails.course.numberOfStudent}
+                  </Typography>
+                </div>
+                <div>
+                  <Typography variant="h6" display="inline" gutterBottom>
+                    Price:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.price}
+                    display="inline">
+                    {adminCourseDetails.course.actualPrice}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.content}
+                    display="inline">
+                    {adminCourseDetails.course.price}
+                  </Typography>
+                </div>
+              </Paper>
             </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
-      <Grid container sm={12} md={4} xs={4} className={classes.gridContainer}>
-        <Grid item xs={12} className={classes.gridItem}>
-          <Paper className={classes.sideInfo}>
-            <Typography variant="h6" gutterBottom>
-              Category
-          </Typography>
-            <Typography variant="body1" gutterBottom>
-              <Chip label={courseInfo.category}></Chip>
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Score
-          </Typography>
-            <Typography variant="body1" className={classes.content} gutterBottom>
-              {courseInfo.points}
-            </Typography>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom >
-                Number of Feedbacks :
-          </Typography>
-              <Typography variant="body1" className={classes.content} display="inline">{courseInfo.numberOfFeedback}</Typography>
-            </div>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Number of Students :
-            </Typography>
-              <Typography variant="body1" className={classes.content} display="inline">{courseInfo.numberOfStudent}</Typography>
-            </div>
-            <div>
-              <Typography variant="h6" display="inline" gutterBottom>
-                Price:
-            </Typography>
-              <Typography variant="body1" className={classes.price} display="inline">{courseInfo.actualPrice}</Typography>
-              <Typography variant="body1" className={classes.content} display="inline">{courseInfo.price}</Typography>
-            </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          <Paper className={classes.lecturerInfo}>
-            <Grid container align="center" justify="center" alignItems="center">
-              <Grid item xs={12}>
-                <Avatar alt="Avatar" className={classes.avatar} src={courseInfo.leturer.avatar} />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h6" className={classes.content}>{courseInfo.leturer.fullname}</Typography>
-              </Grid>
+            <Grid item xs={12} className={classes.gridItem}>
+              <Paper className={classes.lecturerInfo}>
+                <Grid
+                  container
+                  align="center"
+                  justify="center"
+                  alignItems="center">
+                  <Grid item xs={12}>
+                    <Avatar
+                      alt="Avatar"
+                      className={classes.avatar}
+                      src={adminCourseDetails.course.leturer.avatar}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="h6" className={classes.content}>
+                      {adminCourseDetails.course.leturer.fullname}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Typography variant="body1" className={classes.content}>
+                  {adminCourseDetails.course.leturer.description} 
+                </Typography>
+              </Paper>
             </Grid>
-            <Typography variant="body1" className={classes.content}>{courseInfo.leturer.description} abcd</Typography>
-
-          </Paper>
+          </Grid>
+          <Snackbar
+            open={error[0] === null ? false : true}
+            autoHideDuration={2000}
+            onClose={handleClose}>
+            {error[0] !== null ? (
+              <Alert severity={error[0]}>{error[1]}</Alert>
+            ) : null}
+          </Snackbar>
         </Grid>
-      </Grid>
-    </Grid>
+      ) : (
+        <Skeleton variant="rect"></Skeleton>
+      )}
+    </div>
   );
 };
 
+export default withRouter(CourseDetails);

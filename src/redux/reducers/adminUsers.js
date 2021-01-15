@@ -28,7 +28,7 @@ export const adminUsers = (state = initialState, action) => {
         isLoading: true,
         error: null,
       };
-    case actionTypes.ALL_COURSES_FAIL:
+    case actionTypes.ADMIN_USERS_FAIL:
       return {
         ...state,
         isLoading: false,

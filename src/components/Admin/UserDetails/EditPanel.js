@@ -55,7 +55,6 @@ function EditPanel({ handleSave, status, role }) {
         return setError(['input', 'New Password must have more than 8 characters']);
       setError([null, null]);
       setPasswords(['', '']);
-      
     }
   };
   const handleReenter = (event) => {

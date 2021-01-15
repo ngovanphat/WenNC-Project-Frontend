@@ -3,8 +3,6 @@ import { fetchAdminUsers, changeAdminUsersPage } from '../../../redux/actions';
 import { connect, useSelector } from 'react-redux';
 import UsersTable from './UsersTable';
 import { Drawer } from '@material-ui/core';
-import addUser from './AddUser';
-import AddUser from './AddUser';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {

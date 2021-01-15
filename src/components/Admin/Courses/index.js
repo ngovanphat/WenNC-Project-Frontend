@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { Button, Chip, colors, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TablePagination } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { Colors } from '../../../helpers/colors';
-import { fetchAllAdminCourses,changeAdminCoursesPage,changeAdminCoursesPerPage, onChooseAdminCourse, removeAdminCourse } from '../../../redux/actions';
+import { fetchAllAdminCourses,changeAdminCoursesPage,changeAdminCoursesPerPage, onChooseAdminCourse, removeAdminCourse, setAdminCourseDetails } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from '@material-ui/lab';
 // eslint-disable-next-line no-extend-native
@@ -41,7 +41,11 @@ export default function CoursesTable() {
     tableRef.current.onQueryChange();
   },[adminCourses.courses,adminCourses.page,adminCourses.perPage])
 
-
+  useEffect(()=>{
+    //if(adminCourses.error.inclues("Unauthorized"))
+    if(adminCourses.error!==null&&adminCourses.error.inclues("Network"))
+      return <Redirect to='/'/>
+  },[adminCourses.error])
   return (
     <div style={{ height: '100%', width: '100%', overflow: 'auto', marginRight: '10px', marginLeft: '10px' }}>
       <MaterialTable
@@ -53,7 +57,8 @@ export default function CoursesTable() {
             },
             headerStyle: {
               maxWidth: "20vh"
-            }
+            },
+            filtering:false
           },
           { title: 'Title', field: 'title', align: 'left' },
           { title: 'Lecturer', field: 'leturer.fullname', align: 'left' },
@@ -62,18 +67,21 @@ export default function CoursesTable() {
             field: 'numberOfFeedback',
             align: 'left',
             type: 'numeric',
+            filtering:false
           },
           {
             title: 'Students',
             field: 'numberOfStudent',
             align: 'left',
             type: 'numeric',
+            filtering:false
           },
           {
             title: 'Last Updated',
             align: 'left',
             field: 'last_updated',
             type: 'date',
+            filtering:false
           },
           {
             title: 'Category',
@@ -91,13 +99,31 @@ export default function CoursesTable() {
         
         data={query =>
           new Promise((resolve, reject) => {
-            const firstIndex = (adminCourses.page - 1) * adminCourses.perPage;
-            const lastIndex = adminCourses.page * adminCourses.perPage;
-            resolve({
-              data: adminCourses.courses.slice(firstIndex, lastIndex),
-              page: adminCourses.page-1,
-              totalCount: adminCourses.totalCourses,
-            });
+            if(query.search.length>0){
+              let searchCourses={};
+              searchCourses.courses=adminCourses.courses.filter((i=>{
+                console.log(query.search);
+                return (typeof i.leturer.fullname == "string" && i.leturer.fullname.indexOf(query.search) > -1    )||(typeof i.category == "string" && i.category.indexOf(query.search) > -1 ) ;
+              }));
+              searchCourses.page=1;
+              searchCourses.totalCourses=searchCourses.courses.length;
+              const firstIndex = (searchCourses.page - 1) * adminCourses.perPage;
+              const lastIndex = searchCourses.page * adminCourses.perPage;
+              resolve({
+                data: searchCourses.courses.slice(firstIndex, lastIndex),
+                page: searchCourses.page-1,
+                totalCount: searchCourses.totalCourses,
+              });
+            }else{
+              const firstIndex = (adminCourses.page - 1) * adminCourses.perPage;
+              const lastIndex = adminCourses.page * adminCourses.perPage;
+              resolve({
+                data: adminCourses.courses.slice(firstIndex, lastIndex),
+                page: adminCourses.page-1,
+                totalCount: adminCourses.totalCourses,
+              });
+
+            }
           })}
         title="Courses"
         tableRef={tableRef}
@@ -113,6 +139,7 @@ export default function CoursesTable() {
         options={{
           exportButton: true,
           sorting: true,
+          filtering: true,
           actionsColumnIndex: -1,
           pageSize: adminCourses.perPage
         }}
@@ -129,6 +156,7 @@ export default function CoursesTable() {
             tooltip: 'Details',
             onClick: (event, rowData) =>{
               dispatch(onChooseAdminCourse(rowData.tableData.id));
+              dispatch(setAdminCourseDetails(rowData));
               history.push(`/admin/courses/${rowData._id}`, { datas: rowData })
             }
           }),
@@ -179,7 +207,7 @@ export default function CoursesTable() {
         <DialogTitle id="alert-dialog-title">{"Delete Confirmation"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Course "{adminCourses.chosenIndex>-1?adminCourses.courses[adminCourses.chosenIndex].title:"Error"} will be deleted.Continue?
+            Course "{adminCourses.chosenIndex>-1?adminCourses.courses[adminCourses.chosenIndex+(adminCourses.page-1)*adminCourses.perPage].title:"Error"}" will be deleted.Continue?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

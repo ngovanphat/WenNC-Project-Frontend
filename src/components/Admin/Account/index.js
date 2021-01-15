@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { fetchUserProfile } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import EditAccount from './EditAccount';
 const mapStateToProps = (state) => {
   return {
     userProfile: state.userProfile,
@@ -26,11 +27,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Account = (props) => {
+  const userProfile=useSelector(state=>state.userProfile)
   useEffect(() => {
     document.title = 'Account';
     props.fetchUserProfile();
   }, []);
-  if (props.userProfile.isLoading) {
+  if (userProfile.isLoading) {
     return (
       <Grid container alignItems="center">
         <Grid item row xs={12}>
@@ -38,30 +40,29 @@ const Account = (props) => {
         </Grid>
       </Grid>
     );
-  } else if (this.props.userProfile.errMess) {
+  } else if (props.userProfile.errMess) {
     return (
       <Grid container alignItems="center">
         <Grid item row xs={12}>
           <Typography variant="h4">
-            {this.props.singleCourse.errMess}
+            {props.userProfile.errMess}
           </Typography>
         </Grid>
       </Grid>
     );
   } else {
-    let date = new Date(this.props.userProfile.user.user.createdAt);
+    let date = new Date(props.userProfile.user.user.createdAt);
     const theme = createMuiTheme();
 
     return (
-      <main>
+      <div style={{ height: '100%', width: '100%', overflow: 'auto', marginRight: '10px', marginLeft: '10px' }}>
         <Container
-          maxWidth="sm"
+          maxWidth="lg"
           style={{
             backgroundColor: 'white',
             padding: theme.spacing(4, 4),
             marginTop: 40,
             marginBottom: 30,
-            height: '50vh',
           }}>
           <Typography
             style={{
@@ -84,7 +85,7 @@ const Account = (props) => {
               xs={6}>
               <Grid item>
                 <Avatar
-                  src={this.props.userProfile.user.user.avatar}
+                  src={props.userProfile.user.user.avatar}
                   style={{
                     marginTop: 10,
                     width: theme.spacing(20),
@@ -104,14 +105,14 @@ const Account = (props) => {
                 <ListItem>
                   <ListItemText
                     primary="Full name"
-                    secondary={this.props.userProfile.user.user.fullname}
+                    secondary={props.userProfile.user.user.fullname}
                   />
                 </ListItem>
                 <Divider />
                 <ListItem>
                   <ListItemText
                     primary="Email"
-                    secondary={this.props.userProfile.user.user.email}
+                    secondary={props.userProfile.user.user.email}
                   />
                 </ListItem>
                 <Divider />
@@ -138,23 +139,10 @@ const Account = (props) => {
             alignItems="center"
             justify="center"
             xs={12}>
-            <Button
-              variant="outlined"
-              align="center"
-              style={{
-                marginTop: 30,
-                borderColor: '#005580',
-                color: '#005580',
-              }}>
-              <NavLink
-                to="/profile/update"
-                style={{ textDecoration: 'none', color: '#005580' }}>
-                Update your profile
-              </NavLink>
-            </Button>
+              <EditAccount></EditAccount>
           </Grid>
         </Container>
-      </main>
+      </div>
     );
   }
 };

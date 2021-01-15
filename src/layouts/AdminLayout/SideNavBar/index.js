@@ -46,11 +46,6 @@ const items = [
     title: "Categories",
   },
   {
-    href: "/admin/feedbacks",
-    icon: FeedbackIcon,
-    title: "Feedbacks",
-  },
-  {
     href: "/admin/account",
     icon: SecurityIcon,
     title: "Account",
