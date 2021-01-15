@@ -75,20 +75,38 @@ export default function UserMenu(props) {
             <ListItemText primary="Profile" />
           </NavLink>
         </StyledMenuItem>
-        <StyledMenuItem
+        {/* <StyledMenuItem
           onClick={handleClose}
         >
           <NavLink to="/myCourses" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
             <ListItemText primary="My Courses" />
           </NavLink>
-        </StyledMenuItem>
-        <StyledMenuItem
+        </StyledMenuItem> */}
+        {/* <StyledMenuItem
           onClick={handleClose}
         >
           <NavLink to="/wishList" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
             <ListItemText primary="Wishlist" />
           </NavLink>
-        </StyledMenuItem>
+        </StyledMenuItem> */}
+        {props.user.role === "STUDENT" ?
+          <StyledMenuItem
+            onClick={handleClose}
+          >
+            <NavLink to="/myCourses" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
+              <ListItemText primary="My Courses" />
+            </NavLink>
+          </StyledMenuItem> : <div></div>
+        }
+        {props.user.role === "STUDENT" ?
+          <StyledMenuItem
+            onClick={handleClose}
+          >
+            <NavLink to="/wishList" style={{ textDecoration: 'none', color: "#000", fontWeight: 'bold' }}>
+              <ListItemText primary="Wishlist" />
+            </NavLink>
+          </StyledMenuItem> : <div></div>
+        }
         {props.user.role === "LECTURER" ?
           <StyledMenuItem
             onClick={handleClose}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Typography, List, Button, Paper, TextField, Avatar, LinearProgress, Modal } from '@material-ui/core';
+import { Grid, Typography, List, Button, Paper, TextField, Avatar, LinearProgress, Modal, Container } from '@material-ui/core';
 import { Rating, Pagination } from '@material-ui/lab';
 import Image from 'material-ui-image';
 import { connect } from 'react-redux';
@@ -41,6 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 class CourseDetail extends Component {
   constructor(props) {
+    // console.log(props.userProfile.user.user)
     super(props);
     this.state = {
       rating: 5,
@@ -120,6 +121,13 @@ class CourseDetail extends Component {
 
   renderWishlistButton() {
     let isFavorited = this.checkIsInWishlist();
+
+    if (this.props.userProfile.user.user.role === "LECTURER") {
+      return (
+        <Container style={{height: '35px'}}></Container>
+      )
+    }
+
     if (isFavorited == 1) {
       return (
         <Button onClick={(e) => this.handleRemovePress(e)} variant="outlined" color="inherit" endIcon={<FavoriteIcon style={{ color: 'red' }} />} style={{ marginRight: 10 }}>Wishlist</Button>
@@ -150,6 +158,13 @@ class CourseDetail extends Component {
   renderJoinCourseMenu() {
     const course = this.props.singleCourse.course;
     let isJoined = this.checkIsJoined();
+
+    if (this.props.userProfile.user.user.role === "LECTURER") {
+      return (
+        <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 120, width: '100%' }}></Grid>
+      )
+    }
+
     if (isJoined == 1) {
       return (
         <Grid item xs={3} style={{ marginLeft: 10, position: 'absolute', right: 100, bottom: 120, width: '100%' }}>
